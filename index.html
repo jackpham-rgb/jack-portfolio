@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jack Pham — EECS @ Berkeley</title>
+  <meta name="description" content="Jack Pham — EECS student at UC Berkeley. Circuits, embedded systems, signal processing, and intelligent hardware." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+  /* ═══════════════════════════════════════════════
+     TOKENS
+  ═══════════════════════════════════════════════ */
+  :root {
+    /* dark (default) */
+    --bg:         #0d1117;
+    --bg2:        #161b24;
+    --bg3:        #1e2533;
+    --border:     #2d3748;
+    --ink:        #f0f4f8;        /* bright white-ish — high contrast on dark */
+    --ink2:       #cbd5e0;        /* body text — clearly readable */
+    --muted:      #718096;
+    --accent:     #60a5fa;        /* bright sky blue */
+    --accent2:    #34d399;        /* teal green */
+    --accent-dim: rgba(96,165,250,0.13);
+    --tag-bg:     #1e2d3d;
+    --tag-text:   #90cdf4;
+    --card-bg:    #111827;
+    --card-hov:   #1a2540;
+
+    --serif: 'Instrument Serif', Georgia, serif;
+    --mono:  'DM Mono', monospace;
+    --sans:  'Outfit', sans-serif;
+    --max:   1120px;
+    --gap:   clamp(1.25rem, 4vw, 2.5rem);
+    --rad:   5px;
+
+    color-scheme: dark;
+  }
+
+  [data-theme="light"] {
+    --bg:         #f5f1eb;
+    --bg2:        #ede9e2;
+    --bg3:        #e5e0d8;
+    --border:     #c8c0b4;
+    --ink:        #18120a;        /* near-black for max contrast on light */
+    --ink2:       #3a3228;
+    --muted:      #7a7060;
+    --accent:     #b84c22;        /* burnt orange */
+    --accent2:    #1d6b8a;
+    --accent-dim: rgba(184,76,34,0.1);
+    --tag-bg:     #e0d8cc;
+    --tag-text:   #5a4830;
+    --card-bg:    #eee9e2;
+    --card-hov:   #ffffff;
+
+    color-scheme: light;
+  }
+
+  /* ═══════════════════════════════════════════════
+     RESET & BASE
+  ═══════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.7;
+    transition: background .3s, color .3s;
+    min-height: 100vh;
+  }
+
+  [data-theme="dark"] body {
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgba(96,165,250,.05) 0%, transparent 55%),
+      radial-gradient(ellipse at 85% 90%, rgba(52,211,153,.04) 0%, transparent 55%);
+  }
+  [data-theme="light"] body {
+    background-image:
+      linear-gradient(rgba(180,170,158,.25) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(180,170,158,.25) 1px, transparent 1px);
+    background-size: 42px 42px;
+    background-attachment: fixed;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+
+  /* ═══════════════════════════════════════════════
+     TYPOGRAPHY — thicker weights
+  ═══════════════════════════════════════════════ */
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -.015em;
+    color: var(--ink);
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+
+  h2 {
+    font-family: var(--serif);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  h2 em { font-style: italic; color: var(--accent); }
+
+  h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  p { color: var(--ink2); font-size: 1rem; line-height: 1.8; font-weight: 400; }
+
+  .mono { font-family: var(--mono); }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gap); }
+
+  /* ═══════════════════════════════════════════════
+     ANIMATIONS
+  ═══════════════════════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-dot {
+    0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); }
+    50%      { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
+  }
+  @keyframes flicker {
+    0%,100% { opacity: 1; } 50% { opacity: .45; }
+  }
+
+  .reveal { opacity: 0; animation: fadeUp .7s ease forwards; }
+  .r1{animation-delay:.05s} .r2{animation-delay:.18s}
+  .r3{animation-delay:.32s} .r4{animation-delay:.48s}
+  .r5{animation-delay:.65s}
+
+  /* ═══════════════════════════════════════════════
+     NAV
+  ═══════════════════════════════════════════════ */
+  nav {
+    position: sticky; top: 0; z-index: 300;
+    background: color-mix(in srgb, var(--bg) 85%, transparent);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: background .3s, border-color .3s;
+  }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto;
+    padding: 0 var(--gap); height: 60px;
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: .82rem;
+    color: var(--muted); letter-spacing: .06em;
+  }
+  .nav-logo strong { color: var(--accent); font-weight: 500; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono); font-size: .7rem;
+    letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); transition: color .2s; font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* ── Theme toggle — larger, Unicode symbol ── */
+  .theme-toggle {
+    display: flex; align-items: center; gap: 3px;
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 50px; padding: 4px;
+    cursor: pointer; flex-shrink: 0;
+    transition: background .3s, border-color .3s;
+  }
+  .toggle-opt {
+    width: 38px; height: 32px;
+    border-radius: 50px; border: none; background: none;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-family: var(--mono);
+    cursor: pointer; transition: background .2s, color .2s;
+    color: var(--muted); user-select: none;
+    line-height: 1;
+  }
+  .toggle-opt.active {
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  /* Unicode symbols — moon and sun circle */
+  #optDark  { font-size: 1rem; }   /* ☾ */
+  #optLight { font-size: 1.25rem; } /* ○ */
+
+  /* ═══════════════════════════════════════════════
+     HERO
+  ═══════════════════════════════════════════════ */
+  .hero {
+    padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
+    border-bottom: 1px solid var(--border);
+    position: relative; overflow: hidden;
+  }
+  [data-theme="dark"] .hero::before {
+    content: '';
+    position: absolute; top: -30%; right: -5%;
+    width: 550px; height: 550px;
+    background: radial-gradient(circle, rgba(96,165,250,.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 3rem; align-items: start;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: .7rem;
+    font-weight: 500;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: inline-block;
+    width: 22px; height: 1px; background: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 1.7vw, 1.15rem);
+    color: var(--ink2); max-width: 520px;
+    margin: 1.5rem 0 2.25rem;
+    line-height: 1.75; font-weight: 400;
+  }
+
+  .hero-btns { display: flex; flex-wrap: wrap; gap: .6rem; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-family: var(--mono); font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .65rem 1.4rem;
+    border: 1px solid; border-radius: var(--rad);
+    font-weight: 500;
+    transition: all .18s; cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent); border-color: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { opacity: .85; }
+  .btn-ghost {
+    background: transparent; border-color: var(--border);
+    color: var(--ink2);
+  }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--ink); }
+  .btn-resume {
+    background: var(--accent-dim); border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn-resume:hover { background: var(--accent); color: #fff; }
+
+  .hero-status {
+    display: flex; align-items: center; gap: .5rem;
+    font-family: var(--mono); font-size: .65rem;
+    color: var(--muted); margin-top: 2rem; font-weight: 400;
+  }
+  .status-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #34d399; flex-shrink: 0;
+    animation: pulse-dot 2.4s ease-in-out infinite;
+  }
+
+  .focus-strip {
+    display: flex; flex-wrap: wrap; gap: .45rem;
+    padding: 1.5rem 0 0;
+  }
+  .focus-pill {
+    font-family: var(--mono); font-size: .62rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .3rem .85rem;
+    border: 1px solid var(--border); border-radius: 50px;
+    color: var(--muted); font-weight: 500;
+    transition: border-color .2s, color .2s;
+  }
+  .focus-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Avatar */
+  .avatar-wrap { width: clamp(110px,12vw,155px); flex-shrink: 0; margin-top: .5rem; }
+  .avatar-box {
+    width: 100%; aspect-ratio: 1/1;
+    border: 1px solid var(--border); border-radius: var(--rad);
+    overflow: hidden; background: var(--bg3);
+  }
+  .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .avatar-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: .4rem;
+    color: var(--muted); font-family: var(--mono);
+    font-size: .58rem; letter-spacing: .08em; text-align: center; padding: .75rem;
+  }
+  .avatar-placeholder span { font-size: 1.6rem; opacity: .25; }
+
+  /* ═══════════════════════════════════════════════
+     SECTION SKELETON
+  ═══════════════════════════════════════════════ */
+  .section {
+    padding: clamp(3rem, 6vw, 5rem) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .section-head {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 1rem; margin-bottom: 2.25rem; flex-wrap: wrap;
+  }
+  .section-label {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500;
+    display: flex; align-items: center; gap: .45rem; margin-bottom: .4rem;
+  }
+  .section-label::before { content: '§'; color: var(--accent); }
+
+  .see-more-link {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent2); font-weight: 500;
+    background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; gap: .4rem;
+    transition: gap .2s;
+  }
+  .see-more-link:hover { gap: .7rem; }
+
+  /* ═══════════════════════════════════════════════
+     ABOUT
+  ═══════════════════════════════════════════════ */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text p { font-size: 1rem; color: var(--ink2); line-height: 1.85; margin-bottom: .9rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  .sidebar-block {
+    border: 1px solid var(--border); border-radius: var(--rad);
+    padding: 1.25rem; margin-bottom: .8rem;
+    background: var(--card-bg);
+    transition: background .3s, border-color .3s;
+  }
+  .sidebar-title {
+    font-family: var(--mono); font-size: .6rem;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted); font-weight: 500; margin-bottom: .75rem;
+  }
+  .skill-list { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .skill-tag {
+    font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    padding: .2rem .6rem; border-radius: 3px;
+    background: var(--tag-bg); color: var(--tag-text);
+    border: 1px solid var(--border);
+  }
+  .skill-tag.a { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+  .skill-tag.b { background: rgba(52,211,153,.08); border-color: rgba(52,211,153,.3); color: var(--accent2); }
+
+  /* ═══════════════════════════════════════════════
+     FILTER BAR (shared by projects + notes)
+  ═══════════════════════════════════════════════ */
+  .filter-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.75rem; }
+  .filter-btn {
+    font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: .32rem .8rem;
+    border: 1px solid var(--border); border-radius: 50px;
+    background: transparent; color: var(--muted);
+    cursor: pointer; transition: all .18s;
+  }
+  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+  /* ═══════════════════════════════════════════════
+     PROJECT GRID
+  ═══════════════════════════════════════════════ */
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--rad); overflow: hidden;
+  }
+  .pcard {
+    background: var(--card-bg); padding: 1.5rem;
+    display: flex; flex-direction: column; gap: .65rem;
+    transition: background .2s; position: relative;
+    overflow: hidden; cursor: pointer;
+  }
+  .pcard::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .28s ease;
+  }
+  .pcard:hover { background: var(--card-hov); }
+  .pcard:hover::after { transform: scaleX(1); }
+  .pcard.featured { grid-column: span 2; }
+  .pcard.featured .pcard-title { font-size: 1.35rem; }
+
+  .pcard-img {
+    width: 100%; height: 130px;
+    border-radius: 3px; background: var(--bg3);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-family: var(--mono); font-size: .58rem;
+    border: 1px solid var(--border); overflow: hidden; flex-shrink: 0;
+  }
+  .pcard.featured .pcard-img { height: 170px; }
+  .pcard-img img { width: 100%; height: 100%; object-fit: cover; }
+
+  .pcard-meta { display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
+  .pcard-type { font-family: var(--mono); font-size: .57rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  .pcard-year { font-family: var(--mono); font-size: .57rem; color: var(--muted); }
+
+  .pcard-title { font-size: 1.08rem; }
+  .pcard-desc  { font-size: .84rem; color: var(--ink2); line-height: 1.65; flex: 1; }
+
+  .pcard-tags { display: flex; flex-wrap: wrap; gap: .28rem; }
+  .pcard-tag {
+    font-family: var(--mono); font-size: .56rem; font-weight: 500;
+    padding: .12rem .45rem; border-radius: 3px;
+    background: var(--tag-bg); border: 1px solid var(--border);
+    color: var(--tag-text);
+  }
+
+  .pcard-links {
+    display: flex; gap: .7rem; align-items: center;
+    margin-top: auto; padding-top: .6rem;
+    border-top: 1px solid var(--border);
+  }
+  .pcard-link {
+    font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    letter-spacing: .08em; color: var(--accent);
+    display: flex; align-items: center; gap: .28rem;
+    transition: color .2s; border: none; background: none; cursor: pointer; padding: 0;
+  }
+  .pcard-link:hover { color: var(--accent2); }
+
+  .badge {
+    font-family: var(--mono); font-size: .53rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); border: 1px solid var(--accent);
+    border-radius: 3px; padding: .1rem .42rem;
+    animation: flicker 2.5s ease-in-out infinite;
+  }
+
+  .pcard-more {
+    background: var(--bg3); border: 2px dashed var(--border);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: .5rem;
+    cursor: pointer; min-height: 150px;
+    transition: border-color .2s, background .2s;
+  }
+  .pcard-more:hover { border-color: var(--accent); background: var(--accent-dim); }
+  .pcard-more-label {
+    font-family: var(--mono); font-size: .65rem; font-weight: 500;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .pcard-more:hover .pcard-more-label { color: var(--accent); }
+  .pcard-more-icon { font-size: 1.3rem; color: var(--muted); margin-bottom: .1rem; }
+
+  /* ═══════════════════════════════════════════════
+     EXPERIENCE TIMELINE
+  ═══════════════════════════════════════════════ */
+  .timeline-item {
+    display: grid; grid-template-columns: 175px 1fr;
+    gap: 2rem; padding: 1.75rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .tl-date { font-family: var(--mono); font-size: .64rem; font-weight: 500; color: var(--muted); margin-bottom: .3rem; }
+  .tl-org  { font-family: var(--mono); font-size: .7rem;  font-weight: 500; color: var(--accent); }
+  .tl-role { font-size: 1.1rem; margin-bottom: .45rem; }
+  .tl-desc { font-size: .88rem; color: var(--ink2); line-height: 1.78; }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .65rem; }
+
+  /* ═══════════════════════════════════════════════
+     NOTES / FIELD JOURNAL
+  ═══════════════════════════════════════════════ */
+  .notes-grid {
+    display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+  }
+  .note-card {
+    border: 1px solid var(--border); border-radius: var(--rad);
+    padding: 1.3rem; background: var(--card-bg);
+    display: flex; flex-direction: column; gap: .5rem;
+    cursor: pointer; transition: border-color .2s, background .2s;
+  }
+  .note-card:hover { border-color: var(--accent2); background: var(--card-hov); }
+  .note-card.note-hidden { display: none; }
+
+  .note-date { font-family: var(--mono); font-size: .58rem; font-weight: 500; color: var(--muted); }
+  .note-title { font-size: 1rem; }
+  .note-preview { font-size: .83rem; color: var(--ink2); line-height: 1.65; flex: 1; }
+  .note-footer { display: flex; align-items: center; justify-content: space-between; margin-top: .3rem; }
+  .note-tag {
+    font-family: var(--mono); font-size: .56rem; font-weight: 500;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: .12rem .45rem; border-radius: 3px;
+    background: var(--tag-bg); color: var(--tag-text);
+  }
+  .note-highlight {
+    font-family: var(--mono); font-size: .55rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent2); border: 1px solid rgba(52,211,153,.3);
+    border-radius: 3px; padding: .1rem .4rem;
+  }
+
+  /* ═══════════════════════════════════════════════
+     LIFE / BEYOND
+  ═══════════════════════════════════════════════ */
+  .life-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+  .life-card {
+    border: 1px solid var(--border); border-radius: var(--rad);
+    padding: 1.3rem 1rem; background: var(--card-bg);
+    text-align: center; cursor: pointer;
+    transition: border-color .2s, background .2s;
+    display: flex; flex-direction: column; align-items: center; gap: .5rem;
+  }
+  .life-card:hover { border-color: var(--accent2); background: var(--card-hov); }
+  .life-icon { font-size: 1.65rem; }
+  .life-title { font-family: var(--mono); font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+  .life-desc  { font-size: .8rem; color: var(--muted); line-height: 1.55; }
+
+  /* ═══════════════════════════════════════════════
+     MODAL
+  ═══════════════════════════════════════════════ */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; z-index: 500;
+    background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
+    overflow-y: auto; padding: 2rem var(--gap);
+    align-items: flex-start; justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: 8px; max-width: 740px; width: 100%;
+    margin: auto; padding: 2.5rem; position: relative;
+    animation: fadeUp .3s ease;
+  }
+  .modal-close {
+    position: absolute; top: 1.25rem; right: 1.25rem;
+    font-family: var(--mono); font-size: .68rem; font-weight: 500;
+    color: var(--muted); background: var(--bg3);
+    border: 1px solid var(--border); border-radius: 4px;
+    padding: .3rem .7rem; cursor: pointer; transition: color .2s;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-type {
+    font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  .modal h3 { font-size: 1.6rem; padding-right: 4rem; margin-bottom: .5rem; }
+  .modal-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: 1.25rem; }
+  .modal-section { margin-top: 1.4rem; }
+  .modal-section-title {
+    font-family: var(--mono); font-size: .62rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: .55rem;
+  }
+  .modal-section p { font-size: .9rem; color: var(--ink2); line-height: 1.82; white-space: pre-line; }
+  .modal-img {
+    width: 100%; height: 200px; border-radius: 4px;
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-family: var(--mono); font-size: .6rem;
+    margin-top: 1.5rem;
+  }
+
+  /* ═══════════════════════════════════════════════
+     FOOTER
+  ═══════════════════════════════════════════════ */
+  footer {
+    background: var(--bg2); border-top: 1px solid var(--border);
+    padding: 2.5rem 0;
+  }
+  .footer-inner {
+    max-width: var(--max); margin: 0 auto; padding: 0 var(--gap);
+    display: flex; justify-content: space-between;
+    align-items: center; flex-wrap: wrap; gap: 1.25rem;
+  }
+  .footer-name { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--ink); }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a {
+    font-family: var(--mono); font-size: .63rem; font-weight: 500;
+    letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); transition: color .2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-copy { font-family: var(--mono); font-size: .58rem; color: var(--muted); }
+
+  /* ═══════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .projects-grid { grid-template-columns: 1fr 1fr; }
+    .pcard.featured { grid-column: span 2; }
+    .life-grid { grid-template-columns: repeat(2,1fr); }
+    .notes-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 640px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .avatar-wrap { display: none; }
+    .nav-links { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .pcard.featured { grid-column: span 1; }
+    .timeline-item { grid-template-columns: 1fr; gap: .35rem; }
+    .notes-grid, .life-grid { grid-template-columns: 1fr; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════ NAV ════════════════════ -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo"><strong>JP</strong> / jackpham.dev</span>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#notes">Field Notes</a></li>
+      <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub ↗</a></li>
+    </ul>
+    <div class="theme-toggle">
+      <button class="toggle-opt active" id="optDark"  onclick="setTheme('dark')" title="Dark mode">☾</button>
+      <button class="toggle-opt"        id="optLight" onclick="setTheme('light')" title="Light mode">○</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <p class="hero-eyebrow reveal r1">EECS · UC Berkeley · Hardware · Signals</p>
+        <h1 class="reveal r2">Jack<br><em>Pham</em></h1>
+        <p class="hero-sub reveal r3">
+          EECS student at UC Berkeley. I design and build electronic systems,
+          focusing on circuits, PCB layout, signals, and embedded hardware.
+          Built for real-world use.
+        </p>
+        <div class="hero-btns reveal r4">
+          <a href="#projects" class="btn btn-primary">View Projects</a>
+          <a href="assets/jack_pham_resume.pdf" class="btn btn-resume" download>&#8595; Resume</a>
+          <a href="https://github.com/jackpham-rgb" class="btn btn-ghost" target="_blank">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/jackpham1611/" class="btn btn-ghost" target="_blank">LinkedIn ↗</a>
+        </div>
+        <div class="hero-status reveal r5">
+          <span class="status-dot"></span>
+          Open to internships · Berkeley, CA ·
+          <a href="mailto:jack_pham@berkeley.edu" style="color:var(--accent);margin-left:.3rem">jack_pham@berkeley.edu</a>
+        </div>
+        <div class="focus-strip reveal r5">
+          <span class="focus-pill">Circuit Design</span>
+          <span class="focus-pill">PCB Layout</span>
+          <span class="focus-pill">Embedded Systems</span>
+          <span class="focus-pill">Signal Processing</span>
+          <span class="focus-pill">Robotics</span>
+          <span class="focus-pill">Edge AI</span>
+          <span class="focus-pill">IC / Silicon</span>
+        </div>
+      </div>
+      <div class="avatar-wrap reveal r2">
+        <div class="avatar-box">
+          <!-- Uncomment after adding ava-1.jpg to assets/img/ -->
+          <!-- <img src="assets/img/ava-1.jpg" alt="Jack Pham"> -->
+          <div class="avatar-placeholder">
+            <span>&#128100;</span>
+            assets/img/<br>ava-1.jpg
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ ABOUT ════════════════════ -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="section-label">About</p><h2>Engineer &amp; <em>builder</em></h2></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I am an Electrical Engineering and Computer Science (B.S.) student at UC Berkeley,
+          focused on circuits, embedded systems, and signal processing. My work spans
+          circuit design, PCB layout, and hardware-centric robotic systems, with an emphasis
+          on building reliable, real-world devices.
+        </p>
+        <p>
+          My interest in engineering grew from physics — from mechanics to electromagnetism
+          to quantum ideas. That curiosity still shapes how I approach problems: from first
+          principles, not just pattern-matching.
+        </p>
+        <p>
+          Outside of school, I explore creative work and food culture to stay curious and balanced.
+        </p>
+      </div>
+      <div>
+        <div class="sidebar-block">
+          <p class="sidebar-title">Core skills</p>
+          <div class="skill-list">
+            <span class="skill-tag a">Circuit Design</span>
+            <span class="skill-tag a">PCB Layout</span>
+            <span class="skill-tag a">Embedded C/C++</span>
+            <span class="skill-tag a">ESP32 / Arduino / RPi</span>
+            <span class="skill-tag a">Signal Processing</span>
+            <span class="skill-tag a">ROS / Robotics</span>
+            <span class="skill-tag b">Python</span>
+            <span class="skill-tag b">TensorFlow / TFLite</span>
+            <span class="skill-tag b">NumPy / SciPy / cvxpy</span>
+            <span class="skill-tag">C / C++ / Java / MATLAB</span>
+            <span class="skill-tag">Linux / Bash / Git</span>
+            <span class="skill-tag">Docker / Gazebo / ROS</span>
+            <span class="skill-tag">Soldering / Lab Instruments</span>
+          </div>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-title">Education</p>
+          <p style="font-family:var(--mono);font-size:.7rem;color:var(--ink2);line-height:1.75">
+            <strong style="color:var(--accent)">UC Berkeley</strong><br>
+            B.S. EECS · GPA 3.33 · Aug 2025 – Dec 2027<br><br>
+            <strong style="color:var(--muted)">Cypress College</strong><br>
+            A.S. Math &amp; Physics · GPA 3.94 · 2023 – 2025
+          </p>
+        </div>
+        <div class="sidebar-block">
+          <p class="sidebar-title">Currently</p>
+          <p style="font-family:var(--mono);font-size:.68rem;color:var(--ink2);line-height:1.8">
+            &#8594; Underwater Robotics — Electrical Subteam<br>
+            &#8594; Fung Fellowship — Methane Monitoring<br>
+            &#8594; EEG Attention Detection research<br>
+            &#8594; Open to Summer 2026 internships
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ PROJECTS ════════════════════ -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="section-label">Work</p><h2>Selected <em>projects</em></h2></div>
+    </div>
+    <div class="filter-bar" id="projectFilterBar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="embedded">Embedded</button>
+      <button class="filter-btn" data-filter="signals">Signals</button>
+      <button class="filter-btn" data-filter="ai-ml">AI / ML</button>
+      <button class="filter-btn" data-filter="robotics">Robotics</button>
+      <button class="filter-btn" data-filter="accessibility">Accessibility</button>
+      <button class="filter-btn" data-filter="sustainability">Sustainability</button>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+    <div id="projectsArchive" style="display:none;margin-top:1px">
+      <div class="projects-grid" id="archiveGrid"></div>
+      <div style="text-align:center;padding:1.5rem 0">
+        <button class="btn btn-ghost" onclick="hideArchive()">&#8593; Show less</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ EXPERIENCE ════════════════════ -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="section-label">Experience</p><h2>Where I've <em>worked</em></h2></div>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div><p class="tl-date">Jun – Aug 2024</p><p class="tl-org">TACC · UT Austin</p></div>
+        <div>
+          <h3 class="tl-role">Summer Researcher</h3>
+          <p class="tl-desc">Built a multi-robot task allocation and path-planning framework in Python, cvxpy, and ROS, improving simulated disaster-response efficiency by 70%. Validated in Gazebo on TACC supercomputing infrastructure, cutting planning computation time by 45%.</p>
+          <div class="tl-tags">
+            <span class="skill-tag a">ROS</span><span class="skill-tag a">Python</span>
+            <span class="skill-tag a">cvxpy</span><span class="skill-tag">Gazebo</span><span class="skill-tag">HPC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div><p class="tl-date">2025 – Present</p><p class="tl-org">UC Berkeley</p></div>
+        <div>
+          <h3 class="tl-role">Underwater Robotics — Electrical Subteam</h3>
+          <p class="tl-desc">Investigating power dissipation and thermal behavior of NVIDIA Jetson modules in autonomous underwater robots. Supporting electrical integration, power regulation, embedded hardware interfacing, and debugging of onboard systems connected to 16 sensors and actuators.</p>
+          <div class="tl-tags">
+            <span class="skill-tag a">Embedded Hardware</span><span class="skill-tag">Jetson</span><span class="skill-tag">Power Systems</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div><p class="tl-date">Feb – Jul 2025</p><p class="tl-org">NOCCCD</p></div>
+        <div>
+          <h3 class="tl-role">Physics Tutor — Cypress College</h3>
+          <p class="tl-desc">Created Python and Jupyter simulations visualizing electromagnetism, relativity, and thermodynamics across 40+ tutoring hours, contributing to 20% average improvement in student exam performance. Supported circuit analysis and instrumentation labs.</p>
+          <div class="tl-tags">
+            <span class="skill-tag b">Python</span><span class="skill-tag b">Jupyter</span>
+            <span class="skill-tag">Physics</span><span class="skill-tag">Circuit Fundamentals</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div><p class="tl-date">Jan – Dec 2024</p><p class="tl-org">Cypress College</p></div>
+        <div>
+          <h3 class="tl-role">Student Ambassador — Charger Experience</h3>
+          <p class="tl-desc">Automated student data processing with Python and SQL, built live web visualizations, and resolved 75+ cases per semester with a 30% reduction in processing time. Engaged 500+ prospective students at 12 outreach events.</p>
+          <div class="tl-tags">
+            <span class="skill-tag b">Python</span><span class="skill-tag b">SQL</span><span class="skill-tag">Data Visualization</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div><p class="tl-date">2024</p><p class="tl-org">Conferences</p></div>
+        <div>
+          <h3 class="tl-role">Research Presenter</h3>
+          <p class="tl-desc">Presented at SCCUR (Southern California Conferences for Undergraduate Research), San Bernardino, Nov 2024, and at the STARS Celebration Conference, San Diego, Sep 2024.</p>
+          <div class="tl-tags">
+            <span class="skill-tag">Research Communication</span><span class="skill-tag">Robotics</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ FIELD NOTES ════════════════════ -->
+<section class="section" id="notes">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="section-label">Field Notes</p><h2>Lab logs &amp; <em>thinking</em></h2></div>
+      <button class="see-more-link" id="notesArchiveBtn" onclick="toggleNotesArchive()">Full archive &#8594;</button>
+    </div>
+    <div class="filter-bar" id="notesFilterBar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="highlighted">Highlighted</button>
+      <button class="filter-btn" data-filter="embedded">Embedded</button>
+      <button class="filter-btn" data-filter="signals">Signals</button>
+      <button class="filter-btn" data-filter="ai-ml">AI / ML</button>
+      <button class="filter-btn" data-filter="robotics">Robotics</button>
+    </div>
+    <div class="notes-grid" id="notesGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════════════ BEYOND ════════════════════ -->
+<section class="section" id="beyond">
+  <div class="container">
+    <div class="section-head">
+      <div><p class="section-label">Beyond Engineering</p><h2>The rest of <em>the picture</em></h2></div>
+    </div>
+    <div class="life-grid" id="lifeGrid"></div>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-name">Jack Pham</span>
+    <ul class="footer-links">
+      <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
+      <li><a href="mailto:jack_pham@berkeley.edu">Email</a></li>
+      <li><a href="assets/jack_pham_resume.pdf" download>Resume</a></li>
+    </ul>
+    <span class="footer-copy">Built with HTML · GitHub Pages</span>
+  </div>
+</footer>
+
+<!-- ════════════════════ MODAL ════════════════════ -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">&#10005; close</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- ════════════════════ JS ════════════════════ -->
+<script>
+/* ── Theme ── */
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('optDark').classList.toggle('active', t === 'dark');
+  document.getElementById('optLight').classList.toggle('active', t === 'light');
+  localStorage.setItem('jp-theme', t);
+}
+setTheme(localStorage.getItem('jp-theme') || 'dark');
+
+/* ── Data loading ── */
+async function loadJSON(path) {
+  const r = await fetch(path);
+  if (!r.ok) throw new Error('Failed to load ' + path);
+  return r.json();
+}
+
+/* ── Modal ── */
+function openModal(html) {
+  document.getElementById('modalContent').innerHTML = html;
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOnBg(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ════════════════════════════════════════════
+   PROJECTS
+════════════════════════════════════════════ */
+let allProjects = [];
+let projectFilter = 'all';
+const MAIN_LIMIT = 8;
+
+function buildProjectCard(p, featured) {
+  const div = document.createElement('div');
+  div.className = 'pcard' + (featured ? ' featured' : '');
+  div.dataset.tags = p.tags.join(',');
+  div.onclick = () => openProjectModal(p);
+
+  const badge = p.badge
+    ? `<span class="badge">${p.badge}</span>` : '';
+
+  const ghLink = p.github
+    ? `<a href="${p.github}" class="pcard-link" target="_blank" onclick="event.stopPropagation()">&#8599; GitHub</a>` : '';
+
+  div.innerHTML = `
+    <div class="pcard-img">${p.image ? `<img src="${p.image}" alt="${p.title}">` : '[ Image placeholder ]'}</div>
+    <div class="pcard-meta">
+      <span class="pcard-type">${p.type}</span>
+      <div style="display:flex;gap:.4rem;align-items:center">
+        ${badge}<span class="pcard-year">${p.year}</span>
+      </div>
+    </div>
+    <h3 class="pcard-title">${p.title}</h3>
+    <p class="pcard-desc">${p.desc}</p>
+    <div class="pcard-tags">${p.tags_display.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
+    <div class="pcard-links">${ghLink}<button class="pcard-link">&#8594; Case study</button></div>
+  `;
+  return div;
+}
+
+function buildMoreBtn() {
+  const div = document.createElement('div');
+  div.className = 'pcard pcard-more';
+  div.id = 'moreBtn';
+  div.onclick = showArchive;
+  div.innerHTML = `<div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div><span class="pcard-more-label">Full archive</span>`;
+  return div;
+}
+
+function renderProjects() {
+  const grid    = document.getElementById('projectsGrid');
+  const archive = document.getElementById('archiveGrid');
+  grid.innerHTML = '';
+  archive.innerHTML = '';
+
+  const show = allProjects.filter(p => p.show);
+  const hidden = allProjects.filter(p => !p.show);
+
+  show.forEach((p, i) => {
+    const card = buildProjectCard(p, i === 0);
+    // tag visibility
+    card.dataset.tags = p.tags.join(',');
+    grid.appendChild(card);
+  });
+  grid.appendChild(buildMoreBtn());
+
+  hidden.forEach(p => {
+    archive.appendChild(buildProjectCard(p, false));
+  });
+}
+
+function filterProjects(tag) {
+  projectFilter = tag;
+  document.querySelectorAll('#projectFilterBar .filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.filter === tag);
+  });
+  document.querySelectorAll('#projectsGrid .pcard:not(.pcard-more)').forEach(card => {
+    if (tag === 'all') { card.style.display = ''; return; }
+    const tags = (card.dataset.tags || '').split(',');
+    card.style.display = tags.includes(tag) ? '' : 'none';
+  });
+}
+
+document.getElementById('projectFilterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (btn) filterProjects(btn.dataset.filter);
+});
+
+function showArchive() {
+  document.getElementById('projectsArchive').style.display = 'block';
+  document.getElementById('moreBtn').style.display = 'none';
+}
+function hideArchive() {
+  document.getElementById('projectsArchive').style.display = 'none';
+  document.getElementById('moreBtn').style.display = '';
+  document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+}
+
+function openProjectModal(p) {
+  const d = p.detail;
+  openModal(`
+    <p class="modal-type">${p.type} · ${p.year}</p>
+    <h3>${p.title}</h3>
+    <div class="modal-tags">${p.tags_display.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
+    <div class="modal-section"><p class="modal-section-title">// Summary</p><p>${d.summary}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Why I built it</p><p>${d.why}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status}</p></div>
+    <div class="modal-img">[ Image / diagram placeholder ]</div>
+    ${p.github ? `<div style="margin-top:1.25rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>` : ''}
+  `);
+}
+
+/* ════════════════════════════════════════════
+   NOTES
+════════════════════════════════════════════ */
+let allNotes = [];
+let notesShowAll = false;
+let notesFilter = 'all';
+const NOTES_LIMIT = 3;
+
+function buildNoteCard(n) {
+  const div = document.createElement('div');
+  div.className = 'note-card';
+  div.dataset.tag = n.tag;
+  div.dataset.highlighted = n.highlighted;
+  div.onclick = () => openNoteModal(n);
+  div.innerHTML = `
+    <p class="note-date">${n.date}</p>
+    <h3 class="note-title">${n.title}</h3>
+    <p class="note-preview">${n.preview}</p>
+    <div class="note-footer">
+      <span class="note-tag">${n.tag}</span>
+      ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
+    </div>
+  `;
+  return div;
+}
+
+function renderNotes() {
+  const grid = document.getElementById('notesGrid');
+  grid.innerHTML = '';
+
+  let filtered = allNotes;
+  if (notesFilter === 'highlighted') {
+    filtered = allNotes.filter(n => n.highlighted);
+  } else if (notesFilter !== 'all') {
+    filtered = allNotes.filter(n => n.tag === notesFilter);
+  }
+
+  // Sort: recent first (by index, since JSON is ordered by date desc)
+  const shown = notesShowAll ? filtered : filtered.slice(0, NOTES_LIMIT);
+  shown.forEach(n => grid.appendChild(buildNoteCard(n)));
+
+  const btn = document.getElementById('notesArchiveBtn');
+  btn.textContent = notesShowAll ? '&#8593; Show less' : 'Full archive &#8594;';
+  btn.innerHTML   = notesShowAll ? '&#8593; Show less' : 'Full archive &#8594;';
+}
+
+function toggleNotesArchive() {
+  notesShowAll = !notesShowAll;
+  renderNotes();
+  if (!notesShowAll) document.getElementById('notes').scrollIntoView({ behavior: 'smooth' });
+}
+
+document.getElementById('notesFilterBar').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  notesFilter = btn.dataset.filter;
+  document.querySelectorAll('#notesFilterBar .filter-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.filter === notesFilter));
+  notesShowAll = false;
+  renderNotes();
+});
+
+function openNoteModal(n) {
+  openModal(`
+    <p class="modal-type">Field Note · ${n.date}</p>
+    <h3>${n.title}</h3>
+    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.25rem">
+      <span class="note-tag">${n.tag}</span>
+      ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
+    </div>
+    <div class="modal-section"><p class="modal-section-title">// Note</p><p>${n.detail.body}</p></div>
+  `);
+}
+
+/* ════════════════════════════════════════════
+   LIFE
+════════════════════════════════════════════ */
+function renderLife(data) {
+  const grid = document.getElementById('lifeGrid');
+  data.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'life-card';
+    div.onclick = () => openModal(`
+      <h3 style="font-size:1.5rem;margin-bottom:.75rem">${item.icon} ${item.title}</h3>
+      <div class="modal-section"><p class="modal-section-title">// About</p><p>${item.detail.body}</p></div>
+    `);
+    div.innerHTML = `
+      <div class="life-icon">${item.icon}</div>
+      <p class="life-title">${item.title}</p>
+      <p class="life-desc">${item.desc}</p>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+/* ════════════════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════════════════ */
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07 });
+
+  document.querySelectorAll(
+    '.pcard, .timeline-item, .sidebar-block, .note-card, .life-card'
+  ).forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(14px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    obs.observe(el);
+  });
+}
+
+/* ════════════════════════════════════════════
+   INIT — load all JSON data files
+════════════════════════════════════════════ */
+async function init() {
+  try {
+    const [projects, notes, life] = await Promise.all([
+      loadJSON('data/projects.json'),
+      loadJSON('data/notes.json'),
+      loadJSON('data/life.json'),
+    ]);
+
+    allProjects = projects.sort((a, b) => a.rank - b.rank);
+    allNotes    = notes;
+
+    renderProjects();
+    renderNotes();
+    renderLife(life);
+    initReveal();
+  } catch (err) {
+    console.error('Data load error:', err);
+    // Graceful fallback message
+    document.getElementById('projectsGrid').innerHTML =
+      '<p style="padding:2rem;color:var(--muted);font-family:var(--mono);font-size:.75rem">Loading projects... (run via a local server or GitHub Pages)</p>';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
