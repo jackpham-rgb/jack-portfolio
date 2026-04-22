@@ -1,0 +1,178 @@
+[
+  {
+    "id": "accessisound",
+    "rank": 1,
+    "featured": true,
+    "show": true,
+    "tags": ["embedded", "ai-ml", "accessibility"],
+    "type": "Embedded ML · Accessibility",
+    "year": "2024",
+    "badge": "Hackathon",
+    "title": "AccessiSound — ESP32-S3 Sound Recognition",
+    "desc": "Standalone assistive device classifying environmental sounds in real time on-device using TFLite Micro. Alerts visually impaired users via distinct vibration and audio patterns. No cloud, no phone — $17 BOM.",
+    "tags_display": ["ESP32-S3", "TFLite Micro", "MFCC / CNN", "C++", "Python"],
+    "github": "https://github.com/jackpham-rgb/accessisound-esp32s3",
+    "image": "",
+    "detail": {
+      "summary": "Standalone offline assistive device delivering tactile and audio notifications for doorbell, fire alarm, microwave, and phone ring. No cloud, no phone, $17 BOM.",
+      "why": "Visually impaired individuals often miss critical environmental audio cues. Off-the-shelf solutions require smartphones or subscriptions.",
+      "problem": "Real-time on-device sound classification on a microcontroller with 512 KB SRAM while fitting a TFLite Micro model alongside I2S DMA and the Arduino stack.",
+      "approach": "MFCC feature extraction in C++ → 13x32 feature window → quantised 2-layer CNN (TFLite Micro) → confidence threshold → unique vibration + buzzer patterns per class.",
+      "status": "Prototype complete"
+    }
+  },
+  {
+    "id": "kitchen",
+    "rank": 2,
+    "featured": false,
+    "show": true,
+    "tags": ["embedded", "ai-ml", "accessibility"],
+    "type": "Computer Vision · AI",
+    "year": "2026",
+    "badge": "",
+    "title": "AI Kitchen Accessibility Assistant",
+    "desc": "ESP32-CAM + MobileNet for real-time kitchen object recognition with voice command interaction and spoken feedback. Trained on university HPC.",
+    "tags_display": ["ESP32-CAM", "MobileNet", "TFLite", "Speech-to-text"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Camera-based assistive system for elderly and visually impaired users that recognises kitchen objects and responds to spoken voice commands.",
+      "why": "Extends sound-recognition to vision. Kitchen environments are high-risk for visually impaired users.",
+      "problem": "Running object detection inference fast enough on ESP32-CAM's limited compute while also handling speech I/O without cloud dependency.",
+      "approach": "ESP32-CAM captures frames → MobileNet inference (TFLite) → speech-to-text command parsing → spoken feedback. Models trained on HPC.",
+      "status": "In development"
+    }
+  },
+  {
+    "id": "eeg",
+    "rank": 3,
+    "featured": false,
+    "show": true,
+    "tags": ["signals", "ai-ml"],
+    "type": "Neuro-signal · ML",
+    "year": "2026",
+    "badge": "",
+    "title": "EEG Attention Detection System",
+    "desc": "ML pipeline classifying attention states from EEG brainwave data, detecting cognitive disengagement from visual stimuli. Collaborating with grad researchers.",
+    "tags_display": ["Python", "EEG / BCI", "ML", "Signal Processing"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Machine learning pipeline that classifies attention states from EEG brainwave data, detecting when visual stimuli cause cognitive disengagement.",
+      "why": "Understanding attention has broad applications from adaptive learning to human-computer interfaces.",
+      "problem": "EEG signals are highly noisy and person-specific. Reliable classification across subjects requires careful pipeline design.",
+      "approach": "EEG dataset preprocessing → frequency-band feature extraction → ML classifier (SVM, CNN, LSTM comparison) → real-time attention state output.",
+      "status": "Active research"
+    }
+  },
+  {
+    "id": "door",
+    "rank": 4,
+    "featured": false,
+    "show": true,
+    "tags": ["embedded", "accessibility"],
+    "type": "Embedded · Accessibility",
+    "year": "2025-26",
+    "badge": "",
+    "title": "Accessible Door Entry Assistant",
+    "desc": "RF-triggered assistive device enabling mobility-impaired users to activate ADA automatic door buttons remotely via a portable handheld interface.",
+    "tags_display": ["Embedded C", "RF Comms", "MCU", "PCB"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "RF-triggered embedded device enabling mobility-impaired users to activate ADA automatic door buttons without direct physical interaction.",
+      "why": "Many campus and public buildings have ADA buttons inaccessible from wheelchair height or for users with limited upper-body mobility.",
+      "problem": "Reliable RF triggering with enough range, low false-positive rate, and a portable form factor that can be carried or mounted.",
+      "approach": "Handheld transmitter with proximity detection → RF module → receiver near ADA button → relay trigger. Microcontroller-based with simple UI.",
+      "status": "Prototype complete"
+    }
+  },
+  {
+    "id": "methane",
+    "rank": 5,
+    "featured": false,
+    "show": true,
+    "tags": ["sustainability"],
+    "type": "Sustainability · Fung Fellowship",
+    "year": "2026",
+    "badge": "",
+    "title": "Methane Emission Monitoring Platform",
+    "desc": "Prototype environmental data tracking system for methane emissions, developed through 12 stakeholder interviews and human-centered design at UC Berkeley.",
+    "tags_display": ["IoT Sensors", "HCD", "Fung Fellowship", "Data Reporting"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Prototype environmental tracking and reporting system for methane emissions, developed using human-centered design through 12 stakeholder interviews.",
+      "why": "Methane is a potent greenhouse gas with limited affordable monitoring infrastructure.",
+      "problem": "Balancing technical sensor accuracy with accessibility for non-expert stakeholders and regulatory reporting requirements.",
+      "approach": "Stakeholder interview synthesis → system requirements → sensor selection → prototype data pipeline → reporting workflow design.",
+      "status": "Active — Fung Fellowship project"
+    }
+  },
+  {
+    "id": "acoustic",
+    "rank": 6,
+    "featured": false,
+    "show": true,
+    "tags": ["signals"],
+    "type": "Signal Processing · EECS16A",
+    "year": "Fall 2025",
+    "badge": "",
+    "title": "Acoustic Positioning System",
+    "desc": "Full 2D acoustic positioning pipeline localizing a microphone via time-difference-of-arrival using cross-correlation, peak detection, and least-squares multilateration.",
+    "tags_display": ["Python", "TDOA", "Least Squares", "NumPy"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Full 2D acoustic positioning pipeline that localizes a microphone using time-difference-of-arrival from multiple beacon speakers.",
+      "why": "TDOA-based positioning is foundational for signal processing, sensor fusion, and location-aware systems.",
+      "problem": "Noise, reflections, and sampling jitter corrupt the cross-correlation peaks needed for accurate TDOA estimation.",
+      "approach": "Periodic cross-correlation → noise averaging → peak detection → least-squares multilateration. Validated on simulated and real mic recordings.",
+      "status": "Complete"
+    }
+  },
+  {
+    "id": "voice",
+    "rank": 7,
+    "featured": false,
+    "show": true,
+    "tags": ["signals", "ai-ml"],
+    "type": "ML · Signal Processing",
+    "year": "Fall 2025",
+    "badge": "",
+    "title": "Voice Recognition Classifier",
+    "desc": "Speaker-dependent voice command classifier using Mel-spectrogram features, PCA via SVD, and nearest-centroid classification. ~97% accuracy on real-time mic recordings.",
+    "tags_display": ["Python", "PCA / SVD", "Spectrograms", "NumPy"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Speaker-dependent voice command classifier converting speech to Mel-spectrogram features, reduced via PCA/SVD, classified with nearest-centroid.",
+      "why": "Understanding the full pipeline from raw audio to classification — feature engineering, dimensionality reduction, and decision boundaries.",
+      "problem": "Real-time classification must be robust to mic position, room acoustics, and speaker variation.",
+      "approach": "Audio → Mel spectrogram → alignment + normalisation → PCA via SVD → nearest-centroid classifier in PCA space.",
+      "status": "Complete — ~97% accuracy"
+    }
+  },
+  {
+    "id": "multirobot",
+    "rank": 8,
+    "featured": false,
+    "show": true,
+    "tags": ["robotics", "ai-ml"],
+    "type": "Robotics · TACC Research",
+    "year": "Summer 2024",
+    "badge": "",
+    "title": "Multi-Robot Task Allocation Framework",
+    "desc": "Disaster-response coordination framework for multi-agent robots using cvxpy optimization and ROS. 70% efficiency improvement; validated on TACC supercomputing cluster.",
+    "tags_display": ["ROS", "Python", "cvxpy", "Gazebo", "HPC"],
+    "github": "",
+    "image": "",
+    "detail": {
+      "summary": "Disaster-response coordination framework for multi-agent robots using convex optimization and ROS, validated on TACC supercomputing infrastructure.",
+      "why": "Efficient multi-robot coordination is critical for search-and-rescue where robot teams need to cover large areas with minimal overlap.",
+      "problem": "Scaling path-planning optimization to many robots within real-time constraints — traditional approaches become intractable at scale.",
+      "approach": "cvxpy-based optimization → ROS integration → Gazebo simulation → TACC HPC cluster benchmarking. 70% efficiency gain, 45% faster planning.",
+      "status": "Complete — presented at SCCUR and STARS 2024"
+    }
+  }
+]

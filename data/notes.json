@@ -1,0 +1,46 @@
+[
+  {
+    "id": "note-tflite-c3",
+    "date": "Spring 2026",
+    "title": "Designing for constraint: TFLite Micro on a $4 board",
+    "preview": "What happens when you have 400 KB of RAM, a model that needs 60 KB of tensor arena, and I2S DMA running simultaneously...",
+    "tag": "embedded",
+    "highlighted": false,
+    "detail": {
+      "body": "The ESP32-C3 Mini has 400 KB of SRAM total. By the time you account for the Arduino stack (~8 KB), I2S DMA buffers (~8 KB), and audio ring buffers (~4 KB), you have about 380 KB left. Our TFLite Micro model needs 50 KB of tensor arena minimum. That sounds comfortable until you realize the firmware code itself also lives in SRAM during execution.\n\nThe key lesson: always profile memory before writing a single line of ML inference code. On microcontrollers, the model is the last thing you fit in — everything else gets allocated first.\n\nWe ended up reducing the tensor arena from 60 KB (S3 target) to 50 KB and trimming the model's conv layer filters from 32 to 24, losing about 2% test accuracy but gaining stable execution with zero OOM crashes."
+    }
+  },
+  {
+    "id": "note-tdoa",
+    "date": "Fall 2025",
+    "title": "TDOA positioning: from equations to working code",
+    "preview": "The gap between a clean least-squares multilateration formula on paper and a system that actually works in a noisy room is wider than expected...",
+    "tag": "signals",
+    "highlighted": true,
+    "detail": {
+      "body": "Time-difference-of-arrival positioning looks elegant on paper. You have N speakers emitting beacon signals, you cross-correlate with a reference, find the peaks, compute time deltas, and solve a least-squares system. Done.\n\nIn practice: the peaks are not clean. Room reflections create secondary peaks that are sometimes larger than the direct-path peak. The sampling rate creates a quantization floor on TDOA resolution. Background noise shifts the correlation baseline.\n\nWhat actually worked: averaging 8 consecutive cross-correlation windows before peak detection, using a minimum peak-height threshold relative to the correlation maximum, and running a sanity check that TDOA values are physically plausible given speaker geometry. After those three fixes, positioning error dropped from ~40 cm to ~6 cm RMS."
+    }
+  },
+  {
+    "id": "note-hpc-vs-mcu",
+    "date": "Summer 2024",
+    "title": "What supercomputing taught me about small hardware",
+    "preview": "Running optimization experiments on TACC's cluster then writing firmware for a microcontroller changed how I think about computation fundamentally...",
+    "tag": "robotics",
+    "highlighted": false,
+    "detail": {
+      "body": "At TACC I had access to thousands of CPU cores and hundreds of GB of RAM. Running a 50-robot path-planning optimization took 3 seconds on the cluster. The same computation on a laptop took 4 minutes.\n\nThen I went back to writing firmware for the ESP32-S3. 512 KB of RAM. 240 MHz. No OS scheduler. No malloc safety net.\n\nThe mindset shift is total. On HPC you optimize for throughput and correctness. On a microcontroller you optimize for worst-case latency and memory footprint. Every byte matters. Every millisecond of blocking matters.\n\nThe unexpected benefit: spending a summer thinking at HPC scale made me much better at MCU work. When you truly understand what computation costs, you make better decisions at every level of the stack."
+    }
+  },
+  {
+    "id": "note-eeg-noise",
+    "date": "Spring 2026",
+    "title": "EEG signal quality: garbage in, garbage out",
+    "preview": "Before any ML model touches EEG data, the preprocessing pipeline decides everything. Most attention detection failures are not model failures...",
+    "tag": "ai-ml",
+    "highlighted": true,
+    "detail": {
+      "body": "EEG data is extraordinarily noisy. A 60 Hz power line artifact can completely drown out the 8-12 Hz alpha band activity that indicates relaxed attention. Eye blinks create voltage spikes 10x larger than the neural signals we care about. Muscle activity near the electrodes creates broadband noise.\n\nOur preprocessing pipeline: notch filter at 60 Hz and harmonics, bandpass filter 1-50 Hz, independent component analysis to remove eye-blink artifacts, epoch rejection for remaining artifact-contaminated segments.\n\nAfter clean preprocessing, a simple SVM on band-power features achieved 78% accuracy. Before preprocessing, the same SVM on raw data achieved 51% — barely above chance. The model was not the bottleneck. The data quality was."
+    }
+  }
+]
