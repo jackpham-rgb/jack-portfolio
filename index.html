@@ -7,54 +7,85 @@
   <meta name="description" content="Jack Pham — EECS student at UC Berkeley. Circuits, embedded systems, signal processing, and intelligent hardware." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Typography: NYT-inspired stack for both dark and light modes -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Libre+Franklin:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
   /* ═══════════════════════════════════════════════
      TOKENS
   ═══════════════════════════════════════════════ */
-  :root {
-    /* dark (default) */
-    --bg:         #0d1117;
-    --bg2:        #161b24;
-    --bg3:        #1e2533;
-    --border:     #2d3748;
-    --ink:        #f0f4f8;        /* bright white-ish — high contrast on dark */
-    --ink2:       #cbd5e0;        /* body text — clearly readable */
-    --muted:      #718096;
-    --accent:     #60a5fa;        /* bright sky blue */
-    --accent2:    #34d399;        /* teal green */
-    --accent-dim: rgba(96,165,250,0.13);
-    --tag-bg:     #1e2d3d;
-    --tag-text:   #90cdf4;
-    --card-bg:    #111827;
-    --card-hov:   #1a2540;
 
-    --serif: 'Instrument Serif', Georgia, serif;
+  /* ── DARK: Quiet midnight blue (Apple-like restraint) ── */
+  :root {
+    --bg:         #0A1220;
+    --bg2:        #0E1728;
+    --bg3:        #111C30;
+    --border:     #1E2C42;
+    --border2:    #1D2A3D;
+
+    --ink:        #F5F8FC;   /* main headings */
+    --ink2:       #D9E2F0;   /* body text */
+    --muted:      #A8B6C9;   /* secondary text */
+    --muted2:     #7F8EA3;   /* muted labels */
+
+    --accent:     #4C8DFF;   /* one primary accent — no more */
+    --accent2:    #78DCE8;   /* used very sparingly */
+    --accent-dim: rgba(76,141,255,0.1);
+
+    --tag-bg:     #0E1C30;
+    --tag-text:   #7AABFF;
+    --card-bg:    #111C30;
+    --card-hov:   #162035;
+    --card-shadow: 0 2px 12px rgba(0,0,0,0.35);
+    --card-shadow-hov: 0 6px 24px rgba(0,0,0,0.45);
+
+    /* Typography: NYT stack — same for both dark and light */
+    --serif: 'Playfair Display', Georgia, serif;
+    --body:  'Lora', Georgia, serif;
+    --ui:    'Libre Franklin', sans-serif;
     --mono:  'DM Mono', monospace;
-    --sans:  'Outfit', sans-serif;
-    --max:   1120px;
-    --gap:   clamp(1.25rem, 4vw, 2.5rem);
-    --rad:   5px;
+    --sans:  'Libre Franklin', sans-serif;  /* fallback alias */
+
+    /* Type scale */
+    --t-hero:    48px;
+    --t-section: 30px;
+    --t-card:    18px;
+    --t-body:    16px;
+    --t-small:   12px;
+
+    --max:  1120px;
+    --gap:  clamp(1.25rem, 4vw, 2.5rem);
+    --rad:  16px;   /* Apple-like rounded cards */
+    --rad-sm: 8px;
 
     color-scheme: dark;
   }
 
+  /* ── LIGHT: NYT Paper and Ink ── */
   [data-theme="light"] {
-    --bg:         #f5f1eb;
-    --bg2:        #ede9e2;
-    --bg3:        #e5e0d8;
-    --border:     #c8c0b4;
-    --ink:        #18120a;        /* near-black for max contrast on light */
-    --ink2:       #3a3228;
-    --muted:      #7a7060;
-    --accent:     #b84c22;        /* burnt orange */
-    --accent2:    #1d6b8a;
-    --accent-dim: rgba(184,76,34,0.1);
-    --tag-bg:     #e0d8cc;
-    --tag-text:   #5a4830;
-    --card-bg:    #eee9e2;
-    --card-hov:   #ffffff;
+    --bg:         #FFFFFF;
+    --bg2:        #FAFAFA;
+    --bg3:        #F4F4F4;
+    --border:     #E2E2E2;
+    --border2:    #D0D0D0;
+
+    --ink:        #121212;   /* off-black headlines */
+    --ink2:       #333333;   /* article body */
+    --muted:      #666666;   /* bylines, timestamps */
+    --muted2:     #999999;   /* captions */
+
+    --accent:     #326891;   /* NYT muted blue */
+    --accent2:    #326891;
+    --accent-dim: rgba(50,104,145,0.08);
+
+    --tag-bg:     #F0F0F0;
+    --tag-text:   #444444;
+    --card-bg:    #FFFFFF;
+    --card-hov:   #FAFAFA;
+    --card-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    --card-shadow-hov: 0 4px 16px rgba(0,0,0,0.12);
+
+    /* Typography inherits from :root — same NYT stack in both modes */
 
     color-scheme: light;
   }
@@ -67,60 +98,68 @@
 
   body {
     background: var(--bg);
-    color: var(--ink);
-    font-family: var(--sans);
+    color: var(--ink2);
+    font-family: var(--body);   /* Lora for body text */
     font-weight: 400;
-    line-height: 1.7;
-    transition: background .3s, color .3s;
+    font-size: var(--t-body);
+    line-height: 1.75;
+    transition: background .35s, color .35s;
     min-height: 100vh;
   }
 
-  [data-theme="dark"] body {
-    background-image:
-      radial-gradient(ellipse at 15% 0%, rgba(96,165,250,.05) 0%, transparent 55%),
-      radial-gradient(ellipse at 85% 90%, rgba(52,211,153,.04) 0%, transparent 55%);
+  /* UI elements — Libre Franklin across both modes */
+  nav, .filter-btn, .btn, .pcard-type, .pcard-year,
+  .pcard-tag, .skill-tag, .section-label, .hero-eyebrow,
+  .nav-links a, .nav-logo, .focus-pill, .sidebar-title,
+  .tl-date, .tl-org, .note-date, .note-tag, .life-title,
+  .footer-links a, .footer-copy, .badge, .hero-status,
+  .pcard-more-label, .see-more-link, .modal-type,
+  .modal-section-title, .modal-close, .toggle-opt {
+    font-family: var(--ui);
   }
-  [data-theme="light"] body {
-    background-image:
-      linear-gradient(rgba(180,170,158,.25) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(180,170,158,.25) 1px, transparent 1px);
-    background-size: 42px 42px;
-    background-attachment: fixed;
-  }
+
+  /* Headings — Playfair Display across both modes */
+  h1, h2, h3, .footer-name { font-family: var(--serif); }
 
   a { color: inherit; text-decoration: none; }
   button { font-family: inherit; }
 
   /* ═══════════════════════════════════════════════
-     TYPOGRAPHY — thicker weights
+     TYPOGRAPHY — NYT stack, same in both modes
   ═══════════════════════════════════════════════ */
   h1 {
-    font-family: var(--serif);
-    font-size: clamp(3.2rem, 8vw, 6rem);
-    font-weight: 400;
-    line-height: 1.02;
-    letter-spacing: -.015em;
+    /* font-family set by rule above (Playfair Display) */
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -.01em;
     color: var(--ink);
   }
   h1 em { font-style: italic; color: var(--accent); }
 
   h2 {
-    font-family: var(--serif);
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    font-weight: 400;
+    font-size: 30px;
+    font-weight: 600;
     color: var(--ink);
-    line-height: 1.15;
+    line-height: 1.2;
   }
   h2 em { font-style: italic; color: var(--accent); }
 
   h3 {
-    font-family: var(--serif);
-    font-weight: 400;
+    font-size: var(--t-card);  /* 18px */
+    font-weight: 600;
     color: var(--ink);
-    line-height: 1.25;
+    line-height: 1.3;
   }
 
-  p { color: var(--ink2); font-size: 1rem; line-height: 1.8; font-weight: 400; }
+  p { color: var(--ink2); font-size: var(--t-body); line-height: 1.75; font-weight: 400; }
+
+  /* Light: section dividers in NYT style */
+  [data-theme="light"] .section-head {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: .65rem;
+    margin-bottom: 2rem;
+  }
 
   .mono { font-family: var(--mono); }
   .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gap); }
@@ -150,92 +189,120 @@
   ═══════════════════════════════════════════════ */
   nav {
     position: sticky; top: 0; z-index: 300;
-    background: color-mix(in srgb, var(--bg) 85%, transparent);
-    backdrop-filter: blur(16px);
+    background: rgba(10, 18, 32, 0.78);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border2);
+    transition: background .35s, border-color .35s;
+  }
+  [data-theme="light"] nav {
+    background: rgba(255,255,255,0.92);
     border-bottom: 1px solid var(--border);
-    transition: background .3s, border-color .3s;
   }
   .nav-inner {
     max-width: var(--max); margin: 0 auto;
-    padding: 0 var(--gap); height: 60px;
+    padding: 0 var(--gap); height: 68px;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   }
   .nav-logo {
-    font-family: var(--mono); font-size: .82rem;
-    color: var(--muted); letter-spacing: .06em;
+    font-size: 14px; font-weight: 600;
+    color: var(--ink); letter-spacing: .01em;
   }
-  .nav-logo strong { color: var(--accent); font-weight: 500; }
+  .nav-logo strong { color: var(--accent); }
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
-    font-family: var(--mono); font-size: .7rem;
-    letter-spacing: .12em; text-transform: uppercase;
-    color: var(--muted); transition: color .2s; font-weight: 500;
+    font-size: 14px; font-weight: 500;
+    color: var(--ink2); transition: color .2s;
+    position: relative; padding-bottom: 2px;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+    height: 1px; background: var(--accent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .2s ease;
   }
   .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover::after { transform: scaleX(1); }
 
-  /* ── Theme toggle — larger, Unicode symbol ── */
+  /* Light nav: dark text on white */
+  [data-theme="light"] .nav-links a { color: #333333; }
+  [data-theme="light"] .nav-links a:hover { color: #121212; }
+  [data-theme="light"] .nav-logo { color: #121212; }
+
+  /* ── Theme toggle ── */
   .theme-toggle {
-    display: flex; align-items: center; gap: 3px;
+    display: flex; align-items: center; gap: 2px;
     background: var(--bg3); border: 1px solid var(--border);
-    border-radius: 50px; padding: 4px;
-    cursor: pointer; flex-shrink: 0;
-    transition: background .3s, border-color .3s;
+    border-radius: 50px; padding: 3px;
+    flex-shrink: 0;
+    transition: background .35s, border-color .35s;
   }
   .toggle-opt {
-    width: 38px; height: 32px;
+    width: 36px; height: 30px;
     border-radius: 50px; border: none; background: none;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; font-family: var(--mono);
     cursor: pointer; transition: background .2s, color .2s;
-    color: var(--muted); user-select: none;
-    line-height: 1;
+    color: var(--muted2); user-select: none; line-height: 1;
+    /* ◐ and ◯ are geometric — use serif for crisp rendering */
+    font-family: 'Georgia', serif;
+    font-size: 1.05rem;
   }
   .toggle-opt.active {
     background: var(--accent-dim);
     color: var(--accent);
   }
-  /* Unicode symbols — moon and sun circle */
-  #optDark  { font-size: 1rem; }   /* ☾ */
-  #optLight { font-size: 1.25rem; } /* ○ */
+  /* Slightly different sizes for optical balance */
+  #optDark  { font-size: 1.1rem;  letter-spacing: 0; }
+  #optLight { font-size: 1.05rem; letter-spacing: 0; }
 
   /* ═══════════════════════════════════════════════
      HERO
   ═══════════════════════════════════════════════ */
   .hero {
-    padding: clamp(4.5rem, 10vw, 8rem) 0 clamp(3rem, 6vw, 5rem);
+    padding: clamp(4rem, 9vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
     border-bottom: 1px solid var(--border);
     position: relative; overflow: hidden;
   }
+  /* Dark: one subtle very light glow top-right only */
   [data-theme="dark"] .hero::before {
     content: '';
-    position: absolute; top: -30%; right: -5%;
-    width: 550px; height: 550px;
-    background: radial-gradient(circle, rgba(96,165,250,.07) 0%, transparent 70%);
+    position: absolute; top: -20%; right: 0%;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(76,141,255,.05) 0%, transparent 65%);
     pointer-events: none;
   }
+  /* Light: clean, nothing extra */
+  [data-theme="light"] .hero { border-bottom: 2px solid var(--ink); }
+
   .hero-inner {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: 3rem; align-items: start;
   }
   .hero-eyebrow {
-    font-family: var(--mono); font-size: .72rem;
-    letter-spacing: .2em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 1.25rem;
+    font-size: var(--t-small); font-weight: 500;
+    letter-spacing: .06em; text-transform: uppercase;
+    color: var(--muted2); margin-bottom: 1.25rem;
     display: flex; align-items: center; gap: .7rem;
-    font-weight: 500;
   }
-  .hero-eyebrow::before {
+  /* Light mode: NYT uses a thin horizontal rule feel */
+  [data-theme="light"] .hero-eyebrow {
+    color: var(--muted); letter-spacing: .08em;
+    border-top: 1px solid var(--border); padding-top: .75rem;
+  }
+  [data-theme="light"] .hero-eyebrow::before { display: none; }
+  [data-theme="dark"] .hero-eyebrow::before {
     content: ''; display: inline-block;
-    width: 22px; height: 1px; background: var(--accent);
+    width: 18px; height: 1px; background: var(--accent); flex-shrink: 0;
   }
 
   .hero-sub {
-    font-size: clamp(1rem, 1.7vw, 1.15rem);
+    font-size: 20px; font-weight: 400;
     color: var(--ink2); max-width: 520px;
-    margin: 1.5rem 0 2.25rem;
-    line-height: 1.75; font-weight: 400;
+    margin: 1.25rem 0 2rem;
+    line-height: 1.6;
   }
+  [data-theme="light"] .hero-sub { color: #333333; }
 
   .hero-btns { display: flex; flex-wrap: wrap; gap: .6rem; }
 
@@ -317,6 +384,7 @@
   .section-head {
     display: flex; align-items: flex-end; justify-content: space-between;
     gap: 1rem; margin-bottom: 2.25rem; flex-wrap: wrap;
+    padding-bottom: 0;
   }
   .section-label {
     font-family: var(--mono); font-size: .65rem;
@@ -347,8 +415,10 @@
     border: 1px solid var(--border); border-radius: var(--rad);
     padding: 1.25rem; margin-bottom: .8rem;
     background: var(--card-bg);
+    box-shadow: var(--card-shadow);
     transition: background .3s, border-color .3s;
   }
+  [data-theme="light"] .sidebar-block { border-radius: 4px; border-color: var(--border); }
   .sidebar-title {
     font-family: var(--mono); font-size: .6rem;
     letter-spacing: .18em; text-transform: uppercase;
@@ -384,25 +454,37 @@
   ═══════════════════════════════════════════════ */
   .projects-grid {
     display: grid; grid-template-columns: repeat(3,1fr);
-    gap: 1px; background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--rad); overflow: hidden;
+    gap: 1rem;
+    /* no background border — individual cards handle their own borders */
   }
   .pcard {
     background: var(--card-bg); padding: 1.5rem;
     display: flex; flex-direction: column; gap: .65rem;
-    transition: background .2s; position: relative;
-    overflow: hidden; cursor: pointer;
+    position: relative; overflow: hidden; cursor: pointer;
+    border: 1px solid var(--border);
+    border-radius: var(--rad);
+    box-shadow: var(--card-shadow);
+    transition: transform .22s ease, box-shadow .22s ease,
+                border-color .22s ease, background .22s ease;
   }
-  .pcard::after {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; right: 0; height: 2px;
-    background: var(--accent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform .28s ease;
+  .pcard:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hov);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+    background: var(--card-hov);
   }
-  .pcard:hover { background: var(--card-hov); }
-  .pcard:hover::after { transform: scaleX(1); }
+  /* Light mode cards: clean white, NYT border */
+  [data-theme="light"] .pcard {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    box-shadow: var(--card-shadow);
+  }
+  [data-theme="light"] .pcard:hover {
+    border-color: var(--accent);
+    box-shadow: var(--card-shadow-hov);
+    transform: translateY(-2px);
+  }
+  /* No bottom accent line — card lift does the job */
   .pcard.featured { grid-column: span 2; }
   .pcard.featured .pcard-title { font-size: 1.35rem; }
 
@@ -492,9 +574,18 @@
     border: 1px solid var(--border); border-radius: var(--rad);
     padding: 1.3rem; background: var(--card-bg);
     display: flex; flex-direction: column; gap: .5rem;
-    cursor: pointer; transition: border-color .2s, background .2s;
+    cursor: pointer;
+    box-shadow: var(--card-shadow);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
   }
-  .note-card:hover { border-color: var(--accent2); background: var(--card-hov); }
+  .note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hov);
+    border-color: color-mix(in srgb, var(--accent2) 40%, var(--border));
+    background: var(--card-hov);
+  }
+  [data-theme="light"] .note-card { border-radius: 4px; }
+  [data-theme="light"] .note-card:hover { border-color: var(--accent); }
   .note-card.note-hidden { display: none; }
 
   .note-date { font-family: var(--mono); font-size: .58rem; font-weight: 500; color: var(--muted); }
@@ -522,10 +613,18 @@
     border: 1px solid var(--border); border-radius: var(--rad);
     padding: 1.3rem 1rem; background: var(--card-bg);
     text-align: center; cursor: pointer;
-    transition: border-color .2s, background .2s;
+    box-shadow: var(--card-shadow);
     display: flex; flex-direction: column; align-items: center; gap: .5rem;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
   }
-  .life-card:hover { border-color: var(--accent2); background: var(--card-hov); }
+  .life-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hov);
+    border-color: color-mix(in srgb, var(--accent2) 40%, var(--border));
+    background: var(--card-hov);
+  }
+  [data-theme="light"] .life-card { border-radius: 4px; }
+  [data-theme="light"] .life-card:hover { border-color: var(--accent); }
   .life-icon { font-size: 1.65rem; }
   .life-title { font-family: var(--mono); font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
   .life-desc  { font-size: .8rem; color: var(--muted); line-height: 1.55; }
@@ -542,9 +641,15 @@
   .modal-overlay.open { display: flex; }
   .modal {
     background: var(--bg2); border: 1px solid var(--border);
-    border-radius: 8px; max-width: 740px; width: 100%;
+    border-radius: var(--rad); max-width: 740px; width: 100%;
     margin: auto; padding: 2.5rem; position: relative;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.45);
     animation: fadeUp .3s ease;
+  }
+  [data-theme="light"] .modal {
+    border-radius: 4px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
+    border: 1px solid var(--border);
   }
   .modal-close {
     position: absolute; top: 1.25rem; right: 1.25rem;
@@ -582,6 +687,9 @@
   footer {
     background: var(--bg2); border-top: 1px solid var(--border);
     padding: 2.5rem 0;
+  }
+  [data-theme="light"] footer {
+    background: #FAFAFA; border-top: 2px solid var(--ink);
   }
   .footer-inner {
     max-width: var(--max); margin: 0 auto; padding: 0 var(--gap);
@@ -632,9 +740,11 @@
       <li><a href="#notes">Field Notes</a></li>
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub ↗</a></li>
     </ul>
-    <div class="theme-toggle">
-      <button class="toggle-opt active" id="optDark"  onclick="setTheme('dark')" title="Dark mode">☾</button>
-      <button class="toggle-opt"        id="optLight" onclick="setTheme('light')" title="Light mode">○</button>
+    <div class="theme-toggle" title="Toggle theme">
+      <!-- ◐ = half-filled circle = night / dark -->
+      <button class="toggle-opt active" id="optDark"  onclick="setTheme('dark')"  title="Dark">◐</button>
+      <!-- ◯ = empty circle = day / light -->
+      <button class="toggle-opt"        id="optLight" onclick="setTheme('light')" title="Light">◯</button>
     </div>
   </div>
 </nav>
@@ -675,7 +785,11 @@
       <div class="avatar-wrap reveal r2">
         <div class="avatar-box">
           <!-- Uncomment after adding ava-1.jpg to assets/img/ -->
-          <img src="assets/img/ava-1.jpg" alt="Jack Pham">
+          <!-- <img src="assets/img/ava-1.jpg" alt="Jack Pham"> -->
+          <div class="avatar-placeholder">
+            <span>&#128100;</span>
+            assets/img/<br>ava-1.jpg
+          </div>
         </div>
       </div>
     </div>
@@ -878,7 +992,7 @@
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
       <li><a href="mailto:jack_pham@berkeley.edu">Email</a></li>
-      <li><a href="assets/Pham_Jack_Resume.pdf" download>Resume</a></li>
+      <li><a href="assets/jack_pham_resume.pdf" download>Resume</a></li>
     </ul>
     <span class="footer-copy">Built with HTML · GitHub Pages</span>
   </div>
