@@ -1,7 +1,7 @@
 [
   {
     "id": "accessisound",
-    "rank": 1,
+    "rank": 3,
     "show": true,
     "featured": true
   },
@@ -13,8 +13,8 @@
   },
   {
     "id": "eeg",
-    "rank": 3,
-    "show": true,
+    "rank": 9,
+    "show": false,
     "featured": false
   },
   {
@@ -49,8 +49,8 @@
   },
   {
     "id": "drone-ugv",
-    "rank": 9,
-    "show": false,
-    "featured": false
+    "rank": 1,
+    "show": true,
+    "featured": true
   }
 ]
