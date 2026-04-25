@@ -13,14 +13,14 @@
   },
   {
     "id": "eeg",
-    "rank": 9,
-    "show": false,
+    "rank": 4,
+    "show": true,
     "featured": false
   },
   {
     "id": "door",
-    "rank": 4,
-    "show": true,
+    "rank": 9,
+    "show": false,
     "featured": false
   },
   {
