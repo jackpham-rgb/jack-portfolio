@@ -365,14 +365,7 @@
     overflow: hidden; background: var(--bg3);
   }
   .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .avatar-placeholder {
-    width: 100%; height: 100%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: .4rem;
-    color: var(--muted); font-family: var(--mono);
-    font-size: .58rem; letter-spacing: .08em; text-align: center; padding: .75rem;
-  }
-  .avatar-placeholder span { font-size: 1.6rem; opacity: .25; }
+
 
   /* ═══════════════════════════════════════════════
      SECTION SKELETON
@@ -710,6 +703,39 @@
   /* ═══════════════════════════════════════════════
      FOOTER
   ═══════════════════════════════════════════════ */
+  /* ════ Contact modal ════ */
+  .contact-option {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--border); border-radius: var(--rad);
+    background: var(--card-bg); text-decoration: none;
+    transition: border-color .2s, background .2s, transform .18s;
+    cursor: pointer;
+  }
+  .contact-option:hover {
+    border-color: var(--accent); background: var(--card-hov);
+    transform: translateX(3px);
+  }
+  .contact-icon {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--accent-dim); border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--ui); font-size: 1rem; color: var(--accent);
+    flex-shrink: 0; font-weight: 600;
+  }
+  .contact-label {
+    font-family: var(--ui); font-size: .85rem; font-weight: 600;
+    color: var(--ink); margin-bottom: .15rem;
+  }
+  .contact-sub {
+    font-family: var(--mono); font-size: .7rem; color: var(--muted2);
+  }
+  .contact-arrow {
+    margin-left: auto; color: var(--muted2); font-size: 1rem;
+    flex-shrink: 0; transition: color .2s;
+  }
+  .contact-option:hover .contact-arrow { color: var(--accent); }
+
   footer {
     background: var(--bg2); border-top: 1px solid var(--border);
     padding: 2.5rem 0;
@@ -787,6 +813,7 @@
       <li><a href="#experience">Experience</a></li>
       <li><a href="#notes">Field Notes</a></li>
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub ↗</a></li>
+      <li><a href="#" onclick="openContactModal();return false;">Contact</a></li>
     </ul>
     <div class="theme-toggle" title="Toggle theme">
       <!-- ◐ = half-filled circle = night / dark -->
@@ -811,14 +838,15 @@
         </p>
         <div class="hero-btns reveal r4">
           <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="assets/jack_pham_resume.pdf" class="btn btn-resume" download>&#8595; Resume</a>
+          <a href="#" data-resume class="btn btn-resume" download>&#8595; Resume</a>
           <a href="https://github.com/jackpham-rgb" class="btn btn-ghost" target="_blank">GitHub ↗</a>
           <a href="https://www.linkedin.com/in/jackpham1611/" class="btn btn-ghost" target="_blank">LinkedIn ↗</a>
+          <button class="btn btn-ghost" onclick="openContactModal()">Contact</button>
         </div>
         <div class="hero-status reveal r5">
           <span class="status-dot"></span>
           Open to internships · Berkeley, CA ·
-          <a href="mailto:jack_pham@berkeley.edu" style="color:var(--accent);margin-left:.3rem">jack_pham@berkeley.edu</a>
+          <a href="#" data-email data-email-text="true" style="color:var(--accent);margin-left:.3rem">jack_pham@berkeley.edu</a>
         </div>
         <div class="focus-strip reveal r5">
           <span class="focus-pill">Circuit Design</span>
@@ -831,13 +859,8 @@
         </div>
       </div>
       <div class="avatar-wrap reveal r2">
-        <div class="avatar-box">
-          <!-- Uncomment after adding ava-1.jpg to assets/img/ -->
-          <!-- <img src="assets/img/ava-1.jpg" alt="Jack Pham"> -->
-          <div class="avatar-placeholder">
-            <span>&#128100;</span>
-            assets/img/<br>ava-1.jpg
-          </div>
+        <div class="avatar-box" id="avatarBox">
+          <!-- Set your photo filename in SITE_CONFIG below -->
         </div>
       </div>
     </div>
@@ -1044,14 +1067,58 @@
     <ul class="footer-links">
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
-      <li><a href="mailto:jack_pham@berkeley.edu">Email</a></li>
-      <li><a href="assets/jack_pham_resume.pdf" download>Resume</a></li>
+      <li><a href="#" data-email>Email</a></li>
+      <li><a href="#" data-resume download>Resume</a></li>
     </ul>
     <span class="footer-copy">Built with HTML · GitHub Pages</span>
   </div>
 </footer>
 
 <!-- ════════════════════ MODAL ════════════════════ -->
+<!-- ════════════ CONTACT MODAL ════════════ -->
+<div class="modal-overlay" id="contactOverlay" onclick="closeContactOnBg(event)">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeContactModal()">&#10005; close</button>
+    <p class="modal-type">Get in touch</p>
+    <h3 style="margin-bottom:1.25rem">Let's connect</h3>
+
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+
+      <a href="#" data-email class="contact-option">
+        <div class="contact-icon">&#9993;</div>
+        <div>
+          <p class="contact-label">Email me directly</p>
+          <p class="contact-sub" data-email data-email-text="true">jack_pham@berkeley.edu</p>
+        </div>
+        <span class="contact-arrow">&#8599;</span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" class="contact-option">
+        <div class="contact-icon">in</div>
+        <div>
+          <p class="contact-label">LinkedIn</p>
+          <p class="contact-sub">linkedin.com/in/jackpham1611</p>
+        </div>
+        <span class="contact-arrow">&#8599;</span>
+      </a>
+
+      <a href="https://github.com/jackpham-rgb" target="_blank" class="contact-option">
+        <div class="contact-icon" style="font-size:.9rem">gh</div>
+        <div>
+          <p class="contact-label">GitHub</p>
+          <p class="contact-sub">github.com/jackpham-rgb</p>
+        </div>
+        <span class="contact-arrow">&#8599;</span>
+      </a>
+
+    </div>
+
+    <p style="margin-top:1.5rem;font-size:.8rem;color:var(--muted2);font-family:var(--ui)">
+      I am open to internships, research collaborations, and interesting projects.
+    </p>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">&#10005; close</button>
@@ -1061,6 +1128,37 @@
 
 <!-- ════════════════════ JS ════════════════════ -->
 <script>
+/* ════════════════════════════════════════════════════════════
+   SITE CONFIG — change filenames here, nothing else needed
+════════════════════════════════════════════════════════════ */
+const SITE_CONFIG = {
+  avatarFile:  'assets/img/ava-1.jpg',        // change to your actual photo filename
+  resumeFile:  'assets/jack_pham_resume.pdf', // change to your actual resume filename
+  email:       'jack_pham@berkeley.edu',
+};
+
+/* Apply avatar and resume links from config */
+(function applySiteConfig() {
+  // Avatar
+  const box = document.getElementById('avatarBox');
+  if (box) {
+    const img = document.createElement('img');
+    img.src = SITE_CONFIG.avatarFile;
+    img.alt = 'Jack Pham';
+    img.onerror = () => { box.style.display = 'none'; }; // hide silently if file not found
+    box.appendChild(img);
+  }
+  // Resume links
+  document.querySelectorAll('[data-resume]').forEach(el => {
+    el.href = SITE_CONFIG.resumeFile;
+  });
+  // Email links
+  document.querySelectorAll('[data-email]').forEach(el => {
+    el.href = 'mailto:' + SITE_CONFIG.email;
+    if (el.dataset.emailText) el.textContent = SITE_CONFIG.email;
+  });
+})();
+
 /* ── Theme ── */
 function setTheme(t) {
   document.documentElement.setAttribute('data-theme', t);
@@ -1151,8 +1249,8 @@ function buildProjectCard(p, featured) {
     ? `<a href="${p.github}" class="pcard-link" target="_blank" onclick="event.stopPropagation()">&#8599; GitHub</a>` : '';
 
   const imgEl = p.image
-    ? `<div class="pcard-img"><img src="${p.image}" alt="${p.title}" onerror="this.parentElement.innerHTML='[ Image coming soon ]'"></div>`
-    : `<div class="pcard-img">[ Image placeholder ]</div>`;
+    ? `<div class="pcard-img"><img src="${p.image}" alt="${p.title}" onerror="this.style.display='none'"></div>`
+    : '';  /* no image set — don't render the slot at all */
 
   div.innerHTML = `
     ${imgEl}
@@ -1473,6 +1571,27 @@ async function loadIndexedItems(folder) {
   return items;
 }
 
+/* ── Contact modal ── */
+function openContactModal() {
+  document.getElementById('contactOverlay').classList.add('open');
+  document.body.classList.add('modal-open');
+  // Apply email/resume from config to contact modal elements
+  document.querySelectorAll('#contactOverlay [data-email]').forEach(el => {
+    el.href = 'mailto:' + SITE_CONFIG.email;
+    if (el.dataset.emailText) el.textContent = SITE_CONFIG.email;
+  });
+}
+function closeContactModal() {
+  document.getElementById('contactOverlay').classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+function closeContactOnBg(e) {
+  if (e.target === document.getElementById('contactOverlay')) closeContactModal();
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeModal(); closeContactModal(); }
+});
+
 async function init() {
   try {
     const [projectIndex, noteIndex, lifeItems] = await Promise.all([
@@ -1484,8 +1603,10 @@ async function init() {
     // Projects — sort by rank, respect show flag
     allProjects = projectIndex.sort((a, b) => (a.rank || 99) - (b.rank || 99));
 
-    // Notes — keep index order, filter show flag
-    allNotes = noteIndex.filter(n => n.show !== false);
+    // Notes — highlighted bubble to top, then index order
+    allNotes = noteIndex
+      .filter(n => n.show !== false)
+      .sort((a, b) => (b.highlighted ? 1 : 0) - (a.highlighted ? 1 : 0));
 
     renderProjects();
     renderNotes();
