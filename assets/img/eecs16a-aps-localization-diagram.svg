@@ -1,0 +1,132 @@
+<svg viewBox="0 0 860 370" xmlns="http://www.w3.org/2000/svg"
+  font-family="'Libre Franklin','Franklin Gothic',Arial,sans-serif">
+  <defs>
+    <marker id="a3" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#666" stroke-width="1"/>
+    </marker>
+    <marker id="a3b" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#326891" stroke-width="1"/>
+    </marker>
+  </defs>
+  <rect width="860" height="370" fill="#F7F5F0"/>
+  <line x1="28" y1="18" x2="832" y2="18" stroke="#121212" stroke-width="1.5"/>
+  <text x="430" y="40" text-anchor="middle" font-family="'Playfair Display','Georgia',serif"
+    font-size="13" font-weight="700" fill="#121212" letter-spacing="0.04em">ACOUSTIC POSITIONING SYSTEM</text>
+  <line x1="28" y1="50" x2="832" y2="50" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- ── Panel A: Room ── -->
+  <rect x="28" y="60" width="250" height="250" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="28" y1="60" x2="278" y2="60" stroke="#326891" stroke-width="2"/>
+  <text x="153" y="78" text-anchor="middle" font-size="9" font-weight="600" fill="#121212" letter-spacing="0.07em">A. ROOM GEOMETRY</text>
+
+  <!-- room outline -->
+  <rect x="44" y="84" width="218" height="208" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.75" stroke-dasharray="4,3"/>
+
+  <!-- Speaker S1 top-left -->
+  <rect x="50" y="90" width="28" height="20" rx="2" fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="64" y="104" text-anchor="middle" font-size="8" font-weight="600" fill="#326891">S₁</text>
+  <circle cx="64" cy="100" r="36" fill="none" stroke="#326891" stroke-width="0.75" stroke-dasharray="3,3" opacity="0.5"/>
+  <circle cx="64" cy="100" r="58" fill="none" stroke="#326891" stroke-width="0.5" stroke-dasharray="3,5" opacity="0.25"/>
+
+  <!-- Speaker S2 top-right -->
+  <rect x="228" y="90" width="28" height="20" rx="2" fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="242" y="104" text-anchor="middle" font-size="8" font-weight="600" fill="#666">S₂</text>
+  <circle cx="242" cy="100" r="42" fill="none" stroke="#666" stroke-width="0.75" stroke-dasharray="3,3" opacity="0.45"/>
+  <circle cx="242" cy="100" r="66" fill="none" stroke="#666" stroke-width="0.5" stroke-dasharray="3,5" opacity="0.22"/>
+
+  <!-- Speaker S3 bottom-center -->
+  <rect x="139" y="268" width="28" height="20" rx="2" fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="153" y="282" text-anchor="middle" font-size="8" font-weight="600" fill="#999">S₃</text>
+  <circle cx="153" cy="278" r="38" fill="none" stroke="#999" stroke-width="0.75" stroke-dasharray="3,3" opacity="0.4"/>
+
+  <!-- Microphone -->
+  <circle cx="170" cy="185" r="9" fill="#FFF" stroke="#121212" stroke-width="1.2"/>
+  <text x="170" y="189" text-anchor="middle" font-size="7.5" font-weight="700" fill="#121212">M</text>
+  <text x="184" y="178" font-size="8" fill="#666">unknown</text>
+
+  <!-- Distance lines -->
+  <line x1="78"  y1="110" x2="163" y2="180" stroke="#326891" stroke-width="0.9" stroke-dasharray="4,3"/>
+  <text x="114" y="140" font-size="8" fill="#326891">d₁</text>
+  <line x1="228" y1="110" x2="177" y2="180" stroke="#666" stroke-width="0.9" stroke-dasharray="4,3"/>
+  <text x="212" y="140" font-size="8" fill="#666">d₂</text>
+  <line x1="153" y1="268" x2="170" y2="196" stroke="#999" stroke-width="0.9" stroke-dasharray="4,3"/>
+  <text x="156" y="234" font-size="8" fill="#999">d₃</text>
+
+  <text x="153" y="298" text-anchor="middle" font-size="8" fill="#666">Circles from each beacon</text>
+  <text x="153" y="310" text-anchor="middle" font-size="8" fill="#666">intersect at the microphone.</text>
+
+  <!-- ── Panel B: Cross-correlation ── -->
+  <rect x="290" y="60" width="268" height="250" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="290" y1="60" x2="558" y2="60" stroke="#326891" stroke-width="2"/>
+  <text x="424" y="78" text-anchor="middle" font-size="9" font-weight="600" fill="#121212" letter-spacing="0.07em">B. SIGNAL TIMING</text>
+
+  <!-- Transmitted signal -->
+  <text x="308" y="100" font-size="8" fill="#666" font-weight="600">Transmitted x(t)</text>
+  <line x1="308" y1="130" x2="540" y2="130" stroke="#E2E2E2" stroke-width="0.75"/>
+  <polyline points="310,130 322,114 334,130 346,130 358,114 370,130 382,130"
+    fill="none" stroke="#326891" stroke-width="1.4"/>
+
+  <!-- Received signal (delayed) -->
+  <text x="308" y="155" font-size="8" fill="#666" font-weight="600">Received y(t) — delayed by Δt</text>
+  <line x1="308" y1="185" x2="540" y2="185" stroke="#E2E2E2" stroke-width="0.75"/>
+  <polyline points="360,185 372,169 384,185 396,185 408,169 420,185 432,185"
+    fill="none" stroke="#666" stroke-width="1.4"/>
+  <!-- Delay arrow -->
+  <line x1="322" y1="175" x2="372" y2="175" stroke="#121212" stroke-width="0.8" marker-end="url(#a3)"/>
+  <line x1="322" y1="175" x2="310" y2="175" stroke="#121212" stroke-width="0.8"/>
+  <text x="347" y="170" text-anchor="middle" font-size="8" fill="#121212">Δt</text>
+
+  <!-- Cross-correlation -->
+  <text x="308" y="208" font-size="8" fill="#666" font-weight="600">Cross-correlation R(τ)</text>
+  <line x1="308" y1="248" x2="540" y2="248" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="308" y1="216" x2="308" y2="250" stroke="#E2E2E2" stroke-width="0.75"/>
+  <!-- correlation curve -->
+  <polyline points="310,246 330,244 350,238 370,228 388,212 404,225 416,240 432,247 470,247 510,247 540,247"
+    fill="none" stroke="#326891" stroke-width="1.4"/>
+  <!-- peak marker -->
+  <line x1="388" y1="211" x2="388" y2="248" stroke="#121212" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <circle cx="388" cy="212" r="3.5" fill="#326891"/>
+  <text x="396" y="210" font-size="8" fill="#326891" font-weight="600">peak = Δt</text>
+  <text x="424" y="266" text-anchor="middle" font-size="8" fill="#666" font-family="'Courier New',monospace">R(τ) = Σ x(n)·y(n+τ)</text>
+
+  <text x="424" y="292" text-anchor="middle" font-size="8.5" fill="#666">The peak gives you Δt directly.</text>
+  <text x="424" y="306" text-anchor="middle" font-size="8.5" fill="#666">No extra hardware needed.</text>
+
+  <!-- ── Panel C: Localization ── -->
+  <rect x="570" y="60" width="262" height="250" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="570" y1="60" x2="832" y2="60" stroke="#326891" stroke-width="2"/>
+  <text x="701" y="78" text-anchor="middle" font-size="9" font-weight="600" fill="#121212" letter-spacing="0.07em">C. LOCALIZATION MATH</text>
+
+  <!-- Step 1 -->
+  <text x="588" y="102" font-size="9" font-weight="600" fill="#121212">Step 1 — convert delay to distance</text>
+  <rect x="588" y="108" width="222" height="34" rx="2" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="699" y="122" text-anchor="middle" font-size="11" fill="#326891" font-family="'Courier New',monospace" font-weight="600">d = v · Δt</text>
+  <text x="699" y="136" text-anchor="middle" font-size="8" fill="#999">v ≈ 343 m/s (speed of sound)</text>
+
+  <!-- Step 2 -->
+  <text x="588" y="160" font-size="9" font-weight="600" fill="#121212">Step 2 — three beacons, three circles</text>
+  <!-- mini circles -->
+  <circle cx="699" cy="204" r="28" fill="none" stroke="#326891" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
+  <circle cx="699" cy="204" r="20" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
+  <circle cx="699" cy="204" r="38" fill="none" stroke="#999" stroke-width="1" stroke-dasharray="3,3" opacity="0.5"/>
+  <circle cx="699" cy="204" r="3" fill="#326891"/>
+  <text x="712" y="188" font-size="8" fill="#666">circles intersect</text>
+  <text x="712" y="200" font-size="8" fill="#666">at one point</text>
+
+  <!-- Step 3 -->
+  <line x1="588" y1="242" x2="810" y2="242" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="588" y="260" font-size="9" font-weight="600" fill="#121212">Step 3 — least-squares solve</text>
+  <text x="588" y="276" font-size="9" fill="#666" font-family="'Courier New',monospace">Ax = b</text>
+  <text x="640" y="276" font-size="8.5" fill="#999">overdetermined system</text>
+  <text x="588" y="294" font-size="9" fill="#326891" font-family="'Courier New',monospace" font-weight="600">x̂ = A⁺b</text>
+  <text x="640" y="294" font-size="8.5" fill="#999">pseudoinverse solution</text>
+  <text x="588" y="312" font-size="9" fill="#666" font-family="'Courier New',monospace">→ position x̂</text>
+
+  <!-- ── Bottom insight ── -->
+  <line x1="28" y1="326" x2="832" y2="326" stroke="#E2E2E2" stroke-width="0.75"/>
+  <rect x="28" y="334" width="804" height="28" fill="#FFF" stroke="none"/>
+  <text x="46" y="350" font-size="9" font-weight="600" fill="#121212">Takeaway:</text>
+  <text x="118" y="350" font-size="9" fill="#666">Correlation finds timing. Distance = v · Δt. Three distances + least squares = position. No GPS required.</text>
+
+  <line x1="28" y1="362" x2="832" y2="362" stroke="#E2E2E2" stroke-width="0.75"/>
+</svg>

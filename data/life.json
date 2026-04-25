@@ -1,0 +1,38 @@
+[
+  {
+    "id": "life-climbing",
+    "icon": "🧗",
+    "title": "Climbing & Hiking",
+    "desc": "Problem-solving vertically. Bouldering and trail hiking to stay grounded.",
+    "detail": {
+      "body": "Climbing is the closest thing to debugging a physical system. You have a problem — a route — and you have to figure out the sequence of moves, the balance points, where to place your weight. When you fall, you gather information. You try again with a new hypothesis.\n\nI started bouldering at Cypress and picked it up again in the Bay Area. The climbing community here is surprisingly overlap-heavy with engineers and researchers. Good people to think with."
+    }
+  },
+  {
+    "id": "life-art",
+    "icon": "🎨",
+    "title": "Drawing & Art",
+    "desc": "Sketching, making art, customizing clothes and shoes. Design thinking outside the lab.",
+    "detail": {
+      "body": "I draw, paint, and customize — clothes, shoes, objects. It started as a way to personalize things but became its own practice.\n\nArt and engineering share more than people think. Both require understanding constraints, working within them creatively, and making decisions about what to leave out. A good circuit schematic and a good sketch have the same quality: nothing unnecessary."
+    }
+  },
+  {
+    "id": "life-photo",
+    "icon": "📷",
+    "title": "Photography",
+    "desc": "Noticing light and composition — the visual equivalent of signal processing.",
+    "detail": {
+      "body": "Photography is applied optics and timing. I'm drawn to the signal-processing analogy: the sensor captures a raw signal, you process it, and the output is only as good as what you captured and how you handled it.\n\nI shoot mostly street and environment — the kind of photography that requires patience and learning to see what's already there rather than constructing a scene."
+    }
+  },
+  {
+    "id": "life-food",
+    "icon": "🍜",
+    "title": "Food & Culture",
+    "desc": "Exploring food culture to stay curious and balanced. Also: DIY everything.",
+    "detail": {
+      "body": "Food is one of the fastest ways to understand a culture — how people eat tells you what they value, what their history is, what they have access to.\n\nGrowing up Vietnamese-American means I cook both, and I'm always hunting for the version of a dish that tastes like what I remember. It's another form of reverse engineering."
+    }
+  }
+]

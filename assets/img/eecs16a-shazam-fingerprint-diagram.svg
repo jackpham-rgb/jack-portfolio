@@ -1,0 +1,121 @@
+<svg viewBox="0 0 900 400" xmlns="http://www.w3.org/2000/svg" font-family="'Libre Franklin', 'Georgia', sans-serif">
+  <defs>
+    <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4C8DFF"/>
+    </marker>
+  </defs>
+
+  <rect width="900" height="400" fill="#0A1220" rx="12"/>
+  <text x="450" y="34" text-anchor="middle" fill="#F5F8FC" font-size="15" font-weight="600" letter-spacing="0.04em">AUDIO FINGERPRINTING</text>
+  <line x1="100" y1="42" x2="800" y2="42" stroke="#1E2C42" stroke-width="1"/>
+
+  <!-- Step labels row -->
+  <text x="76"  y="62" text-anchor="middle" fill="#7F8EA3" font-size="8" font-weight="600">① AUDIO CLIP</text>
+  <text x="240" y="62" text-anchor="middle" fill="#7F8EA3" font-size="8" font-weight="600">② SHORT-TIME FOURIER</text>
+  <text x="450" y="62" text-anchor="middle" fill="#7F8EA3" font-size="8" font-weight="600">③ PEAK DETECTION</text>
+  <text x="660" y="62" text-anchor="middle" fill="#7F8EA3" font-size="8" font-weight="600">④ FINGERPRINT</text>
+  <text x="820" y="62" text-anchor="middle" fill="#7F8EA3" font-size="8" font-weight="600">⑤ MATCH</text>
+
+  <!-- ① Audio clip -->
+  <rect x="20" y="70" width="112" height="180" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <polyline points="28,180 36,165 44,148 52,135 60,148 68,165 76,180 84,162 92,140 100,120 108,140 116,162 124,180" fill="none" stroke="#4C8DFF" stroke-width="1.6"/>
+  <text x="76" y="215" text-anchor="middle" fill="#7F8EA3" font-size="8">audio signal x(n)</text>
+  <text x="76" y="240" text-anchor="middle" fill="#7F8EA3" font-size="9" font-style="italic">"a song clip"</text>
+
+  <!-- arrow -->
+  <line x1="133" y1="160" x2="153" y2="160" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <!-- ② Spectrogram -->
+  <rect x="155" y="70" width="172" height="180" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <!-- heatmap grid simplified -->
+  <text x="241" y="87" text-anchor="middle" fill="#7F8EA3" font-size="8">frequency</text>
+  <!-- rows of colored cells -->
+  <!-- freq rows: 5 rows, 7 columns -->
+  <!-- f5 (high) -->
+  <rect x="168" y="93"  width="22" height="16" rx="1" fill="#111C30"/><rect x="192" y="93"  width="22" height="16" rx="1" fill="#1a3a5c"/><rect x="216" y="93"  width="22" height="16" rx="1" fill="#111C30"/><rect x="240" y="93"  width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="264" y="93"  width="22" height="16" rx="1" fill="#1a3a5c"/><rect x="288" y="93"  width="22" height="16" rx="1" fill="#111C30"/><rect x="312" y="93"  width="14" height="16" rx="1" fill="#1a3a5c"/>
+  <!-- f4 -->
+  <rect x="168" y="111" width="22" height="16" rx="1" fill="#1a3a5c"/><rect x="192" y="111" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="216" y="111" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="240" y="111" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="264" y="111" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="288" y="111" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="312" y="111" width="14" height="16" rx="1" fill="#2a6aaa"/>
+  <!-- f3 -->
+  <rect x="168" y="129" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="192" y="129" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="216" y="129" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="240" y="129" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="264" y="129" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="288" y="129" width="22" height="16" rx="1" fill="#1a3a5c"/><rect x="312" y="129" width="14" height="16" rx="1" fill="#111C30"/>
+  <!-- f2 -->
+  <rect x="168" y="147" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="192" y="147" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="216" y="147" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="240" y="147" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="264" y="147" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="288" y="147" width="22" height="16" rx="1" fill="#2a6aaa"/><rect x="312" y="147" width="14" height="16" rx="1" fill="#1a3a5c"/>
+  <!-- f1 low -->
+  <rect x="168" y="165" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="192" y="165" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="216" y="165" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="240" y="165" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="264" y="165" width="22" height="16" rx="1" fill="#78DCE8"/><rect x="288" y="165" width="22" height="16" rx="1" fill="#4C8DFF"/><rect x="312" y="165" width="14" height="16" rx="1" fill="#78DCE8"/>
+  <!-- time axis -->
+  <line x1="168" y1="183" x2="327" y2="183" stroke="#1E2C42" stroke-width="1"/>
+  <text x="247" y="194" text-anchor="middle" fill="#7F8EA3" font-size="8">time</text>
+  <!-- freq axis -->
+  <line x1="168" y1="93" x2="168" y2="183" stroke="#1E2C42" stroke-width="1"/>
+  <!-- DFT formula -->
+  <text x="241" y="214" text-anchor="middle" fill="#7F8EA3" font-size="8" font-family="'DM Mono',monospace">X(k) = Σ x(n)·e^(-j2πkn/N)</text>
+  <text x="241" y="240" text-anchor="middle" fill="#7F8EA3" font-size="8">Short-time Fourier: many</text>
+  <text x="241" y="252" text-anchor="middle" fill="#7F8EA3" font-size="8">windows over time</text>
+
+  <!-- arrow -->
+  <line x1="329" y1="160" x2="349" y2="160" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <!-- ③ Peak detection -->
+  <rect x="351" y="70" width="198" height="180" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <!-- same spectrogram + peaks circled -->
+  <!-- mini heatmap -->
+  <rect x="363" y="83"  width="16" height="12" rx="1" fill="#111C30"/><rect x="381" y="83"  width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="399" y="83"  width="16" height="12" rx="1" fill="#111C30"/><rect x="417" y="83"  width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="435" y="83"  width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="453" y="83"  width="16" height="12" rx="1" fill="#111C30"/><rect x="471" y="83"  width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="489" y="83"  width="16" height="12" rx="1" fill="#111C30"/>
+  <rect x="363" y="97"  width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="381" y="97"  width="16" height="12" rx="1" fill="#78DCE8"/><rect x="399" y="97"  width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="417" y="97"  width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="435" y="97"  width="16" height="12" rx="1" fill="#78DCE8"/><rect x="453" y="97"  width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="471" y="97"  width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="489" y="97"  width="16" height="12" rx="1" fill="#1a3a5c"/>
+  <rect x="363" y="111" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="381" y="111" width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="399" y="111" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="417" y="111" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="435" y="111" width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="453" y="111" width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="471" y="111" width="16" height="12" rx="1" fill="#111C30"/><rect x="489" y="111" width="16" height="12" rx="1" fill="#111C30"/>
+  <rect x="363" y="125" width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="381" y="125" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="399" y="125" width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="417" y="125" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="435" y="125" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="453" y="125" width="16" height="12" rx="1" fill="#2a6aaa"/><rect x="471" y="125" width="16" height="12" rx="1" fill="#1a3a5c"/><rect x="489" y="125" width="16" height="12" rx="1" fill="#111C30"/>
+  <rect x="363" y="139" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="381" y="139" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="399" y="139" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="417" y="139" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="435" y="139" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="453" y="139" width="16" height="12" rx="1" fill="#4C8DFF"/><rect x="471" y="139" width="16" height="12" rx="1" fill="#78DCE8"/><rect x="489" y="139" width="16" height="12" rx="1" fill="#4C8DFF"/>
+
+  <!-- Peak circles -->
+  <circle cx="389" cy="103" r="8" fill="none" stroke="#F5F8FC" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="443" cy="103" r="8" fill="none" stroke="#F5F8FC" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="407" cy="117" r="8" fill="none" stroke="#F5F8FC" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="425" cy="131" r="8" fill="none" stroke="#F5F8FC" stroke-width="1.5" opacity="0.9"/>
+  <circle cx="371" cy="145" r="8" fill="none" stroke="#F5F8FC" stroke-width="1.5" opacity="0.9"/>
+
+  <line x1="363" y1="153" x2="507" y2="153" stroke="#1E2C42" stroke-width="1"/>
+  <text x="435" y="168" text-anchor="middle" fill="#7F8EA3" font-size="8">High-energy peaks selected</text>
+  <text x="435" y="180" text-anchor="middle" fill="#7F8EA3" font-size="8">from spectrogram</text>
+  <text x="435" y="214" text-anchor="middle" fill="#7F8EA3" font-size="8">Each peak: (time, freq) pair</text>
+  <text x="435" y="226" text-anchor="middle" fill="#7F8EA3" font-size="8">Most distinctive locations</text>
+
+  <!-- arrow -->
+  <line x1="551" y1="160" x2="571" y2="160" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <!-- ④ Fingerprint block -->
+  <rect x="573" y="70" width="172" height="180" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="659" y="90" text-anchor="middle" fill="#78DCE8" font-size="10" font-weight="600">HASH PAIRS</text>
+  <!-- fingerprint pairs table -->
+  <rect x="585" y="96" width="148" height="18" rx="3" fill="#111C30"/>
+  <text x="593" y="109" fill="#4C8DFF" font-size="9" font-family="'DM Mono',monospace">(t=0.2, f=440 Hz)</text>
+  <rect x="585" y="116" width="148" height="18" rx="3" fill="#111C30"/>
+  <text x="593" y="129" fill="#4C8DFF" font-size="9" font-family="'DM Mono',monospace">(t=0.5, f=880 Hz)</text>
+  <rect x="585" y="136" width="148" height="18" rx="3" fill="#111C30"/>
+  <text x="593" y="149" fill="#4C8DFF" font-size="9" font-family="'DM Mono',monospace">(t=0.9, f=660 Hz)</text>
+  <rect x="585" y="156" width="148" height="18" rx="3" fill="#111C30"/>
+  <text x="593" y="169" fill="#4C8DFF" font-size="9" font-family="'DM Mono',monospace">(t=1.1, f=220 Hz)</text>
+  <text x="659" y="188" text-anchor="middle" fill="#7F8EA3" font-size="8">···</text>
+  <text x="659" y="210" text-anchor="middle" fill="#7F8EA3" font-size="8">Compact signature, not raw audio</text>
+  <text x="659" y="224" text-anchor="middle" fill="#7F8EA3" font-size="8">Robust to noise and compression</text>
+
+  <!-- arrow -->
+  <line x1="747" y1="160" x2="767" y2="160" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+  <!-- ⑤ Database match -->
+  <rect x="769" y="70" width="114" height="180" rx="8" fill="#4C8DFF" fill-opacity="0.1" stroke="#4C8DFF" stroke-width="1"/>
+  <text x="826" y="94" text-anchor="middle" fill="#4C8DFF" font-size="20">🗄</text>
+  <text x="826" y="116" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">DATABASE</text>
+  <text x="826" y="132" text-anchor="middle" fill="#7F8EA3" font-size="8">millions of songs</text>
+  <text x="826" y="148" text-anchor="middle" fill="#7F8EA3" font-size="8">each as fingerprints</text>
+  <line x1="785" y1="162" x2="864" y2="162" stroke="#1E2C42" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="826" y="176" text-anchor="middle" fill="#78DCE8" font-size="18">✓</text>
+  <text x="826" y="196" text-anchor="middle" fill="#78DCE8" font-size="10" font-weight="600">MATCH</text>
+  <text x="826" y="212" text-anchor="middle" fill="#7F8EA3" font-size="8">found in ~1 second</text>
+
+  <!-- Key insight box at bottom -->
+  <rect x="20" y="268" width="860" height="52" rx="6" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="24" y="286" fill="#7F8EA3" font-size="9" font-weight="600">KEY INSIGHT:</text>
+  <text x="24" y="302" fill="#7F8EA3" font-size="9">A single DFT loses time information. A spectrogram preserves when frequencies occur. Fingerprints store only the most distinctive peaks</text>
+  <text x="24" y="314" fill="#7F8EA3" font-size="9">so matching is fast and storage is small. Identity is preserved without storing all original data.</text>
+
+  <!-- caption -->
+  <text x="450" y="360" text-anchor="middle" fill="#7F8EA3" font-size="9" font-style="italic">Real systems identify signals by extracting robust structure, not by storing all original data.</text>
+</svg>

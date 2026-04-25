@@ -1,0 +1,144 @@
+<svg viewBox="0 0 860 330" xmlns="http://www.w3.org/2000/svg"
+  font-family="'Libre Franklin','Franklin Gothic',Arial,sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto">
+      <path d="M0,0.5 L5,3 L0,5.5" fill="none" stroke="#666" stroke-width="1"/>
+    </marker>
+  </defs>
+  <rect width="860" height="330" fill="#F7F5F0"/>
+  <line x1="28" y1="18" x2="832" y2="18" stroke="#121212" stroke-width="1.5"/>
+  <text x="430" y="40" text-anchor="middle" font-family="'Playfair Display','Georgia',serif"
+    font-size="13" font-weight="700" fill="#121212" letter-spacing="0.04em">VOICE RECOGNITION PIPELINE</text>
+  <line x1="28" y1="50" x2="832" y2="50" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- 7 stage cards, y=64 h=90 -->
+  <rect x="28"  y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="28"  y1="64" x2="118"  y2="64" stroke="#326891" stroke-width="2"/>
+  <polyline points="36,114 44,104 52,120 60,100 68,114 76,104 84,118 92,108 100,114 108,104 116,114"
+    fill="none" stroke="#326891" stroke-width="1.2"/>
+  <text x="73" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">RECORD</text>
+  <text x="73" y="151" text-anchor="middle" font-size="7.5" fill="#666">audio x(t)</text>
+
+  <line x1="118" y1="109" x2="132" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="134" y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="134" y1="64" x2="224"  y2="64" stroke="#326891" stroke-width="2"/>
+  <polyline points="142,106 150,98 158,114 166,104 174,110 182,100 190,112 198,104 210,108 218,100"
+    fill="none" stroke="#326891" stroke-width="1"/>
+  <polyline points="142,118 150,110 158,126 166,116 174,122 182,112 190,124 198,116 210,120 218,112"
+    fill="none" stroke="#999" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <text x="179" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">ALIGN</text>
+  <text x="179" y="151" text-anchor="middle" font-size="7.5" fill="#666">sync timing</text>
+
+  <line x1="224" y1="109" x2="238" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="240" y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="240" y1="64" x2="330"  y2="64" stroke="#326891" stroke-width="2"/>
+  <text x="272" y="105" fill="#999" font-size="22" font-weight="200">[</text>
+  <text x="294" y="105" fill="#999" font-size="22" font-weight="200">]</text>
+  <text x="283" y="92"  text-anchor="middle" fill="#666" font-size="8">x₁</text>
+  <text x="283" y="103" text-anchor="middle" fill="#666" font-size="8">x₂</text>
+  <text x="283" y="114" text-anchor="middle" fill="#666" font-size="8">⋮</text>
+  <text x="283" y="125" text-anchor="middle" fill="#666" font-size="8">xₙ</text>
+  <text x="285" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">VECTORIZE</text>
+  <text x="285" y="151" text-anchor="middle" font-size="7.5" fill="#666">ℝⁿ space</text>
+
+  <line x1="330" y1="109" x2="344" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="346" y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="346" y1="64" x2="436"  y2="64" stroke="#326891" stroke-width="2"/>
+  <text x="391" y="88" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212">SVD / PCA</text>
+  <rect x="358" y="94"  width="66" height="5" rx="1" fill="#326891" opacity="0.9"/>
+  <rect x="358" y="102" width="50" height="5" rx="1" fill="#326891" opacity="0.55"/>
+  <rect x="358" y="110" width="34" height="5" rx="1" fill="#326891" opacity="0.3"/>
+  <text x="391" y="130" text-anchor="middle" font-size="7.5" fill="#666">σ₁ ≥ σ₂ ≥ ···</text>
+  <text x="391" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">REDUCE</text>
+  <text x="391" y="151" text-anchor="middle" font-size="7.5" fill="#666">top k dims</text>
+
+  <line x1="436" y1="109" x2="450" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="452" y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="452" y1="64" x2="542"  y2="64" stroke="#326891" stroke-width="2"/>
+  <circle cx="468" cy="93"  r="3" fill="#326891" opacity="0.8"/>
+  <circle cx="476" cy="102" r="3" fill="#326891" opacity="0.7"/>
+  <circle cx="464" cy="106" r="3" fill="#326891" opacity="0.5"/>
+  <circle cx="500" cy="86"  r="3" fill="#666" opacity="0.7"/>
+  <circle cx="508" cy="95"  r="3" fill="#666" opacity="0.7"/>
+  <circle cx="496" cy="100" r="3" fill="#666" opacity="0.5"/>
+  <circle cx="528" cy="108" r="3" fill="#999" opacity="0.6"/>
+  <circle cx="536" cy="98"  r="3" fill="#999" opacity="0.6"/>
+  <text x="497" y="130" text-anchor="middle" font-size="7.5" fill="#666">Uᵀ·x</text>
+  <text x="497" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">PROJECT</text>
+  <text x="497" y="151" text-anchor="middle" font-size="7.5" fill="#666">feature space</text>
+
+  <line x1="542" y1="109" x2="556" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="558" y="64" width="90" height="90" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="558" y1="64" x2="648"  y2="64" stroke="#326891" stroke-width="2"/>
+  <circle cx="578" cy="94" r="3" fill="#326891" opacity="0.6"/>
+  <circle cx="586" cy="102" r="3" fill="#326891" opacity="0.6"/>
+  <circle cx="574" cy="106" r="3" fill="#326891" opacity="0.4"/>
+  <circle cx="582" cy="98" r="6" fill="none" stroke="#326891" stroke-width="1.2"/>
+  <line x1="579" y1="98" x2="585" y2="98" stroke="#326891" stroke-width="1.2"/>
+  <line x1="582" y1="95" x2="582" y2="101" stroke="#326891" stroke-width="1.2"/>
+  <circle cx="624" cy="88" r="3" fill="#666" opacity="0.6"/>
+  <circle cx="632" cy="96" r="3" fill="#666" opacity="0.6"/>
+  <circle cx="628" cy="92" r="6" fill="none" stroke="#666" stroke-width="1.2"/>
+  <line x1="625" y1="92" x2="631" y2="92" stroke="#666" stroke-width="1.2"/>
+  <line x1="628" y1="89" x2="628" y2="95" stroke="#666" stroke-width="1.2"/>
+  <text x="603" y="128" text-anchor="middle" font-size="7.5" fill="#666">cₖ = mean(class k)</text>
+  <text x="603" y="141" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">CENTROIDS</text>
+
+  <line x1="648" y1="109" x2="662" y2="109" stroke="#666" stroke-width="0.8" marker-end="url(#a1)"/>
+
+  <rect x="664" y="64" width="168" height="90" fill="#326891" fill-opacity="0.06" stroke="#326891" stroke-width="0.75"/>
+  <line x1="664" y1="64" x2="832" y2="64" stroke="#326891" stroke-width="2"/>
+  <text x="748" y="90" text-anchor="middle" font-size="8.5" font-weight="600" fill="#326891">argmin ‖x − cₖ‖</text>
+  <text x="748" y="106" text-anchor="middle" font-size="8.5" font-weight="600" fill="#121212" letter-spacing="0.07em">CLASSIFY</text>
+  <text x="748" y="118" text-anchor="middle" font-size="7.5" fill="#666">nearest centroid wins</text>
+  <text x="748" y="142" text-anchor="middle" font-size="18" fill="#326891">✓</text>
+
+  <!-- Insight + formula row -->
+  <line x1="28" y1="174" x2="832" y2="174" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- left: mini scatter -->
+  <rect x="28" y="183" width="320" height="130" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="52" y1="290" x2="330" y2="290" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="52" y1="194" x2="52" y2="292" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="190" y="305" text-anchor="middle" font-size="8" fill="#999">PC 1</text>
+  <text x="38" y="243" text-anchor="middle" font-size="8" fill="#999" transform="rotate(-90,38,243)">PC 2</text>
+  <circle cx="110" cy="250" r="3" fill="#326891" opacity="0.7"/>
+  <circle cx="120" cy="258" r="3" fill="#326891" opacity="0.7"/>
+  <circle cx="104" cy="262" r="3" fill="#326891" opacity="0.5"/>
+  <circle cx="114" cy="255" r="7" fill="none" stroke="#326891" stroke-width="1.3"/>
+  <line x1="110" y1="255" x2="118" y2="255" stroke="#326891" stroke-width="1.3"/>
+  <line x1="114" y1="251" x2="114" y2="259" stroke="#326891" stroke-width="1.3"/>
+  <text x="114" y="238" text-anchor="middle" font-size="8.5" fill="#326891" font-weight="600">"yes"</text>
+  <circle cx="252" cy="270" r="3" fill="#666" opacity="0.7"/>
+  <circle cx="264" cy="260" r="3" fill="#666" opacity="0.7"/>
+  <circle cx="260" cy="272" r="7" fill="none" stroke="#666" stroke-width="1.3"/>
+  <line x1="256" y1="272" x2="264" y2="272" stroke="#666" stroke-width="1.3"/>
+  <line x1="260" y1="268" x2="260" y2="276" stroke="#666" stroke-width="1.3"/>
+  <text x="260" y="248" text-anchor="middle" font-size="8.5" fill="#666" font-weight="600">"no"</text>
+  <circle cx="184" cy="258" r="4.5" fill="#F7F5F0" stroke="#121212" stroke-width="1"/>
+  <text x="184" y="247" text-anchor="middle" font-size="8" fill="#121212">new?</text>
+  <line x1="184" y1="258" x2="114" y2="255" stroke="#326891" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="184" y1="258" x2="260" y2="272" stroke="#666" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="148" y="247" font-size="7.5" fill="#326891">d₁ (closer ✓)</text>
+
+  <!-- right: equations -->
+  <rect x="360" y="183" width="472" height="130" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="360" y1="183" x2="360" y2="313" stroke="#326891" stroke-width="2"/>
+  <text x="378" y="204" font-size="9.5" font-weight="600" fill="#121212">The math, in brief</text>
+  <text x="378" y="224" font-size="9" fill="#666" font-family="'Courier New',monospace">X = U Σ Vᵀ</text>
+  <text x="520" y="224" font-size="8.5" fill="#999">singular value decomposition</text>
+  <text x="378" y="244" font-size="9" fill="#666" font-family="'Courier New',monospace">x̂ = Uₖᵀ · x</text>
+  <text x="520" y="244" font-size="8.5" fill="#999">project to k dimensions</text>
+  <text x="378" y="264" font-size="9" fill="#666" font-family="'Courier New',monospace">ŷ = argmin‖x̂ − cₖ‖</text>
+  <text x="520" y="264" font-size="8.5" fill="#999">nearest centroid = predicted class</text>
+  <line x1="378" y1="276" x2="820" y2="276" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="378" y="294" font-size="8.5" fill="#666" font-style="italic">Once signals are vectors, voice recognition is a geometry problem.</text>
+  <text x="378" y="308" font-size="8.5" fill="#666" font-style="italic">Similar words cluster. The nearest centroid wins.</text>
+
+  <line x1="28" y1="323" x2="832" y2="323" stroke="#E2E2E2" stroke-width="0.75"/>
+</svg>
