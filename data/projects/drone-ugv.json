@@ -1,0 +1,43 @@
+{
+  "id": "drone-ugv",
+  "tags": ["robotics", "ai-ml"],
+  "type": "Robotics · Reinforcement Learning",
+  "year": "April 2026",
+  "badge": "Personal Research",
+  "title": "Drone-UGV Disaster Response System",
+  "desc": "A disaster response simulation where drones and ground robots work together to find and rescue people, using MAPPO and QMIX with a built-in fairness reward.",
+  "tags_display": ["Python", "MAPPO", "QMIX", "Multi-Agent RL", "Simulation"],
+  "github": "https://github.com/jackpham-rgb/drone-ugv-disaster-response",
+  "image": "assets/img/ugv-simulation-view.png",
+  "detail": {
+    "summary": "A disaster response simulation where drones and ground robots work together to find and rescue people. Instead of having every robot do everything, the system splits into roles: drones scout and map the environment, ground robots handle rescue, and fire trucks control fire spread.",
+    "why": "This is a follow-up to my earlier TACC research. Before, all robots had the same role. I wanted to try a different idea where each type of agent has a clear responsibility, making the system more realistic and easier to scale. I also wanted to explore how reinforcement learning and fairness can affect coordination between agents.",
+    "problem": "Coordination becomes more interesting when agents do not have full information. In this system, drones see everything while ground robots only see what drones discover. This made the problem less about control and more about information flow and decision making.",
+    "approach": "Drones use MAPPO (centralized training, decentralized execution). Ground robots use QMIX with a fairness term built directly into the Q-value, so robots that already have more completed rescues get penalized when bidding for new tasks. The fairness reward: r = epsilon + |e_i / e_mean - 1| / e_mean. The whole system runs in a 3D simulation with dynamic fire spread using a cellular automaton model.",
+    "status": "Completed. Personal extension of earlier research work.",
+    "links": [
+      { "label": "GitHub + Documentation", "url": "https://github.com/jackpham-rgb/drone-ugv-disaster-response" },
+      { "label": "Research Portal", "url": "https://jackpham-rgb.github.io/drone-ugv-disaster-response/index.html" },
+      { "label": "Run Simulation in Browser", "url": "https://jackpham-rgb.github.io/drone-ugv-disaster-response/sim3d_v3.html" },
+      { "label": "Research Notebook", "url": "https://github.com/jackpham-rgb/drone-ugv-disaster-response/blob/main/drone_ugv_notebook.ipynb" }
+    ],
+    "results": "Full 3D simulation with switchable policies, variable agent count, and adjustable fire conditions. You can run and compare performance directly in the browser.",
+    "sections": [
+      {
+        "title": "How this differs from the original REU work",
+        "body": "The original 2024 project used single-tier robots with FE-MADDPG. This version adds a two-tier architecture (UAV + UGV + FireTruck), MAPPO for drone policy, QMIX with embedded fairness for ground robots, a 3D isometric environment, dynamic fire spread with wind, and procedural terrain generation."
+      },
+      {
+        "title": "What I learned",
+        "body": "I learned that coordination becomes more interesting when agents do not have full information. Building fairness directly into the learning objective rather than as a post-hoc rule made the system behave more equitably without sacrificing performance."
+      },
+      {
+        "title": "Broader applications",
+        "body": "These ideas apply to robotics, distributed systems, and large-scale coordination problems where agents need to work together with partial information."
+      }
+    ],
+    "media": [
+      { "type": "image", "src": "assets/img/ugv-simulation-view.png", "caption": "Full system running in the 3D simulation" }
+    ]
+  }
+}

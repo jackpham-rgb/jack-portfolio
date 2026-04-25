@@ -333,15 +333,11 @@
   .btn-resume:hover { background: var(--accent); color: #fff; }
 
   .hero-status {
-    display: flex; align-items: center; gap: .5rem;
-    font-family: var(--mono); font-size: .65rem;
+    display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
+    font-family: var(--ui); font-size: .88rem;
     color: var(--muted); margin-top: 2rem; font-weight: 400;
   }
-  .status-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: #34d399; flex-shrink: 0;
-    animation: pulse-dot 2.4s ease-in-out infinite;
-  }
+  .hero-status strong { color: var(--ink); font-weight: 600; }
 
   .focus-strip {
     display: flex; flex-wrap: wrap; gap: .45rem;
@@ -358,7 +354,7 @@
   .focus-pill:hover { border-color: var(--accent); color: var(--accent); }
 
   /* Avatar */
-  .avatar-wrap { width: clamp(220px,24vw,310px); flex-shrink: 0; margin-top: .5rem; }
+  .avatar-wrap { width: clamp(110px,12vw,155px); flex-shrink: 0; margin-top: .5rem; }
   .avatar-box {
     width: 100%; aspect-ratio: 1/1;
     border: 1px solid var(--border); border-radius: var(--rad);
@@ -714,6 +710,10 @@
   /* ═══════════════════════════════════════════════
      FOOTER
   ═══════════════════════════════════════════════ */
+  /* ════ Project table rows ════ */
+  .proj-table-row:hover td { background: var(--card-hov); }
+  .proj-table-row:last-child td { border-bottom: none !important; }
+
   /* ════ Contact modal ════ */
   .contact-option {
     display: flex; align-items: center; gap: 1rem;
@@ -817,7 +817,7 @@
 <!-- ════════════════════ NAV ════════════════════ -->
 <nav>
   <div class="nav-inner">
-    <span class="nav-logo"><strong>JP</strong> / jackpham.dev</span>
+
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
@@ -845,7 +845,7 @@
         <p class="hero-sub reveal r3">
           EECS student at UC Berkeley. I design and build electronic systems,
           focusing on circuits, PCB layout, signals, and embedded hardware.
-          Built for real-world use.
+          Built with purpose.
         </p>
         <div class="hero-btns reveal r4">
           <a href="#projects" class="btn btn-primary">View Projects</a>
@@ -855,9 +855,8 @@
           <button class="btn btn-ghost" onclick="openContactModal()">Contact</button>
         </div>
         <div class="hero-status reveal r5">
-          <span class="status-dot"></span>
-          Open to internships · Berkeley, CA ·
-          <a href="#" data-email data-email-text="true" style="color:var(--accent);margin-left:.3rem">jack_pham@berkeley.edu</a>
+          <strong>Open to internships</strong> &nbsp;&middot;&nbsp; Berkeley, CA &nbsp;&middot;&nbsp;
+          <a href="mailto:jack_pham@berkeley.edu" style="color:var(--accent)">jack_pham@berkeley.edu</a>
         </div>
         <div class="focus-strip reveal r5">
           <span class="focus-pill">Circuit Design</span>
@@ -889,16 +888,16 @@
         <p>
           I am an Electrical Engineering and Computer Science (B.S.) student at UC Berkeley,
           focused on circuits, embedded systems, and signal processing. My work spans
-          circuit design, PCB layout, and hardware-centric robotic systems, with an emphasis
-          on building reliable, real-world devices.
+          circuit design, PCB layout, and hardware-centered robotic systems, with an emphasis
+          on building reliable devices that connect theory to real use.
         </p>
         <p>
-          My interest in engineering grew from physics — from mechanics to electromagnetism
-          to quantum ideas. That curiosity still shapes how I approach problems: from first
-          principles, not just pattern-matching.
+          Not just in engineering, I am also interested in physics, from mechanics to
+          electromagnetism to quantum ideas. That curiosity still shapes how I approach
+          problems. I like to understand how a system works first, then build from the fundamentals.
         </p>
         <p>
-          Outside of school, I explore creative work and food culture to stay curious and balanced.
+          Outside of school, I enjoy creative work, photography, hiking, and exploring food culture.
         </p>
       </div>
       <div>
@@ -910,8 +909,7 @@
             <span class="skill-tag a">Embedded C/C++</span>
             <span class="skill-tag a">ESP32 / Arduino / RPi</span>
             <span class="skill-tag a">Signal Processing</span>
-            <span class="skill-tag a">ROS / Robotics</span>
-            <span class="skill-tag b">Python</span>
+            <span class="skill-tag a">ROS / Robotics</span><span class="skill-tag b">Python</span>
             <span class="skill-tag b">TensorFlow / TFLite</span>
             <span class="skill-tag b">NumPy / SciPy / cvxpy</span>
             <span class="skill-tag">C / C++ / Java / MATLAB</span>
@@ -935,7 +933,7 @@
             &#8594; Underwater Robotics — Electrical Subteam<br>
             &#8594; Fung Fellowship — Methane Monitoring<br>
             &#8594; EEG Attention Detection research<br>
-            &#8594; Open to Summer 2026 internships
+            &#8594; Open to internships, research collaborations, and interesting projects
           </p>
         </div>
       </div>
@@ -1003,10 +1001,11 @@
         <div><p class="tl-date">Feb – Jul 2025</p><p class="tl-org">NOCCCD</p></div>
         <div>
           <h3 class="tl-role">Physics Tutor — Cypress College</h3>
-          <p class="tl-desc">Created Python and Jupyter simulations visualizing electromagnetism, relativity, and thermodynamics across 40+ tutoring hours, contributing to 20% average improvement in student exam performance. Supported circuit analysis and instrumentation labs.</p>
+          <p class="tl-desc">Supported students in physics topics including mechanics, electromagnetism, circuits, relativity, and thermodynamics. Created MATLAB and Jupyter visualizations to make difficult concepts easier to understand, while developing stronger communication, patience, and teaching skills through 40+ tutoring hours.</p>
           <div class="tl-tags">
-            <span class="skill-tag b">Python</span><span class="skill-tag b">Jupyter</span>
-            <span class="skill-tag">Physics</span><span class="skill-tag">Circuit Fundamentals</span>
+            <span class="skill-tag">Teaching</span><span class="skill-tag">Communication</span>
+            <span class="skill-tag">Physics</span><span class="skill-tag b">Jupyter</span>
+            <span class="skill-tag">MATLAB</span><span class="skill-tag">Problem Solving</span>
           </div>
         </div>
       </div>
@@ -1015,9 +1014,12 @@
         <div><p class="tl-date">Jan – Dec 2024</p><p class="tl-org">Cypress College</p></div>
         <div>
           <h3 class="tl-role">Student Ambassador — Charger Experience</h3>
-          <p class="tl-desc">Automated student data processing with Python and SQL, built live web visualizations, and resolved 75+ cases per semester with a 30% reduction in processing time. Engaged 500+ prospective students at 12 outreach events.</p>
+          <p class="tl-desc">Helped prospective and current students navigate campus resources, events, and student services. Supported 75+ student cases per semester and engaged with 500+ prospective students through outreach events, while also improving internal workflows using Python, SQL, and live data visualizations.</p>
           <div class="tl-tags">
-            <span class="skill-tag b">Python</span><span class="skill-tag b">SQL</span><span class="skill-tag">Data Visualization</span>
+            <span class="skill-tag">Outreach</span><span class="skill-tag">Student Support</span>
+            <span class="skill-tag">Communication</span><span class="skill-tag">Leadership</span>
+            <span class="skill-tag b">Python</span><span class="skill-tag b">SQL</span>
+            <span class="skill-tag">Data Visualization</span>
           </div>
         </div>
       </div>
@@ -1074,14 +1076,14 @@
 <!-- ════════════════════ FOOTER ════════════════════ -->
 <footer>
   <div class="footer-inner">
-    <span class="footer-name">Jack Pham</span>
+
     <ul class="footer-links">
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
       <li><a href="#" data-email>Email</a></li>
       <li><a href="#" data-resume download>Resume</a></li>
     </ul>
-    <span class="footer-copy">Built with HTML · GitHub Pages</span>
+
   </div>
 </footer>
 
@@ -1090,16 +1092,15 @@
 <div class="modal-overlay" id="contactOverlay" onclick="closeContactOnBg(event)">
   <div class="modal" style="max-width:480px">
     <button class="modal-close" onclick="closeContactModal()">&#10005; close</button>
-    <p class="modal-type">Get in touch</p>
     <h3 style="margin-bottom:1.25rem">Let's connect</h3>
 
     <div style="display:flex;flex-direction:column;gap:.75rem">
 
-      <a href="#" data-email class="contact-option">
+      <a href="mailto:jack_pham@berkeley.edu" class="contact-option">
         <div class="contact-icon">&#9993;</div>
         <div>
-          <p class="contact-label">Email me directly</p>
-          <p class="contact-sub" data-email data-email-text="true">jack_pham@berkeley.edu</p>
+          <p class="contact-label">Email me</p>
+          <p class="contact-sub">jack_pham@berkeley.edu</p>
         </div>
         <span class="contact-arrow">&#8599;</span>
       </a>
@@ -1124,9 +1125,7 @@
 
     </div>
 
-    <p style="margin-top:1.5rem;font-size:.8rem;color:var(--muted2);font-family:var(--ui)">
-      I am open to internships, research collaborations, and interesting projects.
-    </p>
+
   </div>
 </div>
 
@@ -1144,7 +1143,7 @@
 ════════════════════════════════════════════════════════════ */
 const SITE_CONFIG = {
   avatarFile:  'assets/img/ava-1.jpg',        // change to your actual photo filename
-  resumeFile:  'assets/Pham_Jack_Resume.pdf', // change to your actual resume filename
+  resumeFile:  'assets/jack_pham_resume.pdf', // change to your actual resume filename
   email:       'jack_pham@berkeley.edu',
 };
 
@@ -1187,14 +1186,19 @@ async function loadJSON(path) {
 }
 
 /* ── Modal ── */
+let _savedScrollY = 0;
 function openModal(html) {
+  _savedScrollY = window.scrollY;
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.top = `-${_savedScrollY}px`;
   document.body.classList.add('modal-open');
 }
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
+  document.body.style.top = '';
+  window.scrollTo({ top: _savedScrollY, behavior: 'instant' });
 }
 function closeModalOnBg(e) {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
@@ -1283,9 +1287,40 @@ function buildProjectMoreBtn() {
   const div = document.createElement('div');
   div.className = 'pcard pcard-more';
   div.id = 'moreBtn';
-  div.onclick = showProjectArchive;
-  div.innerHTML = `<div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div><span class="pcard-more-label">View all projects</span>`;
+  div.onclick = openProjectsTable;
+  div.innerHTML = `
+    <div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div>
+    <span class="pcard-more-label">See more projects</span>
+    <span style="font-size:.7rem;color:var(--muted2);font-family:var(--ui)">click to see full list</span>`;
   return div;
+}
+
+function openProjectsTable() {
+  // Build table of ALL projects (shown + hidden)
+  const rows = allProjects.map(p => `
+    <tr class="proj-table-row" onclick="openProjectModal(window._allProjectsMap['${p.id}'])" style="cursor:pointer">
+      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--serif);font-size:.9rem;color:var(--ink)">${p.title}</td>
+      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--ui);font-size:.78rem;color:var(--muted);white-space:nowrap">${p.year}</td>
+      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--ui);font-size:.78rem;color:var(--muted)">${p.tags.join(', ')}</td>
+    </tr>`).join('');
+  // Store lookup map for row clicks
+  window._allProjectsMap = {};
+  allProjects.forEach(p => window._allProjectsMap[p.id] = p);
+
+  openModal(`
+    <h3 style="margin-bottom:1.5rem">All Projects</h3>
+    <table style="width:100%;border-collapse:collapse">
+      <thead>
+        <tr>
+          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Title</th>
+          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Year</th>
+          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Category</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <p style="margin-top:1rem;font-size:.75rem;color:var(--muted2);font-family:var(--ui)">Click any row to view project details.</p>
+  `);
 }
 
 function renderProjects() {
@@ -1357,26 +1392,33 @@ document.getElementById('projectFilterBar').addEventListener('click', e => {
   if (btn) filterProjects(btn.dataset.filter);
 });
 
-function showProjectArchive() {
-  document.getElementById('projectsArchive').style.display = 'block';
-  document.getElementById('moreBtn').style.display = 'none';
-}
-function hideProjectArchive() {
-  document.getElementById('projectsArchive').style.display = 'none';
-  const mb = document.getElementById('moreBtn');
-  if (mb) mb.style.display = '';
-  document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-}
+
 
 function openProjectModal(p) {
   const d = p.detail;
 
-  // Build extra sections if any
   const extraSections = (d.sections || []).map(s => `
     <div class="modal-section">
       <p class="modal-section-title">// ${s.title}</p>
       <p>${s.body}</p>
     </div>`).join('');
+
+  const resultsBlock = d.results ? `
+    <div class="modal-section">
+      <p class="modal-section-title">// Results</p>
+      <p>${d.results}</p>
+    </div>` : '';
+
+  // Links: use links array if present, else fall back to github string
+  let linksBlock = '';
+  if (d.links && d.links.length > 0) {
+    const linkBtns = d.links.map(l =>
+      `<a href="${l.url}" class="btn btn-resume" target="_blank" style="margin-right:.5rem;margin-bottom:.5rem">&#8599; ${l.label}</a>`
+    ).join('');
+    linksBlock = `<div style="margin-top:1.5rem;display:flex;flex-wrap:wrap">${linkBtns}</div>`;
+  } else if (p.github) {
+    linksBlock = `<div style="margin-top:1.5rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>`;
+  }
 
   openModal(`
     <p class="modal-type">${p.type} · ${p.year}</p>
@@ -1387,9 +1429,10 @@ function openProjectModal(p) {
     <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem}</p></div>
     <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach}</p></div>
     ${extraSections}
+    ${resultsBlock}
     <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status}</p></div>
+    ${linksBlock}
     ${renderMedia(d.media)}
-    ${p.github ? `<div style="margin-top:1.5rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>` : ''}
   `);
 }
 
@@ -1612,7 +1655,9 @@ async function loadIndexedItems(folder) {
 
 /* ── Contact modal ── */
 function openContactModal() {
+  _savedScrollY = window.scrollY;
   document.getElementById('contactOverlay').classList.add('open');
+  document.body.style.top = `-${_savedScrollY}px`;
   document.body.classList.add('modal-open');
   // Apply email/resume from config to contact modal elements
   document.querySelectorAll('#contactOverlay [data-email]').forEach(el => {
@@ -1623,6 +1668,8 @@ function openContactModal() {
 function closeContactModal() {
   document.getElementById('contactOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
+  document.body.style.top = '';
+  window.scrollTo({ top: _savedScrollY, behavior: 'instant' });
 }
 function closeContactOnBg(e) {
   if (e.target === document.getElementById('contactOverlay')) closeContactModal();
