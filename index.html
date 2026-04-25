@@ -453,9 +453,9 @@
      PROJECT GRID
   ═══════════════════════════════════════════════ */
   .projects-grid {
-    display: grid; grid-template-columns: repeat(3,1fr);
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1rem;
-    /* no background border — individual cards handle their own borders */
   }
   .pcard {
     background: var(--card-bg); padding: 1.5rem;
@@ -485,18 +485,25 @@
     transform: translateY(-2px);
   }
   /* No bottom accent line — card lift does the job */
-  .pcard.featured { grid-column: span 2; }
-  .pcard.featured .pcard-title { font-size: 1.35rem; }
+  /* featured spans 2 cols only on wide grids — JS adds/removes class by count */
+  .pcard.featured { grid-column: span 1; }
+  .pcard.featured .pcard-title { font-size: 1.2rem; }
+  @media (min-width: 700px) {
+    .pcard.featured.do-span { grid-column: span 2; }
+    .pcard.featured.do-span .pcard-title { font-size: 1.35rem; }
+  }
 
   .pcard-img {
-    width: 100%; height: 130px;
+    width: 100%; aspect-ratio: 16 / 7;
     border-radius: 3px; background: var(--bg3);
     display: flex; align-items: center; justify-content: center;
     color: var(--muted); font-family: var(--mono); font-size: .58rem;
     border: 1px solid var(--border); overflow: hidden; flex-shrink: 0;
   }
-  .pcard.featured .pcard-img { height: 170px; }
-  .pcard-img img { width: 100%; height: 100%; object-fit: cover; }
+  .pcard.featured .pcard-img { aspect-ratio: 16 / 6; }
+  .pcard-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* SVG diagrams scale naturally with width — no distortion */
+  .pcard-img img[src$=".svg"] { object-fit: contain; background: var(--bg2); padding: .5rem; }
 
   .pcard-meta { display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
   .pcard-type { font-family: var(--mono); font-size: .57rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
@@ -568,7 +575,9 @@
      NOTES / FIELD JOURNAL
   ═══════════════════════════════════════════════ */
   .notes-grid {
-    display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
   }
   .note-card {
     border: 1px solid var(--border); border-radius: var(--rad);
@@ -608,7 +617,11 @@
   /* ═══════════════════════════════════════════════
      LIFE / BEYOND
   ═══════════════════════════════════════════════ */
-  .life-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+  .life-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
   .life-card {
     border: 1px solid var(--border); border-radius: var(--rad);
     padding: 1.3rem 1rem; background: var(--card-bg);
@@ -635,10 +648,13 @@
   .modal-overlay {
     display: none; position: fixed; inset: 0; z-index: 500;
     background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
-    overflow-y: auto; padding: 2rem var(--gap);
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding: 2rem var(--gap);
     align-items: flex-start; justify-content: center;
   }
   .modal-overlay.open { display: flex; }
+  /* Prevent body scroll on iOS when modal open */
+  body.modal-open { overflow: hidden; position: fixed; width: 100%; }
   .modal {
     background: var(--bg2); border: 1px solid var(--border);
     border-radius: var(--rad); max-width: 740px; width: 100%;
@@ -674,11 +690,21 @@
   }
   .modal-section p { font-size: .9rem; color: var(--ink2); line-height: 1.82; white-space: pre-line; }
   .modal-img {
-    width: 100%; height: 200px; border-radius: 4px;
+    width: 100%; border-radius: 4px;
     background: var(--bg3); border: 1px solid var(--border);
     display: flex; align-items: center; justify-content: center;
     color: var(--muted); font-family: var(--mono); font-size: .6rem;
-    margin-top: 1.5rem;
+    margin-top: 1.5rem; min-height: 120px;
+  }
+  /* In renderMedia(), <img> and <iframe> are in <figure> — no .modal-img used */
+  .modal figure img {
+    width: 100%; height: auto; display: block;
+    border-radius: 6px; border: 1px solid var(--border);
+    max-height: 480px; object-fit: contain; background: var(--bg2);
+  }
+  .modal figure img[src$=".svg"] {
+    /* SVGs: let them breathe, no forced height */
+    max-height: none; padding: .5rem; background: var(--bg2);
   }
 
   /* ═══════════════════════════════════════════════
@@ -709,21 +735,43 @@
   /* ═══════════════════════════════════════════════
      RESPONSIVE
   ═══════════════════════════════════════════════ */
+  /* ════════ Notes archive list view ════════ */
+  .notes-archive-list {
+    border: 1px solid var(--border);
+    border-radius: var(--rad);
+    overflow: hidden;
+  }
+  .notes-archive-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background .18s;
+    background: var(--card-bg);
+  }
+  .notes-archive-row:last-child { border-bottom: none; }
+  .notes-archive-row:hover { background: var(--card-hov); }
+  .notes-archive-title {
+    font-family: var(--serif); font-size: .95rem;
+    color: var(--ink); font-weight: 600;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  [data-theme="light"] .notes-archive-row:hover { background: #FAFAFA; }
+
   @media (max-width: 900px) {
     .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    .projects-grid { grid-template-columns: 1fr 1fr; }
-    .pcard.featured { grid-column: span 2; }
-    .life-grid { grid-template-columns: repeat(2,1fr); }
-    .notes-grid { grid-template-columns: 1fr 1fr; }
+    /* auto-fill handles column count — no override needed */
+/* life-grid auto-fills */
+/* notes-grid auto-fills */
   }
   @media (max-width: 640px) {
     .hero-inner { grid-template-columns: 1fr; }
     .avatar-wrap { display: none; }
     .nav-links { display: none; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .pcard.featured { grid-column: span 1; }
+    /* auto-fill already collapses to 1 col at narrow width */
+
     .timeline-item { grid-template-columns: 1fr; gap: .35rem; }
-    .notes-grid, .life-grid { grid-template-columns: 1fr; }
+.notes-grid { grid-template-columns: 1fr; }
   }
   </style>
 </head>
@@ -785,7 +833,11 @@
       <div class="avatar-wrap reveal r2">
         <div class="avatar-box">
           <!-- Uncomment after adding ava-1.jpg to assets/img/ -->
-          <<img src="assets/img/ava-1.jpg" alt="Jack Pham">
+          <!-- <img src="assets/img/ava-1.jpg" alt="Jack Pham"> -->
+          <div class="avatar-placeholder">
+            <span>&#128100;</span>
+            assets/img/<br>ava-1.jpg
+          </div>
         </div>
       </div>
     </div>
@@ -876,7 +928,7 @@
     <div id="projectsArchive" style="display:none;margin-top:1px">
       <div class="projects-grid" id="archiveGrid"></div>
       <div style="text-align:center;padding:1.5rem 0">
-        <button class="btn btn-ghost" onclick="hideArchive()">&#8593; Show less</button>
+        <button class="btn btn-ghost" onclick="hideProjectArchive()">&#8593; Show less</button>
       </div>
     </div>
   </div>
@@ -967,6 +1019,11 @@
       <button class="filter-btn" data-filter="robotics">Robotics</button>
     </div>
     <div class="notes-grid" id="notesGrid"></div>
+
+    <!-- Archive: full list view, hidden by default -->
+    <div id="notesArchivePanel" style="display:none;margin-top:1.5rem">
+      <div id="notesArchiveList" class="notes-archive-list"></div>
+    </div>
   </div>
 </section>
 
@@ -988,7 +1045,7 @@
       <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
       <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
       <li><a href="mailto:jack_pham@berkeley.edu">Email</a></li>
-      <li><a href="assets/Pham_Jack_Resume.pdf" download>Resume</a></li>
+      <li><a href="assets/jack_pham_resume.pdf" download>Resume</a></li>
     </ul>
     <span class="footer-copy">Built with HTML · GitHub Pages</span>
   </div>
@@ -1024,23 +1081,64 @@ async function loadJSON(path) {
 function openModal(html) {
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
 }
 function closeModal() {
   document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
+  document.body.classList.remove('modal-open');
 }
 function closeModalOnBg(e) {
   if (e.target === document.getElementById('modalOverlay')) closeModal();
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-/* ════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════
+   MEDIA RENDERER
+   Renders image or YouTube embed from a media array
+════════════════════════════════════════════════════════════ */
+function getYouTubeId(url) {
+  const m = url.match(/(?:v=|youtu\.be\/)([^&?/]+)/);
+  return m ? m[1] : null;
+}
+
+function renderMedia(mediaArr) {
+  if (!mediaArr || mediaArr.length === 0) return '';
+  return mediaArr.map(m => {
+    if (m.type === 'youtube') {
+      const id = getYouTubeId(m.src);
+      if (!id) return '';
+      return `
+        <figure style="margin-top:1.5rem">
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
+            <iframe
+              src="https://www.youtube.com/embed/${id}"
+              style="position:absolute;top:0;left:0;width:100%;height:100%;border:none"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen loading="lazy">
+            </iframe>
+          </div>
+          ${m.caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);margin-top:.5rem;font-family:var(--ui);text-align:center">${m.caption}</figcaption>` : ''}
+        </figure>`;
+    }
+    if (m.type === 'image') {
+      return `
+        <figure style="margin-top:1.5rem">
+          <img src="${m.src}" alt="${m.caption || ''}"
+            style="width:100%;border-radius:8px;border:1px solid var(--border);display:block;object-fit:cover;max-height:360px"
+            onerror="this.parentElement.style.display='none'">
+          ${m.caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);margin-top:.5rem;font-family:var(--ui);text-align:center">${m.caption}</figcaption>` : ''}
+        </figure>`;
+    }
+    return '';
+  }).join('');
+}
+
+/* ════════════════════════════════════════════════════════════
    PROJECTS
-════════════════════════════════════════════ */
+════════════════════════════════════════════════════════════ */
 let allProjects = [];
 let projectFilter = 'all';
-const MAIN_LIMIT = 8;
+const PROJECT_LIMIT = 8;
 
 function buildProjectCard(p, featured) {
   const div = document.createElement('div');
@@ -1048,14 +1146,16 @@ function buildProjectCard(p, featured) {
   div.dataset.tags = p.tags.join(',');
   div.onclick = () => openProjectModal(p);
 
-  const badge = p.badge
-    ? `<span class="badge">${p.badge}</span>` : '';
-
+  const badge = p.badge ? `<span class="badge">${p.badge}</span>` : '';
   const ghLink = p.github
     ? `<a href="${p.github}" class="pcard-link" target="_blank" onclick="event.stopPropagation()">&#8599; GitHub</a>` : '';
 
+  const imgEl = p.image
+    ? `<div class="pcard-img"><img src="${p.image}" alt="${p.title}" onerror="this.parentElement.innerHTML='[ Image coming soon ]'"></div>`
+    : `<div class="pcard-img">[ Image placeholder ]</div>`;
+
   div.innerHTML = `
-    <div class="pcard-img">${p.image ? `<img src="${p.image}" alt="${p.title}">` : '[ Image placeholder ]'}</div>
+    ${imgEl}
     <div class="pcard-meta">
       <span class="pcard-type">${p.type}</span>
       <div style="display:flex;gap:.4rem;align-items:center">
@@ -1070,12 +1170,12 @@ function buildProjectCard(p, featured) {
   return div;
 }
 
-function buildMoreBtn() {
+function buildProjectMoreBtn() {
   const div = document.createElement('div');
   div.className = 'pcard pcard-more';
   div.id = 'moreBtn';
-  div.onclick = showArchive;
-  div.innerHTML = `<div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div><span class="pcard-more-label">Full archive</span>`;
+  div.onclick = showProjectArchive;
+  div.innerHTML = `<div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div><span class="pcard-more-label">View all projects</span>`;
   return div;
 }
 
@@ -1085,32 +1185,62 @@ function renderProjects() {
   grid.innerHTML = '';
   archive.innerHTML = '';
 
-  const show = allProjects.filter(p => p.show);
+  const shown  = allProjects.filter(p => p.show);
   const hidden = allProjects.filter(p => !p.show);
 
-  show.forEach((p, i) => {
+  shown.forEach((p, i) => {
     const card = buildProjectCard(p, i === 0);
-    // tag visibility
-    card.dataset.tags = p.tags.join(',');
+    // Only span 2 columns when there are 3+ visible cards (enough to fill row)
+    if (i === 0 && shown.length >= 3) card.classList.add('do-span');
     grid.appendChild(card);
   });
-  grid.appendChild(buildMoreBtn());
-
-  hidden.forEach(p => {
-    archive.appendChild(buildProjectCard(p, false));
-  });
+  if (hidden.length > 0) grid.appendChild(buildProjectMoreBtn());
+  hidden.forEach(p => archive.appendChild(buildProjectCard(p, false)));
 }
 
 function filterProjects(tag) {
   projectFilter = tag;
-  document.querySelectorAll('#projectFilterBar .filter-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.filter === tag);
-  });
-  document.querySelectorAll('#projectsGrid .pcard:not(.pcard-more)').forEach(card => {
-    if (tag === 'all') { card.style.display = ''; return; }
+  document.querySelectorAll('#projectFilterBar .filter-btn').forEach(b =>
+    b.classList.toggle('active', b.dataset.filter === tag));
+
+  const cards = document.querySelectorAll('#projectsGrid .pcard:not(.pcard-more)');
+  let visibleCount = 0;
+  cards.forEach(card => {
+    if (tag === 'all') { card.style.display = ''; visibleCount++; return; }
     const tags = (card.dataset.tags || '').split(',');
-    card.style.display = tags.includes(tag) ? '' : 'none';
+    const visible = tags.includes(tag);
+    card.style.display = visible ? '' : 'none';
+    if (visible) visibleCount++;
   });
+
+  // Featured card: only span when 3+ cards visible
+  const featured = document.querySelector('#projectsGrid .pcard.featured');
+  if (featured) featured.classList.toggle('do-span', visibleCount >= 3);
+
+  // More button: hide if no archived cards match
+  const moreBtn = document.getElementById('moreBtn');
+  if (moreBtn) {
+    if (tag === 'all') { moreBtn.style.display = ''; }
+    else {
+      const archiveHasMatch = allProjects.filter(p => !p.show)
+        .some(p => p.tags.includes(tag));
+      moreBtn.style.display = archiveHasMatch ? '' : 'none';
+    }
+  }
+
+  // Empty state
+  let emptyMsg = document.getElementById('projectsEmptyState');
+  if (visibleCount === 0) {
+    if (!emptyMsg) {
+      emptyMsg = document.createElement('p');
+      emptyMsg.id = 'projectsEmptyState';
+      emptyMsg.style.cssText = 'padding:2rem;color:var(--muted2);font-family:var(--ui);font-size:.85rem;grid-column:1/-1;text-align:center';
+      document.getElementById('projectsGrid').appendChild(emptyMsg);
+    }
+    emptyMsg.textContent = 'No projects in this category yet.';
+  } else if (emptyMsg) {
+    emptyMsg.remove();
+  }
 }
 
 document.getElementById('projectFilterBar').addEventListener('click', e => {
@@ -1118,18 +1248,27 @@ document.getElementById('projectFilterBar').addEventListener('click', e => {
   if (btn) filterProjects(btn.dataset.filter);
 });
 
-function showArchive() {
+function showProjectArchive() {
   document.getElementById('projectsArchive').style.display = 'block';
   document.getElementById('moreBtn').style.display = 'none';
 }
-function hideArchive() {
+function hideProjectArchive() {
   document.getElementById('projectsArchive').style.display = 'none';
-  document.getElementById('moreBtn').style.display = '';
+  const mb = document.getElementById('moreBtn');
+  if (mb) mb.style.display = '';
   document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
 }
 
 function openProjectModal(p) {
   const d = p.detail;
+
+  // Build extra sections if any
+  const extraSections = (d.sections || []).map(s => `
+    <div class="modal-section">
+      <p class="modal-section-title">// ${s.title}</p>
+      <p>${s.body}</p>
+    </div>`).join('');
+
   openModal(`
     <p class="modal-type">${p.type} · ${p.year}</p>
     <h3>${p.title}</h3>
@@ -1138,25 +1277,25 @@ function openProjectModal(p) {
     <div class="modal-section"><p class="modal-section-title">// Why I built it</p><p>${d.why}</p></div>
     <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem}</p></div>
     <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach}</p></div>
+    ${extraSections}
     <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status}</p></div>
-    <div class="modal-img">[ Image / diagram placeholder ]</div>
-    ${p.github ? `<div style="margin-top:1.25rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>` : ''}
+    ${renderMedia(d.media)}
+    ${p.github ? `<div style="margin-top:1.5rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>` : ''}
   `);
 }
 
-/* ════════════════════════════════════════════
-   NOTES
-════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   NOTES — archive is a list view, click to open modal
+════════════════════════════════════════════════════════════ */
 let allNotes = [];
-let notesShowAll = false;
 let notesFilter = 'all';
+let notesArchiveOpen = false;
 const NOTES_LIMIT = 3;
 
 function buildNoteCard(n) {
   const div = document.createElement('div');
   div.className = 'note-card';
   div.dataset.tag = n.tag;
-  div.dataset.highlighted = n.highlighted;
   div.onclick = () => openNoteModal(n);
   div.innerHTML = `
     <p class="note-date">${n.date}</p>
@@ -1170,30 +1309,71 @@ function buildNoteCard(n) {
   return div;
 }
 
+function getFilteredNotes() {
+  if (notesFilter === 'highlighted') return allNotes.filter(n => n.highlighted);
+  if (notesFilter !== 'all') return allNotes.filter(n => n.tag === notesFilter);
+  return allNotes;
+}
+
 function renderNotes() {
   const grid = document.getElementById('notesGrid');
   grid.innerHTML = '';
 
-  let filtered = allNotes;
-  if (notesFilter === 'highlighted') {
-    filtered = allNotes.filter(n => n.highlighted);
-  } else if (notesFilter !== 'all') {
-    filtered = allNotes.filter(n => n.tag === notesFilter);
+  const filtered = getFilteredNotes();
+  // Show only up to NOTES_LIMIT — no placeholders if fewer exist
+  const shown = filtered.slice(0, NOTES_LIMIT);
+
+  if (shown.length === 0) {
+    const msg = document.createElement('p');
+    msg.style.cssText = 'padding:1.5rem 0;color:var(--muted2);font-family:var(--ui);font-size:.85rem;';
+    msg.textContent = 'No notes in this category yet.';
+    grid.appendChild(msg);
+  } else {
+    shown.forEach(n => grid.appendChild(buildNoteCard(n)));
   }
 
-  // Sort: recent first (by index, since JSON is ordered by date desc)
-  const shown = notesShowAll ? filtered : filtered.slice(0, NOTES_LIMIT);
-  shown.forEach(n => grid.appendChild(buildNoteCard(n)));
-
-  const btn = document.getElementById('notesArchiveBtn');
-  btn.textContent = notesShowAll ? '&#8593; Show less' : 'Full archive &#8594;';
-  btn.innerHTML   = notesShowAll ? '&#8593; Show less' : 'Full archive &#8594;';
+  // Update archive button visibility
+  const archiveBtn = document.getElementById('notesArchiveBtn');
+  archiveBtn.style.display = filtered.length > NOTES_LIMIT ? '' : 'none';
 }
 
-function toggleNotesArchive() {
-  notesShowAll = !notesShowAll;
-  renderNotes();
-  if (!notesShowAll) document.getElementById('notes').scrollIntoView({ behavior: 'smooth' });
+function renderNotesArchive() {
+  // Archive = full list view with titles only, click to open modal
+  const filtered = getFilteredNotes();
+  const list = document.getElementById('notesArchiveList');
+  list.innerHTML = '';
+  filtered.forEach(n => {
+    const row = document.createElement('div');
+    row.className = 'notes-archive-row';
+    row.onclick = () => openNoteModal(n);
+    row.innerHTML = `
+      <div style="display:flex;align-items:center;gap:1rem;flex:1;min-width:0">
+        <span class="note-tag" style="flex-shrink:0">${n.tag}</span>
+        <span class="notes-archive-title">${n.title}</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;flex-shrink:0">
+        ${n.highlighted ? '<span class="note-highlight">&#9733;</span>' : ''}
+        <span class="note-date">${n.date}</span>
+        <span style="color:var(--muted2);font-size:.75rem">&#8594;</span>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function openNotesArchive() {
+  notesArchiveOpen = true;
+  renderNotesArchive();
+  document.getElementById('notesArchivePanel').style.display = 'block';
+  document.getElementById('notesArchiveBtn').innerHTML = '&#8593; Show less';
+  document.getElementById('notesArchiveBtn').onclick = closeNotesArchive;
+}
+function closeNotesArchive() {
+  notesArchiveOpen = false;
+  document.getElementById('notesArchivePanel').style.display = 'none';
+  document.getElementById('notesArchiveBtn').innerHTML = 'View all &#8594;';
+  document.getElementById('notesArchiveBtn').onclick = openNotesArchive;
+  document.getElementById('notes').scrollIntoView({ behavior: 'smooth' });
 }
 
 document.getElementById('notesFilterBar').addEventListener('click', e => {
@@ -1202,33 +1382,42 @@ document.getElementById('notesFilterBar').addEventListener('click', e => {
   notesFilter = btn.dataset.filter;
   document.querySelectorAll('#notesFilterBar .filter-btn').forEach(b =>
     b.classList.toggle('active', b.dataset.filter === notesFilter));
-  notesShowAll = false;
   renderNotes();
+  if (notesArchiveOpen) renderNotesArchive();
 });
 
 function openNoteModal(n) {
   openModal(`
     <p class="modal-type">Field Note · ${n.date}</p>
     <h3>${n.title}</h3>
-    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.25rem">
+    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.25rem;flex-wrap:wrap">
       <span class="note-tag">${n.tag}</span>
       ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
     </div>
-    <div class="modal-section"><p class="modal-section-title">// Note</p><p>${n.detail.body}</p></div>
+    <div class="modal-section">
+      <p class="modal-section-title">// Note</p>
+      <p>${(n.detail.body || '').replace(/\n\n/g, '<br><br>')}</p>
+    </div>
+    ${renderMedia(n.detail.media)}
   `);
 }
 
-/* ════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════
    LIFE
-════════════════════════════════════════════ */
+════════════════════════════════════════════════════════════ */
 function renderLife(data) {
   const grid = document.getElementById('lifeGrid');
+  grid.innerHTML = '';
   data.forEach(item => {
     const div = document.createElement('div');
     div.className = 'life-card';
     div.onclick = () => openModal(`
-      <h3 style="font-size:1.5rem;margin-bottom:.75rem">${item.icon} ${item.title}</h3>
-      <div class="modal-section"><p class="modal-section-title">// About</p><p>${item.detail.body}</p></div>
+      <h3 style="margin-bottom:.75rem">${item.icon} ${item.title}</h3>
+      <div class="modal-section">
+        <p class="modal-section-title">// About</p>
+        <p>${(item.detail.body || '').replace(/\n\n/g, '<br><br>')}</p>
+      </div>
+      ${renderMedia(item.detail.media)}
     `);
     div.innerHTML = `
       <div class="life-icon">${item.icon}</div>
@@ -1239,9 +1428,9 @@ function renderLife(data) {
   });
 }
 
-/* ════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════
    SCROLL REVEAL
-════════════════════════════════════════════ */
+════════════════════════════════════════════════════════════ */
 function initReveal() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
@@ -1263,29 +1452,53 @@ function initReveal() {
   });
 }
 
-/* ════════════════════════════════════════════
-   INIT — load all JSON data files
-════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════
+   INIT — loads from data/projects/, data/notes/, data/life/
+════════════════════════════════════════════════════════════ */
+async function loadJSON(path) {
+  const r = await fetch(path);
+  if (!r.ok) throw new Error('Failed: ' + path);
+  return r.json();
+}
+
+async function loadIndexedItems(folder) {
+  const index = await loadJSON(`data/${folder}/index.json`);
+  const items = await Promise.all(
+    index.map(entry => {
+      const id = typeof entry === 'string' ? entry : entry.id;
+      return loadJSON(`data/${folder}/${id}.json`)
+        .then(item => ({ ...item, ...(typeof entry === 'object' ? entry : {}) }));
+    })
+  );
+  return items;
+}
+
 async function init() {
   try {
-    const [projects, notes, life] = await Promise.all([
-      loadJSON('data/projects.json'),
-      loadJSON('data/notes.json'),
-      loadJSON('data/life.json'),
+    const [projectIndex, noteIndex, lifeItems] = await Promise.all([
+      loadIndexedItems('projects'),
+      loadIndexedItems('notes'),
+      loadIndexedItems('life'),
     ]);
 
-    allProjects = projects.sort((a, b) => a.rank - b.rank);
-    allNotes    = notes;
+    // Projects — sort by rank, respect show flag
+    allProjects = projectIndex.sort((a, b) => (a.rank || 99) - (b.rank || 99));
+
+    // Notes — keep index order, filter show flag
+    allNotes = noteIndex.filter(n => n.show !== false);
 
     renderProjects();
     renderNotes();
-    renderLife(life);
+    renderLife(lifeItems);
     initReveal();
+
+    // Init notes archive button
+    document.getElementById('notesArchiveBtn').onclick = openNotesArchive;
+
   } catch (err) {
     console.error('Data load error:', err);
-    // Graceful fallback message
     document.getElementById('projectsGrid').innerHTML =
-      '<p style="padding:2rem;color:var(--muted);font-family:var(--mono);font-size:.75rem">Loading projects... (run via a local server or GitHub Pages)</p>';
+      '<p style="padding:2rem;color:var(--muted);font-family:var(--ui);font-size:.8rem">Run via GitHub Pages or a local server to load content.</p>';
   }
 }
 
