@@ -1,0 +1,96 @@
+<svg viewBox="0 0 860 360" xmlns="http://www.w3.org/2000/svg"
+  font-family="'Libre Franklin','Franklin Gothic',Arial,sans-serif">
+  <defs>
+    <marker id="ros-arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0.5 L6,3 L0,5.5" fill="none" stroke="#326891" stroke-width="1.2"/>
+    </marker>
+    <marker id="ros-arr-g" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0.5 L6,3 L0,5.5" fill="none" stroke="#666" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <rect width="860" height="360" fill="#F7F5F0"/>
+  <line x1="28" y1="18" x2="832" y2="18" stroke="#121212" stroke-width="1.5"/>
+  <text x="430" y="40" text-anchor="middle"
+    font-family="'Playfair Display','Georgia',serif"
+    font-size="13" font-weight="700" fill="#121212" letter-spacing="0.04em">
+    ROS TASK ALLOCATION PIPELINE
+  </text>
+  <line x1="28" y1="50" x2="832" y2="50" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- ── Node boxes ── -->
+  <!-- 1. Input node -->
+  <rect x="28" y="70" width="148" height="80" rx="3" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="28" y1="70" x2="176" y2="70" stroke="#326891" stroke-width="2"/>
+  <text x="102" y="92" text-anchor="middle" font-size="8" font-weight="600" fill="#666" letter-spacing="0.07em">INPUT</text>
+  <text x="102" y="108" text-anchor="middle" font-size="9" font-weight="600" fill="#121212">Environment</text>
+  <text x="102" y="120" text-anchor="middle" font-size="8" fill="#666">robots, tasks, map</text>
+  <text x="102" y="132" text-anchor="middle" font-size="7.5" fill="#999" font-family="'Courier New',monospace">/env_state</text>
+
+  <!-- arrow 1→2 -->
+  <line x1="176" y1="110" x2="200" y2="110" stroke="#326891" stroke-width="1" marker-end="url(#ros-arr)"/>
+
+  <!-- 2. Allocator node -->
+  <rect x="202" y="70" width="160" height="80" rx="3" fill="#FFF" stroke="#326891" stroke-width="1"/>
+  <line x1="202" y1="70" x2="362" y2="70" stroke="#326891" stroke-width="2"/>
+  <text x="282" y="92" text-anchor="middle" font-size="8" font-weight="600" fill="#666" letter-spacing="0.07em">ROS NODE</text>
+  <text x="282" y="108" text-anchor="middle" font-size="9" font-weight="600" fill="#121212">task_allocator</text>
+  <text x="282" y="120" text-anchor="middle" font-size="8" fill="#666">cvxpy solver runs here</text>
+  <text x="282" y="132" text-anchor="middle" font-size="7.5" fill="#326891" font-family="'Courier New',monospace">minimize cost + fairness</text>
+
+  <!-- arrow 2→3 -->
+  <line x1="362" y1="110" x2="386" y2="110" stroke="#326891" stroke-width="1" marker-end="url(#ros-arr)"/>
+
+  <!-- 3. Assignment publisher -->
+  <rect x="388" y="70" width="160" height="80" rx="3" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="388" y1="70" x2="548" y2="70" stroke="#326891" stroke-width="2"/>
+  <text x="468" y="92" text-anchor="middle" font-size="8" font-weight="600" fill="#666" letter-spacing="0.07em">PUBLISHER</text>
+  <text x="468" y="108" text-anchor="middle" font-size="9" font-weight="600" fill="#121212">Assignment Topics</text>
+  <text x="468" y="120" text-anchor="middle" font-size="7.5" fill="#999" font-family="'Courier New',monospace">/robot_1/goal</text>
+  <text x="468" y="132" text-anchor="middle" font-size="7.5" fill="#999" font-family="'Courier New',monospace">/robot_2/goal  ···</text>
+
+  <!-- arrow 3→4 -->
+  <line x1="548" y1="110" x2="572" y2="110" stroke="#326891" stroke-width="1" marker-end="url(#ros-arr)"/>
+
+  <!-- 4. Robot subscribers -->
+  <rect x="574" y="70" width="258" height="80" rx="3" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="574" y1="70" x2="832" y2="70" stroke="#326891" stroke-width="2"/>
+  <text x="703" y="92" text-anchor="middle" font-size="8" font-weight="600" fill="#666" letter-spacing="0.07em">SUBSCRIBERS</text>
+  <text x="703" y="108" text-anchor="middle" font-size="9" font-weight="600" fill="#121212">Robot Controllers</text>
+  <text x="703" y="120" text-anchor="middle" font-size="8" fill="#666">each robot follows its assigned goal</text>
+  <text x="703" y="132" text-anchor="middle" font-size="7.5" fill="#999" font-family="'Courier New',monospace">move_base / nav_stack</text>
+
+  <!-- ── Second layer: feedback loop ── -->
+  <text x="430" y="178" text-anchor="middle" font-size="8.5" font-weight="600" fill="#666" letter-spacing="0.06em">TOPIC FLOW</text>
+  <line x1="28" y1="184" x2="832" y2="184" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- Topic rows -->
+  <!-- Row 1 -->
+  <rect x="28" y="192" width="804" height="28" rx="2" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="44" y="210" font-size="8.5" font-weight="600" fill="#326891" font-family="'Courier New',monospace">/env_state</text>
+  <text x="180" y="210" font-size="8" fill="#666">→ Published by environment node. Contains robot positions, task locations, map boundaries.</text>
+
+  <!-- Row 2 -->
+  <rect x="28" y="222" width="804" height="28" rx="2" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="44" y="240" font-size="8.5" font-weight="600" fill="#326891" font-family="'Courier New',monospace">/allocation_result</text>
+  <text x="180" y="240" font-size="8" fill="#666">→ Published by task_allocator. Matrix X where X[i][j] = 1 means robot i is assigned to task j.</text>
+
+  <!-- Row 3 -->
+  <rect x="28" y="252" width="804" height="28" rx="2" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="44" y="270" font-size="8.5" font-weight="600" fill="#326891" font-family="'Courier New',monospace">/robot_N/goal</text>
+  <text x="180" y="270" font-size="8" fill="#666">→ One topic per robot. Parsed from allocation_result. Consumed by each robot's navigation stack.</text>
+
+  <!-- Row 4 -->
+  <rect x="28" y="282" width="804" height="28" rx="2" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="44" y="300" font-size="8.5" font-weight="600" fill="#326891" font-family="'Courier New',monospace">/robot_N/status</text>
+  <text x="180" y="300" font-size="8" fill="#666">→ Published by each robot. Signals task completion back to the allocator for replanning.</text>
+
+  <!-- ── Bottom note ── -->
+  <line x1="28" y1="322" x2="832" y2="322" stroke="#E2E2E2" stroke-width="0.75"/>
+  <rect x="28" y="330" width="804" height="22" fill="#FFF" stroke="none"/>
+  <text x="44" y="345" font-size="9" fill="#666">
+    <tspan font-weight="600" fill="#121212">Simulation: </tspan>
+    Gazebo publishes sensor data and robot state. task_allocator runs the cvxpy solve and publishes goals. Robots navigate using ROS move_base.
+  </text>
+  <line x1="28" y1="354" x2="832" y2="354" stroke="#E2E2E2" stroke-width="0.75"/>
+</svg>
