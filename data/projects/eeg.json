@@ -2,36 +2,19 @@
   "id": "eeg",
   "tags": ["signals", "ai-ml"],
   "type": "Signals · Machine Learning",
-  "year": "April 2026",
+  "year": "Spring 2026",
   "badge": "",
-  "title": "EEG Attention Detection System",
-  "desc": "ML pipeline classifying attention states from EEG brainwave data. Detects when someone is engaged or mentally checked out while viewing visual content. ~64% accuracy across unseen subjects.",
+  "title": "EEG Attention Detection",
+  "desc": "ML pipeline classifying attention states from EEG brainwave data. Detects engagement vs low attention while viewing visual content. ~64% accuracy across unseen subjects.",
   "tags_display": ["Python", "EEG", "Signal Processing", "XGBoost", "ML"],
   "github": "https://github.com/andersvestrum/eeg-attention-analysis",
   "image": "",
   "detail": {
-    "summary": "Analyzes EEG brainwave data to detect when someone is engaged or mentally checked out while looking at visual content. We were interested in what happens during doomscrolling — where someone keeps watching but is not fully engaged.",
-    "why": "The goal was to see if brain signals alone can tell the difference between active thinking and passive attention, using only frequency-band features without complex deep learning.",
-    "problem": "EEG signals are noisy and highly person-specific. Feature choice matters more than model complexity, and real data requires careful preprocessing before any classification is meaningful.",
-    "approach": "Pipeline: raw EEG recordings -> short time windows -> frequency band features (Theta 4-7 Hz, Alpha 8-12 Hz, Beta 13-30 Hz). Features like alpha power, beta power, and alpha/beta ratio represent different brain states. Higher alpha = more idle. Higher beta = more active thinking. We compared Logistic Regression vs XGBoost. XGBoost reached ~64% accuracy on unseen subjects.",
-    "status": "Completed.",
+    "body": "Spring 2026 · Signals · Machine Learning\n\nFull project and code: https://github.com/andersvestrum/eeg-attention-analysis\n\nProject hosted on a collaborator's repository. We led development and analysis.\n\n[SECTION: What this is]\n\nThis project analyzes EEG brainwave data to detect when someone is engaged or mentally checked out while looking at visual content.\n\n[SECTION: Why we built this]\n\nWe were interested in what happens during attention and low engagement, especially in cases like doomscrolling where someone keeps watching but is not fully engaged.\n\nThe goal was to see if brain signals alone can tell the difference between active thinking and passive attention.\n\n[SECTION: What we learned]\n\nWe learned that brain signals are noisy, but patterns still exist if the data is represented correctly.\n\n- Feature choice matters more than model complexity\n- Different brain states can be separated using frequency bands\n- Real data requires careful preprocessing\n\n[SECTION: How it works]\n\nThe pipeline starts with raw EEG recordings. The signals are split into short time windows and converted into features based on frequency bands.\n\nKey bands:\n- Theta (4-7 Hz)\n- Alpha (8-12 Hz)\n- Beta (13-30 Hz)\n\n[IMAGE: assets/img/eeg-frequency-bands.png | Frequency band features extracted from EEG signals]\n\nFrom these, features like alpha power, beta power, and alpha/beta ratio are computed.\n\nThese features represent different brain states:\n- Higher alpha = more idle or low engagement\n- Higher beta = more active thinking\n\nNext, the data is used to train machine learning models. We compared Logistic Regression and XGBoost.\n\n[IMAGE: assets/img/eeg-model-results.png | Model performance comparison]\n\nThe final model (XGBoost) reached about 64% accuracy on unseen subjects, showing that it learned meaningful patterns in the data.\n\n[SECTION: Results]\n\n- ~64% classification accuracy\n- Alpha and beta bands were the most useful features\n- Model generalized across different subjects\n\n[SECTION: Conclusion]\n\nThis project helped us understand how signal processing and machine learning can work together to extract meaning from biological data.\n\nThese ideas can be used in brain-computer interfaces, attention monitoring systems, and adaptive user interfaces.",
     "links": [
       { "label": "GitHub (collaborator repo)", "url": "https://github.com/andersvestrum/eeg-attention-analysis" }
     ],
-    "results": "~64% classification accuracy on unseen subjects. Alpha and beta bands were the most useful features. The model generalized across different subjects, showing it learned meaningful patterns rather than overfitting.",
-    "sections": [
-      {
-        "title": "What we learned",
-        "body": "Feature choice matters more than model complexity. Different brain states can be separated using frequency bands alone. Real data requires careful preprocessing — without it, accuracy dropped to ~51%, barely above chance."
-      },
-      {
-        "title": "Broader applications",
-        "body": "These ideas apply to brain-computer interfaces, attention monitoring systems, and adaptive user interfaces where the system adjusts based on the user's cognitive state."
-      }
-    ],
-    "media": [
-      { "type": "image", "src": "assets/img/eeg-frequency-bands.png", "caption": "Frequency band features extracted from EEG signals" },
-      { "type": "image", "src": "assets/img/eeg-model-results.png", "caption": "Model performance comparison: Logistic Regression vs XGBoost" }
-    ]
+    "status": "Completed.",
+    "tags_display": ["Python", "EEG", "Signal Processing", "Machine Learning", "XGBoost", "Data Analysis", "Neuroscience"]
   }
 }

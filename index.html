@@ -1397,6 +1397,42 @@ document.getElementById('projectFilterBar').addEventListener('click', e => {
 function openProjectModal(p) {
   const d = p.detail;
 
+  // Links block
+  let linksBlock = '';
+  if (d.links && d.links.length > 0) {
+    const linkBtns = d.links.map(l =>
+      `<a href="${l.url}" class="btn btn-resume" target="_blank"
+        style="margin-right:.5rem;margin-bottom:.5rem">&#8599; ${l.label}</a>`
+    ).join('');
+    linksBlock = `<div style="margin-top:1.5rem;display:flex;flex-wrap:wrap">${linkBtns}</div>`;
+  } else if (p.github) {
+    linksBlock = `<div style="margin-top:1.5rem">
+      <a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>`;
+  }
+
+  // Tags to display (prefer detail override if present)
+  const displayTags = (d.tags_display || p.tags_display || []);
+
+  // If the project has a body string, use the rich body renderer
+  if (d.body) {
+    const bodyHtml = renderProjectBody(d.body);
+    openModal(`
+      <p class="modal-type">${p.type} · ${p.year}</p>
+      <h3 style="margin-bottom:.75rem">${p.title}</h3>
+      <div class="modal-tags" style="margin-bottom:1.25rem">
+        ${displayTags.map(t => `<span class="pcard-tag">${t}</span>`).join('')}
+      </div>
+      ${bodyHtml}
+      <div class="modal-section" style="margin-top:1.25rem">
+        <p class="modal-section-title">// Status</p>
+        <p>${d.status || ''}</p>
+      </div>
+      ${linksBlock}
+    `);
+    return;
+  }
+
+  // Legacy format (summary/why/problem/approach fields)
   const extraSections = (d.sections || []).map(s => `
     <div class="modal-section">
       <p class="modal-section-title">// ${s.title}</p>
@@ -1409,31 +1445,94 @@ function openProjectModal(p) {
       <p>${d.results}</p>
     </div>` : '';
 
-  // Links: use links array if present, else fall back to github string
-  let linksBlock = '';
-  if (d.links && d.links.length > 0) {
-    const linkBtns = d.links.map(l =>
-      `<a href="${l.url}" class="btn btn-resume" target="_blank" style="margin-right:.5rem;margin-bottom:.5rem">&#8599; ${l.label}</a>`
-    ).join('');
-    linksBlock = `<div style="margin-top:1.5rem;display:flex;flex-wrap:wrap">${linkBtns}</div>`;
-  } else if (p.github) {
-    linksBlock = `<div style="margin-top:1.5rem"><a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>`;
-  }
-
   openModal(`
     <p class="modal-type">${p.type} · ${p.year}</p>
     <h3>${p.title}</h3>
-    <div class="modal-tags">${p.tags_display.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
-    <div class="modal-section"><p class="modal-section-title">// Summary</p><p>${d.summary}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Why I built it</p><p>${d.why}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach}</p></div>
+    <div class="modal-tags">${displayTags.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
+    <div class="modal-section"><p class="modal-section-title">// Summary</p><p>${d.summary || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Why I built it</p><p>${d.why || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach || ''}</p></div>
     ${extraSections}
     ${resultsBlock}
-    <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status}</p></div>
+    <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status || ''}</p></div>
     ${linksBlock}
-    ${renderMedia(d.media)}
+    ${renderMedia(d.media || [])}
   `);
+}
+
+/* ── Project body renderer ─────────────────────────────────────────────────
+   Parses the body string with [SECTION: ...] and [IMAGE: src | caption] markers
+   and renders them in order, exactly as placed in the JSON.
+──────────────────────────────────────────────────────────────────────────── */
+function renderProjectBody(body) {
+  return body.split('\n\n').map(chunk => {
+    const t = chunk.trim();
+    if (!t) return '';
+
+    // Section header
+    if (t.startsWith('[SECTION:')) {
+      const title = t.replace('[SECTION:', '').replace(']', '').trim();
+      return `<div class="modal-section" style="margin-top:1.5rem">
+        <p class="modal-section-title">// ${title}</p>`;
+      // Note: section div is closed by next non-section block — we handle
+      // this by wrapping everything in a flat stream instead
+    }
+
+    // Image marker: [IMAGE: path | caption]
+    if (t.startsWith('[IMAGE:')) {
+      const inner = t.replace('[IMAGE:', '').replace(']', '').trim();
+      const [src, caption] = inner.split('|').map(s => s.trim());
+      return `<figure style="margin:.75rem 0 1rem">
+        <img src="${src}" alt="${caption || ''}"
+          style="width:100%;border-radius:6px;border:1px solid var(--border);
+                 display:block;object-fit:cover;max-height:400px"
+          onerror="this.parentElement.style.display='none'">
+        ${caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);
+          margin-top:.4rem;font-family:var(--ui);text-align:center">${caption}</figcaption>` : ''}
+      </figure>`;
+    }
+
+    // URL-only line — render as a link
+    if (/^https?:\/\/\S+$/.test(t)) {
+      return `<p style="margin:.3rem 0;font-family:var(--mono);font-size:.75rem">
+        <a href="${t}" target="_blank" style="color:var(--accent)">${t}</a></p>`;
+    }
+
+    // Line containing a URL with label prefix (e.g. "View ... → https://...")
+    if (t.includes('https://') && (t.includes('→') || t.includes(':'))) {
+      const urlMatch = t.match(/(https?:\/\/\S+)/);
+      if (urlMatch) {
+        const url = urlMatch[1];
+        const label = t.replace(url, '').replace(/[→:]+$/, '').trim();
+        return `<p style="margin:.4rem 0;font-size:.88rem;color:var(--ink2)">
+          ${label ? label + ' ' : ''}
+          <a href="${url}" target="_blank"
+            style="color:var(--accent);font-family:var(--mono);font-size:.78rem">${url}</a></p>`;
+      }
+    }
+
+    // Bullet list lines (starts with -)
+    if (t.startsWith('- ')) {
+      const items = t.split('\n').filter(l => l.startsWith('- '));
+      const lis = items.map(l =>
+        `<li style="margin-bottom:.3rem">${l.slice(2)}</li>`).join('');
+      return `<ul style="margin:.5rem 0 .75rem 1.25rem;font-size:.9rem;
+        color:var(--ink2);line-height:1.75">${lis}</ul>`;
+    }
+
+    // Formula heuristic (short, contains math chars)
+    const hasMath = /[=→·^ᵀ‖∑Σεᵢ]/.test(t);
+    const isShort = t.split(' ').length < 16;
+    if (hasMath && isShort) {
+      return `<p class="note-formula">${t}</p>`;
+    }
+
+    // Default paragraph
+    return `<p style="margin-bottom:.75rem;font-size:.93rem;
+      color:var(--ink2);line-height:1.82">${t}</p>`;
+
+  }).join('');
 }
 
 /* ════════════════════════════════════════════════════════════

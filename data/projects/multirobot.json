@@ -10,26 +10,13 @@
   "github": "https://github.com/jackpham-rgb/area-disaster-response",
   "image": "",
   "detail": {
-    "summary": "A research framework for coordinating multiple robots to complete tasks efficiently in search-and-rescue scenarios. The goal is to assign tasks and plan paths so robots cover more area with less overlap and fairer workload distribution.",
-    "why": "I wanted to understand how robot teams can work better together. More robots should help, but only if tasks are assigned well. This project explored task allocation using optimization, reinforcement learning, and fairness so the system could be faster while keeping work balanced across robots.",
-    "problem": "Scaling path-planning optimization to many robots within real-time constraints. Traditional approaches become computationally intractable at scale, and naive allocation overloads some robots while others sit idle.",
-    "approach": "The system defines robots, tasks, and environment. Task allocation is solved using cvxpy, minimizing travel cost, overlap, and unfair workload distribution. Assignments are passed into ROS where robots follow their assigned tasks. The system is validated in Gazebo simulation before deployment.",
-    "status": "Completed. Presented at UT Austin, SCCUR, and STARS 2024.",
+    "body": "Summer 2024 · TACC · Cyberinfrastructure Research 4 Social Change · Robotics\n\nView the GitHub and documentation for this project: https://github.com/jackpham-rgb/area-disaster-response\n\n[SECTION: What this is]\n\nThis project focused on helping multiple robots divide tasks more efficiently. The goal was to improve coordination for search-and-rescue style scenarios, where robots need to cover large areas without wasting time or repeating the same work.\n\n[SECTION: Why I built this]\n\nI wanted to understand how robot teams can work better together. More robots should help, but only if the tasks are assigned well.\n\nThis project looked at task allocation using optimization, reinforcement learning, and fairness, so the system could be faster while also keeping work balanced across robots.\n\n[SECTION: What I learned]\n\nI learned that multi-robot systems are not just about movement. They are also about decision-making, coordination, and fairness.\n\nA good system should not only finish quickly. It should also avoid overloading one robot while others do less.\n\n[SECTION: How it works]\n\nFirst, the system defines the robots, tasks, and environment.\n\n[IMAGE: assets/img/multi-robot-system-overview.png | Overview of robots, task locations, and the coordination pipeline]\n\nThen the task allocation problem is solved using cvxpy. The goal is to assign tasks in a way that reduces travel cost, overlap, and unfair workload distribution.\n\n[IMAGE: assets/img/task-allocation-optimization.png | Example of optimized task assignment across multiple robots]\n\nAfter that, the assignments are passed into ROS, where the robots can follow their assigned tasks.\n\n[IMAGE: assets/img/ros-task-pipeline.png | ROS pipeline connecting task allocation to robot control]\n\nThe system is simulated so different scenarios can be tested before using real robots.\n\n[IMAGE: assets/img/robot-simulation.png | Multi-robot simulation]\n\n[SECTION: Results]\n\nThe framework improved task allocation efficiency by about 70% and reduced planning time by about 45% compared to baseline methods.\n\n[SECTION: Conclusion]\n\nThis project helped me understand how coordination works at scale. It is not just about making one robot perform well, but making a system of robots work together efficiently.\n\nThese ideas can be used in other areas like distributed systems, swarm robotics, logistics, and large-scale scheduling. It also connects to future work in embedded and real-world robotics where decisions need to be made quickly with limited resources.",
     "links": [
       { "label": "GitHub + Documentation", "url": "https://github.com/jackpham-rgb/area-disaster-response" },
       { "label": "Research Notebook", "url": "https://github.com/jackpham-rgb/area-disaster-response/blob/main/disaster_response.ipynb" },
       { "label": "Research Paper (PDF)", "url": "https://github.com/jackpham-rgb/area-disaster-response/blob/main/REU%20paper.pdf" }
     ],
-    "results": "The framework improved task allocation efficiency by about 70% and reduced planning time by about 45% compared to baseline methods.",
-    "sections": [
-      { "title": "What I learned", "body": "Multi-robot systems are not just about movement. They are also about decision-making, coordination, and fairness. A good system should not only finish quickly, it should also avoid overloading one robot while others do less." },
-      { "title": "Broader applications", "body": "These ideas connect to distributed systems, swarm robotics, logistics, and large-scale scheduling. They also apply to future work in embedded and real-world robotics where decisions need to be made quickly with limited resources." }
-    ],
-    "media": [
-      { "type": "image", "src": "assets/img/multi-robot-system-overview.png", "caption": "Overview of robots, task locations, and the coordination pipeline" },
-      { "type": "image", "src": "assets/img/task-allocation-optimization.png", "caption": "Example of optimized task assignment across multiple robots" },
-      { "type": "image", "src": "assets/img/ros-task-pipeline.png", "caption": "ROS pipeline connecting task allocation to robot control" },
-      { "type": "image", "src": "assets/img/robot-simulation.png", "caption": "Multi-robot simulation" }
-    ]
+    "status": "Completed. Presented at UT Austin, SCCUR, and STARS 2024.",
+    "tags_display": ["ROS", "Python", "cvxpy", "Gazebo", "High Performance Computing (HPC)"]
   }
 }
