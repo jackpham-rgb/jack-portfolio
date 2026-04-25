@@ -1,0 +1,172 @@
+<svg viewBox="0 0 860 380" xmlns="http://www.w3.org/2000/svg"
+  font-family="'Libre Franklin','Franklin Gothic',Arial,sans-serif">
+  <rect width="860" height="380" fill="#F7F5F0"/>
+  <line x1="28" y1="18" x2="832" y2="18" stroke="#121212" stroke-width="1.5"/>
+  <text x="430" y="40" text-anchor="middle"
+    font-family="'Playfair Display','Georgia',serif"
+    font-size="13" font-weight="700" fill="#121212" letter-spacing="0.04em">
+    MULTI-ROBOT SYSTEM OVERVIEW
+  </text>
+  <line x1="28" y1="50" x2="832" y2="50" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- ── Three columns: Environment | Allocation | Execution ── -->
+
+  <!-- Column headers -->
+  <text x="170" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#666" letter-spacing="0.08em">ENVIRONMENT</text>
+  <text x="430" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#666" letter-spacing="0.08em">TASK ALLOCATION</text>
+  <text x="700" y="70" text-anchor="middle" font-size="9" font-weight="600" fill="#666" letter-spacing="0.08em">EXECUTION</text>
+
+  <!-- Column dividers -->
+  <line x1="310" y1="60" x2="310" y2="320" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="560" y1="60" x2="560" y2="320" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- ── COLUMN 1: Environment grid ── -->
+  <rect x="44" y="82" width="232" height="220" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- Grid map background -->
+  <rect x="54" y="92" width="212" height="200" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.5"/>
+
+  <!-- Grid lines -->
+  <line x1="54"  y1="126" x2="266" y2="126" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="54"  y1="160" x2="266" y2="160" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="54"  y1="194" x2="266" y2="194" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="54"  y1="228" x2="266" y2="228" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="88"  y1="92"  x2="88"  y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="122" y1="92"  x2="122" y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="156" y1="92"  x2="156" y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="190" y1="92"  x2="190" y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="224" y1="92"  x2="224" y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+  <line x1="258" y1="92"  x2="258" y2="292" stroke="#E2E2E2" stroke-width="0.5"/>
+
+  <!-- Robots (R) -->
+  <circle cx="71"  cy="108" r="10" fill="#326891" opacity="0.9"/>
+  <text x="71"  y="112" text-anchor="middle" fill="#FFF" font-size="8" font-weight="700">R1</text>
+  <circle cx="105" cy="176" r="10" fill="#326891" opacity="0.9"/>
+  <text x="105" y="180" text-anchor="middle" fill="#FFF" font-size="8" font-weight="700">R2</text>
+  <circle cx="71"  cy="244" r="10" fill="#326891" opacity="0.9"/>
+  <text x="71"  y="248" text-anchor="middle" fill="#FFF" font-size="8" font-weight="700">R3</text>
+
+  <!-- Tasks (T) — star/diamond markers -->
+  <polygon points="190,108 196,120 210,120 200,128 203,142 190,134 177,142 180,128 170,120 184,120"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="190" y="128" text-anchor="middle" fill="#666" font-size="7" font-weight="600">T1</text>
+
+  <polygon points="241,160 247,172 261,172 251,180 254,194 241,186 228,194 231,180 221,172 235,172"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="241" y="180" text-anchor="middle" fill="#666" font-size="7" font-weight="600">T2</text>
+
+  <polygon points="156,244 162,256 176,256 166,264 169,278 156,270 143,278 146,264 136,256 150,256"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="156" y="264" text-anchor="middle" fill="#666" font-size="7" font-weight="600">T3</text>
+
+  <polygon points="241,244 247,256 261,256 251,264 254,278 241,270 228,278 231,264 221,256 235,256"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="241" y="264" text-anchor="middle" fill="#666" font-size="7" font-weight="600">T4</text>
+
+  <!-- Legend -->
+  <circle cx="60" cy="304" r="6" fill="#326891" opacity="0.9"/>
+  <text x="70" y="308" font-size="8" fill="#666">Robot</text>
+  <polygon points="100,304 104,312 112,312 106,317 108,325 100,320 92,325 94,317 88,312 96,312"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="118" y="312" font-size="8" fill="#666">Task location</text>
+
+  <!-- ── COLUMN 2: Optimization ── -->
+  <rect x="326" y="82" width="218" height="220" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- Optimization box -->
+  <rect x="338" y="96" width="194" height="52" rx="3" fill="#F7F5F0" stroke="#326891" stroke-width="1"/>
+  <text x="435" y="114" text-anchor="middle" font-size="9" font-weight="600" fill="#121212">cvxpy optimizer</text>
+  <text x="435" y="128" text-anchor="middle" font-size="8" fill="#666" font-family="'Courier New',monospace">minimize: cost + overlap + unfairness</text>
+  <text x="435" y="140" text-anchor="middle" font-size="8" fill="#666" font-family="'Courier New',monospace">subject to: coverage constraints</text>
+
+  <!-- Assignment matrix -->
+  <text x="435" y="168" text-anchor="middle" font-size="8.5" font-weight="600" fill="#666" letter-spacing="0.06em">ASSIGNMENT MATRIX X</text>
+
+  <!-- Matrix grid -->
+  <rect x="358" y="174" width="154" height="96" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.75"/>
+  <!-- Column headers -->
+  <text x="397" y="186" text-anchor="middle" font-size="7.5" fill="#999">T1</text>
+  <text x="435" y="186" text-anchor="middle" font-size="7.5" fill="#999">T2</text>
+  <text x="473" y="186" text-anchor="middle" font-size="7.5" fill="#999">T3</text>
+  <text x="500" y="186" text-anchor="middle" font-size="7.5" fill="#999">T4</text>
+  <!-- Row headers -->
+  <text x="370" y="204" font-size="7.5" fill="#999">R1</text>
+  <text x="370" y="224" font-size="7.5" fill="#999">R2</text>
+  <text x="370" y="244" font-size="7.5" fill="#999">R3</text>
+  <!-- Values -->
+  <!-- R1 -->
+  <rect x="384" y="194" width="24" height="16" rx="2" fill="#326891" opacity="0.8"/>
+  <text x="396" y="205" text-anchor="middle" fill="#FFF" font-size="8" font-weight="600">1</text>
+  <rect x="422" y="194" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="434" y="205" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="460" y="194" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="472" y="205" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="488" y="194" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="500" y="205" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <!-- R2 -->
+  <rect x="384" y="214" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="396" y="225" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="422" y="214" width="24" height="16" rx="2" fill="#326891" opacity="0.8"/>
+  <text x="434" y="225" text-anchor="middle" fill="#FFF" font-size="8" font-weight="600">1</text>
+  <rect x="460" y="214" width="24" height="16" rx="2" fill="#326891" opacity="0.5"/>
+  <text x="472" y="225" text-anchor="middle" fill="#FFF" font-size="8" font-weight="600">1</text>
+  <rect x="488" y="214" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="500" y="225" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <!-- R3 -->
+  <rect x="384" y="234" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="396" y="245" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="422" y="234" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="434" y="245" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="460" y="234" width="24" height="16" rx="2" fill="#E2E2E2"/>
+  <text x="472" y="245" text-anchor="middle" fill="#999" font-size="8">0</text>
+  <rect x="488" y="234" width="24" height="16" rx="2" fill="#326891" opacity="0.8"/>
+  <text x="500" y="245" text-anchor="middle" fill="#FFF" font-size="8" font-weight="600">1</text>
+
+  <text x="435" y="278" text-anchor="middle" font-size="8" fill="#666" font-style="italic">1 = assigned, 0 = not assigned</text>
+  <text x="435" y="292" text-anchor="middle" font-size="8" fill="#666">Balanced: R2 gets 2 tasks, others get 1</text>
+
+  <!-- ── COLUMN 3: Execution ── -->
+  <rect x="576" y="82" width="256" height="220" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+
+  <!-- Robot paths on mini map -->
+  <rect x="586" y="92" width="236" height="140" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.5"/>
+
+  <!-- R1 path to T1 -->
+  <circle cx="612" cy="150" r="9" fill="#326891" opacity="0.9"/>
+  <text x="612" cy="154" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700">R1</text>
+  <text x="612" y="154" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700">R1</text>
+  <line x1="621" y1="146" x2="665" y2="118" stroke="#326891" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <polygon points="670,108 676,120 690,120 680,128 683,142 670,134 657,142 660,128 650,120 664,120"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="670" y="128" text-anchor="middle" fill="#666" font-size="7">T1</text>
+
+  <!-- R2 path to T2 + T3 -->
+  <circle cx="612" cy="190" r="9" fill="#326891" opacity="0.9"/>
+  <text x="612" y="194" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700">R2</text>
+  <line x1="621" y1="190" x2="730" y2="140" stroke="#326891" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <polygon points="735,130 741,142 755,142 745,150 748,164 735,156 722,164 725,150 715,142 729,142"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="735" y="150" text-anchor="middle" fill="#666" font-size="7">T2</text>
+
+  <!-- R3 path to T4 -->
+  <circle cx="612" cy="220" r="9" fill="#326891" opacity="0.9"/>
+  <text x="612" y="224" text-anchor="middle" fill="#FFF" font-size="7" font-weight="700">R3</text>
+  <line x1="621" y1="220" x2="730" y2="220" stroke="#326891" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <polygon points="735,210 741,222 755,222 745,230 748,244 735,236 722,244 725,230 715,222 729,222"
+    fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
+  <text x="735" y="230" text-anchor="middle" fill="#666" font-size="7">T4</text>
+
+  <!-- ROS label -->
+  <rect x="586" y="242" width="236" height="44" rx="2" fill="#FFF" stroke="#E2E2E2" stroke-width="0.75"/>
+  <line x1="586" y1="242" x2="586" y2="286" stroke="#326891" stroke-width="2"/>
+  <text x="598" y="258" font-size="8.5" font-weight="600" fill="#121212">ROS publishes assignments</text>
+  <text x="598" y="272" font-size="8" fill="#666" font-family="'Courier New',monospace">/task_allocator → /robot_N/goal</text>
+  <text x="598" y="284" font-size="8" fill="#999">Each robot subscribes to its own topic</text>
+
+  <!-- ── Bottom insight ── -->
+  <line x1="28" y1="328" x2="832" y2="328" stroke="#E2E2E2" stroke-width="0.75"/>
+  <text x="46" y="346" font-size="9" font-weight="600" fill="#121212">Key idea:</text>
+  <text x="108" y="346" font-size="9" fill="#666">Robots and tasks are defined in the environment. cvxpy minimizes cost and unfairness to assign tasks. ROS delivers assignments.</text>
+  <text x="46" y="362" font-size="9" fill="#666">70% efficiency gain over naive assignment. 45% faster planning time vs brute force.</text>
+  <line x1="28" y1="372" x2="832" y2="372" stroke="#E2E2E2" stroke-width="0.75"/>
+</svg>
