@@ -591,6 +591,17 @@
   .note-card.note-hidden { display: none; }
 
   .note-date { font-family: var(--mono); font-size: .58rem; font-weight: 500; color: var(--muted); }
+  .note-formula {
+    font-family: var(--mono); font-size: .85rem;
+    color: var(--ink); background: var(--bg3);
+    border-left: 2px solid var(--accent);
+    padding: .55rem 1rem; margin: .85rem 0;
+    border-radius: 0 4px 4px 0; letter-spacing: .02em;
+  }
+  [data-theme="light"] .note-formula {
+    background: #F4F4F4; border-left-color: var(--accent);
+  }
+  .note-body-content p { color: var(--ink2); font-size: .95rem; }
   .note-title { font-size: 1rem; }
   .note-preview { font-size: .83rem; color: var(--ink2); line-height: 1.65; flex: 1; }
   .note-footer { display: flex; align-items: center; justify-content: space-between; margin-top: .3rem; }
@@ -1485,18 +1496,46 @@ document.getElementById('notesFilterBar').addEventListener('click', e => {
 });
 
 function openNoteModal(n) {
+  const media = n.detail.media || [];
+  let mediaIdx = 0;
+
+  // Split body on double newlines, render each chunk
+  const bodyHtml = (n.detail.body || '')
+    .split('\n\n')
+    .map(para => {
+      const t = para.trim();
+      if (!t) return '';
+
+      // Inline SVG/image marker — consume next media item
+      if (t.startsWith('[SVG:') || t.startsWith('[Image:')) {
+        if (mediaIdx < media.length) return renderMedia([media[mediaIdx++]]);
+        return '';
+      }
+
+      // Formula heuristic: short, contains math chars, no sentence punctuation
+      const hasMath = /[=→·^ᵀ‖∑Σ₀₁₂₃₄₅₆₇₈₉⁺⁻]/.test(t);
+      const isShort = t.split(' ').length < 14;
+      const noSentence = !/[.!?]$/.test(t);
+      if (hasMath && isShort && noSentence) {
+        return `<p class="note-formula">${t}</p>`;
+      }
+
+      return `<p style="margin-bottom:.8rem;line-height:1.85;font-size:.95rem;color:var(--ink2)">${t}</p>`;
+    })
+    .join('');
+
+  // Remaining media (not consumed inline)
+  const trailingMedia = media.slice(mediaIdx);
+
   openModal(`
     <p class="modal-type">Field Note · ${n.date}</p>
-    <h3>${n.title}</h3>
-    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.25rem;flex-wrap:wrap">
+    <h3 style="margin-bottom:.5rem">${n.title}</h3>
+    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.5rem;flex-wrap:wrap">
       <span class="note-tag">${n.tag}</span>
       ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
     </div>
-    <div class="modal-section">
-      <p class="modal-section-title">// Note</p>
-      <p>${(n.detail.body || '').replace(/\n\n/g, '<br><br>')}</p>
-    </div>
-    ${renderMedia(n.detail.media)}
+    ${bodyHtml}
+    ${trailingMedia.length ? renderMedia(trailingMedia) : ''}
   `);
 }
 

@@ -1,32 +1,27 @@
 {
   "id": "eecs16a-signals-lab-log",
   "date": "Fall 2025",
-  "title": "EECS16A Lab Log: Signals, Systems, and Information Processing",
-  "preview": "A reflection on EECS16A labs where I learned how signals can be represented, transformed, compared, and turned into working engineering systems.",
+  "title": "EECS16A: What I Actually Learned About Signals",
+  "preview": "Attending Prof. Babak Ayazifar's lectures changed how I think about signals. They are not just math — they are structured data you can measure, compare, and use to build real things.",
   "tag": "signals",
   "highlighted": true,
   "detail": {
-    "body": "In EECS16A, I began seeing signals not just as math expressions, but as structured data that can be measured, transformed, compared, and used to build real systems. The labs moved across several connected ideas: voice recognition, spectrogram-based feature extraction, audio fingerprinting, and acoustic positioning. What made these labs valuable is that they connected linear algebra, signal processing, and geometry in a way that felt practical rather than abstract.\n\nOne major lab sequence focused on voice recognition. Audio recordings were first collected and aligned so that comparison across samples was meaningful. Each signal was then represented as a vector, which made it possible to use linear algebra tools. SVD and PCA were used to reduce the dimensionality of the recordings while preserving important structure. After projection into a lower-dimensional feature space, classification was done by comparing a new example to the centroid of each class. Voice recognition in this setting is not mysterious. It is a geometry problem. Similar words form clusters, and the system predicts the class by finding what it is closest to.\n\nA later extension introduced spectrograms and richer feature representations. Instead of treating a signal only as a time-domain waveform, the lab converted audio into a time-frequency representation. This made it possible to observe how energy at different frequencies changes over time. This lab changed how I think about modeling. The representation of the data often matters as much as the classifier. A good representation can make a difficult problem much simpler.\n\nAnother lab focused on the ideas behind Shazam-style song recognition. The key tool here was the Discrete Fourier Transform, which expresses a signal in terms of its frequency content. A full-song transform shows what frequencies exist overall, but it does not preserve when those frequencies occur. The lab used spectrograms, which are many short Fourier analyses over time. From the spectrogram, strong local peaks can be identified and converted into compact fingerprints. A system does not need to store full audio data to identify a song. It only needs a robust signature built from the most distinctive time-frequency features.\n\nThe acoustic positioning lab was especially interesting because it connected signal processing to physical space. Speakers acted like beacons and a microphone received delayed versions of their signals. Cross-correlation was used to estimate the arrival time of each beacon. Once a delay was found, it could be converted into a distance using distance equals speed times time. With multiple beacons, geometry was used to estimate position. Signals became a tool for sensing. Correlation became a tool for timing. Geometry became a tool for localization.\n\nAcross these labs, I developed a few core takeaways. First, once signals are represented as vectors, many tasks become problems in linear algebra. Second, similarity is a recurring idea. Dot products, correlation, nearest-centroid methods, and low-dimensional embeddings are all different ways of asking what resembles what. Third, representation matters deeply. A raw waveform, a PCA projection, a spectrogram, and an audio fingerprint are all different views of the same underlying signal, but each view makes different engineering tasks easier.\n\nThese ideas can be applied in projects such as offline voice command systems, audio visualization tools, embedded sound-recognition devices, music identification tools, or indoor positioning systems.",
+    "body": "I had the chance to attend lectures by Professor Babak Ayazifar, and the way he framed signals made everything click differently. Signals are not just waveforms. Once you represent them as vectors, the whole toolkit of linear algebra becomes available.\n\nThe core idea that kept coming back: a signal x of length n is just a point in n-dimensional space.\n\nx = [x₁  x₂  ···  xₙ]ᵀ\n\nFrom there, comparing signals is a geometry problem.\n\nFor voice recognition, the lab aligned recordings, vectorized them, then used SVD to find the directions of most variation. Projecting into that lower-dimensional space and classifying by nearest centroid is surprisingly effective.\n\nprojected = Uᵀ · x\npredicted class = argmin‖x − cₖ‖\n\nReal-life example: think of Shazam. When you hold your phone up to a song, it does not compare the full audio. It extracts a fingerprint — the strongest peaks in the spectrogram — and matches those against a database. A 3-minute song becomes a few dozen (time, frequency) pairs. Fast, compact, and robust to noise.\n\nThe spectrogram comes from applying the DFT over short overlapping windows:\n\nX(k) = Σ x(n) · e^(−j2πkn/N)\n\nEach window gives you frequency content at that moment. Stack them and you get a 2D picture of how a sound evolves. The raw waveform hides timing. The spectrogram shows it.\n\nThe acoustic positioning lab was the most satisfying. Speakers play tones, a microphone hears them with a delay, and cross-correlation finds that delay precisely.\n\nR(τ) = Σ x(n) · y(n + τ)\n\nPeak of R(τ) gives Δt. Then d = v · Δt where v is 343 m/s. With three beacons, three distance estimates, the position is a least-squares solve:\n\nAx = b   →   x̂ = A⁺b\n\nI thought positioning required GPS. It just requires correlation and geometry.",
     "media": [
       {
         "type": "image",
         "src": "assets/img/eecs16a-voice-recognition-diagram.svg",
-        "caption": "Voice recognition pipeline: from raw audio to nearest-centroid classification"
+        "caption": "Voice recognition: from raw audio to nearest-centroid classification"
       },
       {
         "type": "image",
         "src": "assets/img/eecs16a-spectrogram-feature-diagram.svg",
-        "caption": "Signal representation: waveform to spectrogram to compact features"
-      },
-      {
-        "type": "image",
-        "src": "assets/img/eecs16a-shazam-fingerprint-diagram.svg",
-        "caption": "Audio fingerprinting: how Shazam-style recognition works"
+        "caption": "Waveform to spectrogram to compact fingerprint"
       },
       {
         "type": "image",
         "src": "assets/img/eecs16a-aps-localization-diagram.svg",
-        "caption": "Acoustic positioning: cross-correlation, delay estimation, and geometric localization"
+        "caption": "Acoustic positioning: cross-correlation, delay estimation, localization"
       }
     ]
   }
