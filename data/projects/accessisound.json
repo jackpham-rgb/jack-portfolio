@@ -1,0 +1,21 @@
+{
+  "id": "accessisound",
+  "tags": ["embedded", "ai-ml", "accessibility"],
+  "type": "Embedded ML · Accessibility",
+  "year": "2024",
+  "badge": "Hackathon",
+  "title": "AccessiSound — ESP32-S3 Sound Recognition",
+  "desc": "Standalone assistive device classifying environmental sounds in real time on-device using TFLite Micro. Alerts visually impaired users via distinct vibration and audio patterns. No cloud, no phone — $17 BOM.",
+  "tags_display": ["ESP32-S3", "TFLite Micro", "MFCC / CNN", "C++", "Python"],
+  "github": "https://github.com/jackpham-rgb/accessisound-esp32s3",
+  "image": "",
+  "detail": {
+    "summary": "Standalone offline assistive device delivering tactile and audio notifications for doorbell, fire alarm, microwave, and phone ring. No cloud, no phone, $17 BOM.",
+    "why": "Visually impaired individuals often miss critical environmental audio cues. Off-the-shelf solutions require smartphones or subscriptions.",
+    "problem": "Real-time on-device sound classification on a microcontroller with 512 KB SRAM while fitting a TFLite Micro model alongside I2S DMA and the Arduino stack.",
+    "approach": "MFCC feature extraction in C++ — 13x32 feature window — quantised 2-layer CNN (TFLite Micro) — confidence threshold — unique vibration + buzzer patterns per class.",
+    "status": "Prototype complete",
+    "media": [],
+    "sections": []
+  }
+}

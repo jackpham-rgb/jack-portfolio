@@ -1,0 +1,22 @@
+[
+  {
+    "id": "tflite-constraint",
+    "show": true
+  },
+  {
+    "id": "tdoa-positioning",
+    "show": true
+  },
+  {
+    "id": "hpc-vs-mcu",
+    "show": true
+  },
+  {
+    "id": "eeg-noise",
+    "show": true
+  },
+  {
+    "id": "eecs16a-signals-lab-log",
+    "show": true
+  }
+]

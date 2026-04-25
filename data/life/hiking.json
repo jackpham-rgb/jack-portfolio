@@ -1,0 +1,16 @@
+{
+  "id": "hiking",
+  "icon": "🏕️",
+  "title": "Hiking & Camping",
+  "desc": "I enjoy hiking, camping, and spending time outdoors when I need space away from school and projects.",
+  "detail": {
+    "body": "I enjoy hiking and camping because it gives me time to slow down and reconnect with the world outside of classes and engineering work. One of my favorite outdoor memories was camping in Yosemite, where I saw a deer up close. It was cute and peaceful, even though the night was cold, dark, and a little intense. These trips remind me to appreciate quiet moments, nature, and the small details around me.",
+    "media": [
+      {
+        "type": "image",
+        "src": "assets/img/yosemite-hiking.jpg",
+        "caption": "Camping and hiking in Yosemite"
+      }
+    ]
+  }
+}
