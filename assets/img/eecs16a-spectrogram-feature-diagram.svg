@@ -1,0 +1,154 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="'Libre Franklin', 'Georgia', sans-serif">
+  <defs>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4C8DFF"/>
+    </marker>
+    <!-- spectrogram gradient colors -->
+    <linearGradient id="heatLow"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0E1728"/><stop offset="100%" stop-color="#1a3a5c"/></linearGradient>
+    <linearGradient id="heatMid"  x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#1a3a5c"/><stop offset="100%" stop-color="#2a5f9e"/></linearGradient>
+    <linearGradient id="heatHigh" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#2a5f9e"/><stop offset="100%" stop-color="#78DCE8"/></linearGradient>
+  </defs>
+
+  <rect width="900" height="380" fill="#0A1220" rx="12"/>
+
+  <!-- Title -->
+  <text x="450" y="34" text-anchor="middle" fill="#F5F8FC" font-size="15" font-weight="600" letter-spacing="0.04em">SIGNAL REPRESENTATION MATTERS</text>
+  <line x1="100" y1="42" x2="800" y2="42" stroke="#1E2C42" stroke-width="1"/>
+
+  <!-- ── PANEL 1: Waveform ── -->
+  <rect x="20" y="56" width="260" height="220" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="150" y="76" text-anchor="middle" fill="#A8B6C9" font-size="11" font-weight="600">1. RAW WAVEFORM</text>
+  <text x="150" y="90" text-anchor="middle" fill="#7F8EA3" font-size="8">time domain</text>
+
+  <!-- waveform axes -->
+  <line x1="40" y1="190" x2="262" y2="190" stroke="#1E2C42" stroke-width="1"/>
+  <line x1="40" y1="115" x2="40"  y2="195" stroke="#1E2C42" stroke-width="1"/>
+  <text x="152" y="210" text-anchor="middle" fill="#7F8EA3" font-size="8">time</text>
+  <text x="30" y="155" text-anchor="middle" fill="#7F8EA3" font-size="8" transform="rotate(-90,30,155)">amp</text>
+
+  <!-- waveform signal -->
+  <polyline
+    points="42,190 50,175 58,155 66,140 74,155 82,175 90,190 98,175 106,152 114,130 122,152 130,175 138,190 146,175 154,158 162,145 170,158 178,175 186,190 194,180 202,165 210,175 218,182 226,190 234,185 242,190 250,190 258,190"
+    fill="none" stroke="#4C8DFF" stroke-width="1.8"/>
+
+  <text x="150" y="248" text-anchor="middle" fill="#7F8EA3" font-size="9">Keeps raw signal structure</text>
+  <text x="150" y="262" text-anchor="middle" fill="#7F8EA3" font-size="9">Hard to compare directly</text>
+
+  <!-- arrow 1 to 2 -->
+  <line x1="284" y1="166" x2="308" y2="166" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <text x="296" y="156" text-anchor="middle" fill="#7F8EA3" font-size="8">STFT</text>
+
+  <!-- ── PANEL 2: Spectrogram ── -->
+  <rect x="312" y="56" width="276" height="220" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="450" y="76" text-anchor="middle" fill="#A8B6C9" font-size="11" font-weight="600">2. SPECTROGRAM</text>
+  <text x="450" y="90" text-anchor="middle" fill="#7F8EA3" font-size="8">time-frequency domain</text>
+
+  <!-- spectrogram axes -->
+  <line x1="334" y1="220" x2="574" y2="220" stroke="#1E2C42" stroke-width="1"/>
+  <line x1="334" y1="102" x2="334" y2="224" stroke="#1E2C42" stroke-width="1"/>
+  <text x="454" y="236" text-anchor="middle" fill="#7F8EA3" font-size="8">time</text>
+  <text x="322" y="162" text-anchor="middle" fill="#7F8EA3" font-size="8" transform="rotate(-90,322,162)">freq</text>
+
+  <!-- spectrogram heatmap cells (simplified) -->
+  <!-- row 1 low freq — generally high energy -->
+  <rect x="336" y="200" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="368" y="200" width="30" height="18" fill="#3278c0" rx="1"/>
+  <rect x="400" y="200" width="30" height="18" fill="#78DCE8" rx="1"/>
+  <rect x="432" y="200" width="30" height="18" fill="#4C8DFF" rx="1"/>
+  <rect x="464" y="200" width="30" height="18" fill="#3278c0" rx="1"/>
+  <rect x="496" y="200" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="528" y="200" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <!-- row 2 mid freq -->
+  <rect x="336" y="180" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="368" y="180" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="400" y="180" width="30" height="18" fill="#4C8DFF" rx="1"/>
+  <rect x="432" y="180" width="30" height="18" fill="#78DCE8" rx="1"/>
+  <rect x="464" y="180" width="30" height="18" fill="#4C8DFF" rx="1"/>
+  <rect x="496" y="180" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="528" y="180" width="30" height="18" fill="#0E1728" rx="1"/>
+  <!-- row 3 upper-mid -->
+  <rect x="336" y="160" width="30" height="18" fill="#0E1728" rx="1"/>
+  <rect x="368" y="160" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="400" y="160" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="432" y="160" width="30" height="18" fill="#3278c0" rx="1"/>
+  <rect x="464" y="160" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="496" y="160" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="528" y="160" width="30" height="18" fill="#0E1728" rx="1"/>
+  <!-- row 4 high freq — sparse -->
+  <rect x="336" y="140" width="30" height="18" fill="#0E1728" rx="1"/>
+  <rect x="368" y="140" width="30" height="18" fill="#0E1728" rx="1"/>
+  <rect x="400" y="140" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="432" y="140" width="30" height="18" fill="#2a6aaa" rx="1"/>
+  <rect x="464" y="140" width="30" height="18" fill="#1a3a5c" rx="1"/>
+  <rect x="496" y="140" width="30" height="18" fill="#0E1728" rx="1"/>
+  <rect x="528" y="140" width="30" height="18" fill="#0E1728" rx="1"/>
+  <!-- row 5 very high -->
+  <rect x="336" y="104" width="222" height="34" fill="#0E1728" rx="1"/>
+
+  <!-- colorbar legend -->
+  <defs>
+    <linearGradient id="colorbar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%"   stop-color="#0E1728"/>
+      <stop offset="50%"  stop-color="#4C8DFF"/>
+      <stop offset="100%" stop-color="#78DCE8"/>
+    </linearGradient>
+  </defs>
+  <rect x="430" y="108" width="120" height="8" fill="url(#colorbar)" rx="3"/>
+  <text x="430" y="120" fill="#7F8EA3" font-size="7">low</text>
+  <text x="550" y="120" text-anchor="end" fill="#7F8EA3" font-size="7">high energy</text>
+
+  <text x="450" y="248" text-anchor="middle" fill="#7F8EA3" font-size="9">Reveals how frequency changes over time</text>
+  <text x="450" y="262" text-anchor="middle" fill="#7F8EA3" font-size="9">Basis for Mel spectrogram (log frequency)</text>
+
+  <!-- arrow 2 to 3 -->
+  <line x1="592" y1="166" x2="614" y2="166" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr2)"/>
+  <text x="603" y="156" text-anchor="middle" fill="#7F8EA3" font-size="8">compress</text>
+
+  <!-- ── PANEL 3: Compact features ── -->
+  <rect x="618" y="56" width="262" height="220" rx="8" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="749" y="76" text-anchor="middle" fill="#A8B6C9" font-size="11" font-weight="600">3. COMPACT FEATURES</text>
+  <text x="749" y="90" text-anchor="middle" fill="#7F8EA3" font-size="8">for classification</text>
+
+  <!-- Option A: flat vector -->
+  <text x="638" y="112" fill="#78DCE8" font-size="9" font-weight="600">A. Flattened vector</text>
+  <!-- vector cells -->
+  <rect x="638" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.8"/>
+  <rect x="654" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.65"/>
+  <rect x="670" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.9"/>
+  <rect x="686" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.5"/>
+  <rect x="702" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.75"/>
+  <rect x="718" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.4"/>
+  <rect x="734" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.85"/>
+  <rect x="750" y="118" width="14" height="14" rx="2" fill="#4C8DFF" opacity="0.6"/>
+  <text x="770" y="129" fill="#7F8EA3" font-size="10">···</text>
+  <text x="638" y="146" fill="#7F8EA3" font-size="8">row-major flatten of spectrogram</text>
+
+  <!-- divider -->
+  <line x1="638" y1="158" x2="860" y2="158" stroke="#1E2C42" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- Option B: statistics -->
+  <text x="638" y="174" fill="#78DCE8" font-size="9" font-weight="600">B. Statistical summary</text>
+
+  <text x="638" y="192" fill="#7F8EA3" font-size="9" font-family="'DM Mono', monospace">mean(X)  = [μ₁  μ₂  ···  μₙ]</text>
+  <text x="638" y="208" fill="#7F8EA3" font-size="9" font-family="'DM Mono', monospace">std(X)   = [σ₁  σ₂  ···  σₙ]</text>
+
+  <!-- bar chart for mean values -->
+  <rect x="638" y="232" width="8"  height="26" rx="2" fill="#4C8DFF" opacity="0.9"/>
+  <rect x="650" y="242" width="8"  height="16" rx="2" fill="#4C8DFF" opacity="0.7"/>
+  <rect x="662" y="226" width="8"  height="32" rx="2" fill="#4C8DFF" opacity="0.9"/>
+  <rect x="674" y="238" width="8"  height="20" rx="2" fill="#4C8DFF" opacity="0.6"/>
+  <rect x="686" y="248" width="8"  height="10" rx="2" fill="#4C8DFF" opacity="0.5"/>
+  <rect x="698" y="236" width="8"  height="22" rx="2" fill="#4C8DFF" opacity="0.8"/>
+  <line x1="634" y1="258" x2="780" y2="258" stroke="#1E2C42" stroke-width="1"/>
+  <text x="706" y="268" text-anchor="middle" fill="#7F8EA3" font-size="8">compact feature vector</text>
+
+  <text x="749" y="248" text-anchor="middle" fill="#7F8EA3" font-size="9"/>
+
+  <!-- Bottom note -->
+  <text x="450" y="302" text-anchor="middle" fill="#7F8EA3" font-size="9" font-style="italic">The same signal. Three different representations. Each makes different tasks easier.</text>
+
+  <!-- Three labels -->
+  <text x="150" y="320" text-anchor="middle" fill="#4C8DFF" font-size="9" font-weight="600">Time structure preserved</text>
+  <text x="450" y="320" text-anchor="middle" fill="#4C8DFF" font-size="9" font-weight="600">Frequency change visible</text>
+  <text x="749" y="320" text-anchor="middle" fill="#4C8DFF" font-size="9" font-weight="600">Compact, classifier-ready</text>
+</svg>

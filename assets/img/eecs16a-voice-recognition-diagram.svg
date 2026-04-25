@@ -1,0 +1,150 @@
+<svg viewBox="0 0 900 420" xmlns="http://www.w3.org/2000/svg" font-family="'Libre Franklin', 'Georgia', sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#4C8DFF"/>
+    </marker>
+  </defs>
+
+  <!-- background -->
+  <rect width="900" height="420" fill="#0A1220" rx="12"/>
+
+  <!-- title -->
+  <text x="450" y="36" text-anchor="middle" fill="#F5F8FC" font-size="15" font-weight="600" letter-spacing="0.04em">VOICE RECOGNITION PIPELINE</text>
+  <line x1="160" y1="44" x2="740" y2="44" stroke="#1E2C42" stroke-width="1"/>
+
+  <!-- Stage boxes — 7 stages across -->
+  <!-- Stage 1: Record -->
+  <rect x="20" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <text x="74" y="95" text-anchor="middle" fill="#78DCE8" font-size="18">♪</text>
+  <text x="74" y="112" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">RECORD</text>
+  <text x="74" y="126" text-anchor="middle" fill="#7F8EA3" font-size="9">audio signal</text>
+
+  <!-- arrow -->
+  <line x1="128" y1="106" x2="146" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 2: Align -->
+  <rect x="148" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <!-- mini waveform alignment lines -->
+  <polyline points="160,98 168,90 176,106 184,94 192,102 200,88 208,100 216,92 224,100 232,95 240,98" fill="none" stroke="#4C8DFF" stroke-width="1.2"/>
+  <polyline points="160,118 168,112 176,124 184,116 192,122 200,110 208,120 216,114 224,120 232,115 240,118" fill="none" stroke="#78DCE8" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="202" y="134" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">ALIGN</text>
+
+  <!-- arrow -->
+  <line x1="256" y1="106" x2="274" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 3: Vectorize -->
+  <rect x="276" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <!-- vector bracket symbol -->
+  <text x="330" y="105" text-anchor="middle" fill="#4C8DFF" font-size="28" font-weight="300">[</text>
+  <text x="346" y="105" text-anchor="middle" fill="#4C8DFF" font-size="28" font-weight="300">]</text>
+  <text x="338" y="91" text-anchor="middle" fill="#7F8EA3" font-size="8">x₁</text>
+  <text x="338" y="101" text-anchor="middle" fill="#7F8EA3" font-size="8">x₂</text>
+  <text x="338" y="111" text-anchor="middle" fill="#7F8EA3" font-size="8">⋮</text>
+  <text x="330" y="134" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">VECTORIZE</text>
+
+  <!-- arrow -->
+  <line x1="384" y1="106" x2="402" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 4: SVD/PCA -->
+  <rect x="404" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <text x="458" y="97" text-anchor="middle" fill="#D9E2F0" font-size="9" font-weight="600">SVD / PCA</text>
+  <!-- sigma bars -->
+  <rect x="428" y="102" width="60" height="5" rx="2" fill="#4C8DFF" opacity="0.9"/>
+  <rect x="428" y="110" width="44" height="5" rx="2" fill="#4C8DFF" opacity="0.65"/>
+  <rect x="428" y="118" width="28" height="5" rx="2" fill="#4C8DFF" opacity="0.4"/>
+  <text x="458" y="136" text-anchor="middle" fill="#7F8EA3" font-size="8">dimensionality reduction</text>
+
+  <!-- arrow -->
+  <line x1="512" y1="106" x2="530" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 5: Project -->
+  <rect x="532" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <!-- mini scatter -->
+  <circle cx="558" cy="98"  r="3" fill="#4C8DFF" opacity="0.8"/>
+  <circle cx="564" cy="92"  r="3" fill="#4C8DFF" opacity="0.8"/>
+  <circle cx="561" cy="102" r="3" fill="#4C8DFF" opacity="0.8"/>
+  <circle cx="582" cy="118" r="3" fill="#78DCE8" opacity="0.8"/>
+  <circle cx="588" cy="112" r="3" fill="#78DCE8" opacity="0.8"/>
+  <circle cx="578" cy="122" r="3" fill="#78DCE8" opacity="0.8"/>
+  <circle cx="616" cy="96"  r="3" fill="#A8B6C9" opacity="0.6"/>
+  <circle cx="622" cy="104" r="3" fill="#A8B6C9" opacity="0.6"/>
+  <text x="586" y="136" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">PROJECT</text>
+
+  <!-- arrow -->
+  <line x1="640" y1="106" x2="658" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 6: Centroids -->
+  <rect x="660" y="70" width="108" height="72" rx="8" fill="#111C30" stroke="#1E2C42" stroke-width="1"/>
+  <!-- centroid markers -->
+  <circle cx="694" cy="100" r="6" fill="none" stroke="#4C8DFF" stroke-width="1.5"/>
+  <line x1="691" y1="100" x2="697" y2="100" stroke="#4C8DFF" stroke-width="1.5"/>
+  <line x1="694" y1="97"  x2="694" y2="103" stroke="#4C8DFF" stroke-width="1.5"/>
+  <circle cx="718" cy="112" r="6" fill="none" stroke="#78DCE8" stroke-width="1.5"/>
+  <line x1="715" y1="112" x2="721" y2="112" stroke="#78DCE8" stroke-width="1.5"/>
+  <line x1="718" y1="109" x2="718" y2="115" stroke="#78DCE8" stroke-width="1.5"/>
+  <circle cx="742" cy="96" r="6" fill="none" stroke="#A8B6C9" stroke-width="1.5"/>
+  <line x1="739" y1="96" x2="745" y2="96" stroke="#A8B6C9" stroke-width="1.5"/>
+  <line x1="742" y1="93" x2="742" y2="99" stroke="#A8B6C9" stroke-width="1.5"/>
+  <text x="714" y="136" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">CENTROIDS</text>
+
+  <!-- arrow -->
+  <line x1="768" y1="106" x2="786" y2="106" stroke="#4C8DFF" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <!-- Stage 7: Classify -->
+  <rect x="788" y="70" width="96" height="72" rx="8" fill="#4C8DFF" fill-opacity="0.12" stroke="#4C8DFF" stroke-width="1"/>
+  <text x="836" y="94" text-anchor="middle" fill="#4C8DFF" font-size="22">✓</text>
+  <text x="836" y="112" text-anchor="middle" fill="#D9E2F0" font-size="10" font-weight="600">CLASSIFY</text>
+  <text x="836" y="126" text-anchor="middle" fill="#7F8EA3" font-size="8">nearest centroid</text>
+
+  <!-- Equation block -->
+  <rect x="20" y="172" width="400" height="56" rx="6" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="36" y="192" fill="#78DCE8" font-size="10" font-weight="600" font-family="'DM Mono', monospace">x_projected = Uᵀ · x</text>
+  <text x="36" y="210" fill="#78DCE8" font-size="10" font-weight="600" font-family="'DM Mono', monospace">predicted class = argmin ||x - cₖ||</text>
+  <text x="36" y="222" fill="#7F8EA3" font-size="8">where cₖ is the centroid of class k</text>
+
+  <!-- Scatter plot detail -->
+  <rect x="440" y="172" width="440" height="200" rx="6" fill="#0E1728" stroke="#1E2C42" stroke-width="1"/>
+  <text x="660" y="194" text-anchor="middle" fill="#A8B6C9" font-size="10" font-weight="600">2D FEATURE SPACE</text>
+
+  <!-- axes -->
+  <line x1="470" y1="350" x2="860" y2="350" stroke="#1E2C42" stroke-width="1"/>
+  <line x1="470" y1="200" x2="470" y2="350" stroke="#1E2C42" stroke-width="1"/>
+  <text x="665" y="365" text-anchor="middle" fill="#7F8EA3" font-size="8">PC 1</text>
+  <text x="458" y="278" text-anchor="middle" fill="#7F8EA3" font-size="8" transform="rotate(-90,458,278)">PC 2</text>
+
+  <!-- cluster A "yes" -->
+  <circle cx="540" cy="240" r="4" fill="#4C8DFF" opacity="0.7"/>
+  <circle cx="552" cy="252" r="4" fill="#4C8DFF" opacity="0.7"/>
+  <circle cx="530" cy="258" r="4" fill="#4C8DFF" opacity="0.7"/>
+  <circle cx="558" cy="244" r="4" fill="#4C8DFF" opacity="0.7"/>
+  <circle cx="545" cy="262" r="4" fill="#4C8DFF" opacity="0.5"/>
+  <!-- centroid A -->
+  <circle cx="545" cy="251" r="7" fill="none" stroke="#4C8DFF" stroke-width="2"/>
+  <line x1="541" y1="251" x2="549" y2="251" stroke="#4C8DFF" stroke-width="2"/>
+  <line x1="545" y1="247" x2="545" y2="255" stroke="#4C8DFF" stroke-width="2"/>
+  <text x="545" y="228" text-anchor="middle" fill="#4C8DFF" font-size="9" font-weight="600">"yes"</text>
+
+  <!-- cluster B "no" -->
+  <circle cx="700" cy="300" r="4" fill="#78DCE8" opacity="0.7"/>
+  <circle cx="714" cy="290" r="4" fill="#78DCE8" opacity="0.7"/>
+  <circle cx="694" cy="310" r="4" fill="#78DCE8" opacity="0.7"/>
+  <circle cx="720" cy="308" r="4" fill="#78DCE8" opacity="0.7"/>
+  <circle cx="708" cy="318" r="4" fill="#78DCE8" opacity="0.5"/>
+  <!-- centroid B -->
+  <circle cx="706" cy="305" r="7" fill="none" stroke="#78DCE8" stroke-width="2"/>
+  <line x1="702" y1="305" x2="710" y2="305" stroke="#78DCE8" stroke-width="2"/>
+  <line x1="706" y1="301" x2="706" y2="309" stroke="#78DCE8" stroke-width="2"/>
+  <text x="706" y="278" text-anchor="middle" fill="#78DCE8" font-size="9" font-weight="600">"no"</text>
+
+  <!-- unknown point -->
+  <circle cx="620" cy="268" r="5" fill="#F5F8FC" opacity="0.9"/>
+  <text x="620" y="258" text-anchor="middle" fill="#F5F8FC" font-size="8">? new</text>
+  <!-- distance lines -->
+  <line x1="620" y1="268" x2="545" y2="251" stroke="#4C8DFF" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="620" y1="268" x2="706" y2="305" stroke="#78DCE8" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- label closer one -->
+  <text x="576" y="254" fill="#4C8DFF" font-size="8">d₁ (closer)</text>
+
+  <!-- caption -->
+  <text x="450" y="400" fill="#7F8EA3" font-size="9" font-style="italic">Recognition = geometry. Find the nearest centroid in feature space.</text>
+</svg>
