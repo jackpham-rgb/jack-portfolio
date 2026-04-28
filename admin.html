@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0f1117; --bg2: #161b26; --bg3: #1c2333;
+      --border: #252f42; --ink: #e8edf5; --ink2: #9aadc4;
+      --muted: #5a6e8a; --accent: #4c8dff; --accent2: #34d399;
+      --red: #f87171; --yellow: #fbbf24;
+      --mono: 'DM Mono', monospace; --sans: 'Libre Franklin', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 15px; }
+    body { background: var(--bg); color: var(--ink); font-family: var(--sans); min-height: 100vh; }
+
+    /* ── Layout ── */
+    .shell { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+    /* ── Sidebar ── */
+    aside {
+      background: var(--bg2); border-right: 1px solid var(--border);
+      padding: 1.5rem 0; position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    }
+    .sidebar-title {
+      font-family: var(--mono); font-size: .65rem; font-weight: 500;
+      letter-spacing: .15em; text-transform: uppercase; color: var(--muted);
+      padding: 0 1.25rem; margin-bottom: 1rem;
+    }
+    .nav-section { margin-bottom: 1.5rem; }
+    .nav-label {
+      font-family: var(--mono); font-size: .58rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted); padding: 0 1.25rem;
+      margin-bottom: .4rem; display: block;
+    }
+    .nav-btn {
+      display: flex; align-items: center; gap: .6rem;
+      width: 100%; padding: .55rem 1.25rem;
+      background: none; border: none; cursor: pointer;
+      font-family: var(--sans); font-size: .85rem; color: var(--ink2);
+      text-align: left; transition: background .15s, color .15s;
+    }
+    .nav-btn:hover { background: var(--bg3); color: var(--ink); }
+    .nav-btn.active { background: var(--bg3); color: var(--accent); border-right: 2px solid var(--accent); }
+    .nav-icon { font-size: .9rem; flex-shrink: 0; }
+
+    /* ── Main ── */
+    main { padding: 2rem; max-width: 900px; }
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 2rem; padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-title { font-size: 1.1rem; font-weight: 600; color: var(--ink); }
+    .page-sub { font-family: var(--mono); font-size: .68rem; color: var(--muted); margin-top: .2rem; }
+
+    /* ── Cards list ── */
+    .items-list { display: flex; flex-direction: column; gap: .5rem; margin-bottom: 1.5rem; }
+    .item-row {
+      display: flex; align-items: center; gap: .75rem;
+      padding: .9rem 1rem; background: var(--bg2);
+      border: 1px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: border-color .15s, background .15s;
+    }
+    .item-row:hover { border-color: var(--accent); background: var(--bg3); }
+    .item-row.selected { border-color: var(--accent); }
+    .item-rank {
+      font-family: var(--mono); font-size: .65rem; color: var(--muted);
+      min-width: 24px; text-align: center;
+    }
+    .item-info { flex: 1; min-width: 0; }
+    .item-title { font-size: .9rem; font-weight: 500; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-meta { font-family: var(--mono); font-size: .62rem; color: var(--muted); margin-top: .15rem; }
+    .item-badge {
+      font-family: var(--mono); font-size: .55rem; letter-spacing: .08em;
+      text-transform: uppercase; padding: .18rem .5rem;
+      border-radius: 3px; flex-shrink: 0;
+    }
+    .badge-show { background: rgba(52,211,153,.12); color: var(--accent2); border: 1px solid rgba(52,211,153,.3); }
+    .badge-hide { background: var(--bg3); color: var(--muted); border: 1px solid var(--border); }
+    .badge-featured { background: rgba(76,141,255,.12); color: var(--accent); border: 1px solid rgba(76,141,255,.3); }
+
+    /* ── Editor panel ── */
+    .editor-panel {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 1.5rem;
+    }
+    .editor-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.25rem; padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .editor-title { font-size: 1rem; font-weight: 600; }
+
+    /* ── Form ── */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: .4rem; }
+    .form-group.full { grid-column: span 2; }
+    label {
+      font-family: var(--mono); font-size: .62rem; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    input, select, textarea {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 4px; padding: .6rem .75rem;
+      font-family: var(--sans); font-size: .875rem; color: var(--ink);
+      transition: border-color .15s; outline: none; width: 100%;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 120px; font-family: var(--mono); font-size: .78rem; line-height: 1.6; }
+    textarea.tall { min-height: 260px; }
+    select option { background: var(--bg3); }
+
+    /* Checkbox row */
+    .check-row { display: flex; align-items: center; gap: .5rem; }
+    .check-row input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; }
+    .check-row label { font-family: var(--sans); font-size: .85rem; color: var(--ink2); text-transform: none; letter-spacing: 0; }
+
+    /* ── Tags input ── */
+    .tags-wrap {
+      display: flex; flex-wrap: wrap; gap: .35rem;
+      padding: .5rem; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 4px; min-height: 42px; cursor: text;
+    }
+    .tags-wrap:focus-within { border-color: var(--accent); }
+    .tag-chip {
+      display: flex; align-items: center; gap: .3rem;
+      background: rgba(76,141,255,.15); color: var(--accent);
+      font-family: var(--mono); font-size: .65rem; font-weight: 500;
+      padding: .18rem .5rem; border-radius: 3px;
+    }
+    .tag-chip button {
+      background: none; border: none; cursor: pointer;
+      color: var(--accent); font-size: .8rem; padding: 0; line-height: 1;
+    }
+    .tags-input {
+      border: none; background: none; outline: none;
+      font-family: var(--mono); font-size: .72rem; color: var(--ink);
+      min-width: 80px; padding: .1rem;
+    }
+
+    /* ── Media list ── */
+    .media-list { display: flex; flex-direction: column; gap: .5rem; }
+    .media-item {
+      display: grid; grid-template-columns: 80px 1fr auto;
+      gap: .5rem; align-items: center; padding: .6rem;
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 4px;
+    }
+    .media-type-badge {
+      font-family: var(--mono); font-size: .58rem; text-transform: uppercase;
+      padding: .15rem .4rem; border-radius: 3px; text-align: center;
+    }
+    .mt-img { background: rgba(52,211,153,.1); color: var(--accent2); }
+    .mt-yt  { background: rgba(248,113,113,.1); color: var(--red); }
+    .media-inputs { display: flex; flex-direction: column; gap: .3rem; }
+    .media-inputs input { font-size: .75rem; padding: .35rem .6rem; }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: .6rem; margin-top: 1.25rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-family: var(--mono); font-size: .68rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .6rem 1.2rem; border: 1px solid; border-radius: 4px;
+      cursor: pointer; transition: all .15s; background: none;
+    }
+    .btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn-primary:hover { opacity: .85; }
+    .btn-success { background: var(--accent2); border-color: var(--accent2); color: #0f1117; }
+    .btn-success:hover { opacity: .85; }
+    .btn-ghost { border-color: var(--border); color: var(--ink2); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--ink); }
+    .btn-danger { border-color: var(--red); color: var(--red); }
+    .btn-danger:hover { background: var(--red); color: #fff; }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 6px; padding: .75rem 1.25rem;
+      font-family: var(--mono); font-size: .75rem; color: var(--ink2);
+      transform: translateY(20px); opacity: 0;
+      transition: all .25s ease; pointer-events: none;
+      max-width: 380px;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.ok   { border-color: var(--accent2); color: var(--accent2); }
+    #toast.err  { border-color: var(--red); color: var(--red); }
+
+    /* ── Empty state ── */
+    .empty { padding: 2rem; text-align: center; color: var(--muted); font-family: var(--mono); font-size: .78rem; }
+
+    /* ── Help text ── */
+    .help { font-family: var(--mono); font-size: .62rem; color: var(--muted); margin-top: .25rem; }
+
+    /* ── Experience timeline editor ── */
+    .exp-item {
+      background: var(--bg2); border: 1px solid var(--border);
+      border-radius: 6px; padding: 1rem; margin-bottom: .75rem;
+    }
+    .exp-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: .75rem; cursor: pointer;
+    }
+    .exp-title { font-size: .9rem; font-weight: 500; }
+
+    @media (max-width: 720px) {
+      .shell { grid-template-columns: 1fr; }
+      aside { position: static; height: auto; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ── Sidebar ── -->
+  <aside>
+    <p class="sidebar-title">Portfolio Admin</p>
+
+    <div class="nav-section">
+      <span class="nav-label">Content</span>
+      <button class="nav-btn active" onclick="showSection('projects')" id="nav-projects">
+        <span class="nav-icon">🗂</span> Projects
+      </button>
+      <button class="nav-btn" onclick="showSection('notes')" id="nav-notes">
+        <span class="nav-icon">📓</span> Lab Notes
+      </button>
+      <button class="nav-btn" onclick="showSection('life')" id="nav-life">
+        <span class="nav-icon">🌿</span> Life Cards
+      </button>
+      <button class="nav-btn" onclick="showSection('experience')" id="nav-experience">
+        <span class="nav-icon">💼</span> Experience
+      </button>
+    </div>
+
+    <div class="nav-section">
+      <span class="nav-label">Actions</span>
+      <button class="nav-btn" onclick="newItem()">
+        <span class="nav-icon">＋</span> New item
+      </button>
+      <button class="nav-btn" onclick="exportAll()">
+        <span class="nav-icon">⬇</span> Export JSON
+      </button>
+    </div>
+
+    <div style="padding:1.25rem;margin-top:auto">
+      <p style="font-family:var(--mono);font-size:.6rem;color:var(--muted);line-height:1.6">
+        Changes are exported as JSON files.<br>Upload them to GitHub to go live.
+      </p>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main>
+    <div class="top-bar">
+      <div>
+        <p class="page-title" id="pageTitle">Projects</p>
+        <p class="page-sub" id="pageSub">Click a row to edit · Changes export as JSON for GitHub upload</p>
+      </div>
+    </div>
+
+    <div id="sectionContent"></div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════════════════════ */
+let state = {
+  section: 'projects',
+  data: { projects: [], notes: [], life: [], experience: [] },
+  selected: null,
+  dirty: false
+};
+
+/* ── Hardcoded experience (edit directly here since it lives in index.html) ── */
+state.data.experience = [
+  {
+    id: 'tacc',
+    date: 'Jun – Aug 2024',
+    org: 'TACC · UT Austin',
+    role: 'Summer Researcher',
+    desc: 'Built a multi-robot task allocation and path-planning framework in Python, cvxpy, and ROS, improving simulated disaster-response efficiency by 70%. Validated in Gazebo on TACC supercomputing infrastructure, cutting planning computation time by 45%.',
+    tags: ['ROS', 'Python', 'cvxpy', 'Gazebo', 'HPC']
+  },
+  {
+    id: 'robotics',
+    date: '2025 – Present',
+    org: 'UC Berkeley',
+    role: 'Underwater Robotics — Electrical Subteam',
+    desc: 'Investigating power dissipation and thermal behavior of NVIDIA Jetson modules in autonomous underwater robots. Supporting electrical integration, power regulation, embedded hardware interfacing, and debugging of onboard systems connected to 16 sensors and actuators.',
+    tags: ['Embedded Hardware', 'Jetson', 'Power Systems']
+  },
+  {
+    id: 'tutor',
+    date: 'Feb – Jul 2025',
+    org: 'NOCCCD',
+    role: 'Physics Tutor — Cypress College',
+    desc: 'Supported students in physics topics including mechanics, electromagnetism, circuits, relativity, and thermodynamics. Created MATLAB and Jupyter visualizations to make difficult concepts easier to understand, while developing stronger communication, patience, and teaching skills through 40+ tutoring hours.',
+    tags: ['Teaching', 'Communication', 'Physics', 'Jupyter', 'MATLAB', 'Problem Solving']
+  },
+  {
+    id: 'ambassador',
+    date: 'Jan – Dec 2024',
+    org: 'Cypress College',
+    role: 'Student Ambassador — Charger Experience',
+    desc: 'Helped prospective and current students navigate campus resources, events, and student services. Supported 75+ student cases per semester and engaged with 500+ prospective students through outreach events, while also improving internal workflows using Python, SQL, and live data visualizations.',
+    tags: ['Outreach', 'Student Support', 'Communication', 'Leadership', 'Python', 'SQL', 'Data Visualization']
+  },
+  {
+    id: 'presenter',
+    date: '2024',
+    org: 'Conferences',
+    role: 'Research Presenter',
+    desc: 'Presented at SCCUR (Southern California Conferences for Undergraduate Research), San Bernardino, Nov 2024, and at the STARS Celebration Conference, San Diego, Sep 2024.',
+    tags: ['Research Communication', 'Robotics']
+  }
+];
+
+/* ════════════════════════════════════════════════════════════
+   DATA LOADING — reads from data/ folder via fetch
+════════════════════════════════════════════════════════════ */
+async function loadJSON(path) {
+  try {
+    const r = await fetch(path + '?t=' + Date.now());
+    if (!r.ok) return null;
+    return await r.json();
+  } catch { return null; }
+}
+
+async function loadSection(section) {
+  if (section === 'experience') return; // hardcoded above
+
+  const folders = { projects: 'data/projects', notes: 'data/notes', life: 'data/life' };
+  const folder = folders[section];
+
+  const index = await loadJSON(folder + '/index.json');
+  if (!index) { toast('Could not load ' + folder + '/index.json', 'err'); return; }
+
+  const items = [];
+  for (const entry of index) {
+    const id = typeof entry === 'string' ? entry : entry.id;
+    const meta = typeof entry === 'object' ? entry : {};
+    const item = await loadJSON(folder + '/' + id + '.json');
+    if (item) items.push({ ...item, ...meta });
+  }
+  state.data[section] = items;
+}
+
+/* ════════════════════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════════════════════ */
+const TITLES = {
+  projects: ['Projects', 'Manage project cards, order, visibility, and detail content'],
+  notes: ['Lab Notes', 'Add or edit field notes and lab logs'],
+  life: ['Life Cards', 'Edit the Beyond Engineering cards'],
+  experience: ['Experience', 'Edit timeline entries (exports a snippet to paste into index.html)']
+};
+
+async function showSection(section) {
+  state.section = section;
+  state.selected = null;
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('nav-' + section).classList.add('active');
+  const [title, sub] = TITLES[section];
+  document.getElementById('pageTitle').textContent = title;
+  document.getElementById('pageSub').textContent = sub;
+
+  document.getElementById('sectionContent').innerHTML =
+    '<div class="empty">Loading...</div>';
+  await loadSection(section);
+  renderSection();
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION RENDERERS
+════════════════════════════════════════════════════════════ */
+function renderSection() {
+  const el = document.getElementById('sectionContent');
+  const { section, data } = state;
+
+  if (section === 'projects') el.innerHTML = renderProjectsList();
+  else if (section === 'notes') el.innerHTML = renderNotesList();
+  else if (section === 'life') el.innerHTML = renderLifeList();
+  else if (section === 'experience') el.innerHTML = renderExperienceList();
+
+  // Re-attach events after innerHTML set
+  attachListEvents();
+}
+
+/* ── Projects list ── */
+function renderProjectsList() {
+  const items = [...state.data.projects].sort((a, b) => (a.rank||99)-(b.rank||99));
+  let html = `
+    <div class="items-list" id="itemsList">`;
+  items.forEach((p, i) => {
+    html += `
+      <div class="item-row" data-id="${p.id}" onclick="selectItem('${p.id}')">
+        <span class="item-rank">${p.rank || i+1}</span>
+        <div class="item-info">
+          <div class="item-title">${p.title || '(untitled)'}</div>
+          <div class="item-meta">${p.type || ''} · ${p.year || ''}</div>
+        </div>
+        ${p.featured ? '<span class="item-badge badge-featured">featured</span>' : ''}
+        <span class="item-badge ${p.show ? 'badge-show' : 'badge-hide'}">${p.show ? 'visible' : 'hidden'}</span>
+      </div>`;
+  });
+  html += `</div>
+    <button class="btn btn-ghost" onclick="newItem()" style="margin-bottom:1.5rem">＋ Add new project</button>
+    <div id="editorArea"></div>`;
+  return html;
+}
+
+/* ── Notes list ── */
+function renderNotesList() {
+  const items = state.data.notes;
+  let html = `<div class="items-list" id="itemsList">`;
+  items.forEach(n => {
+    html += `
+      <div class="item-row" data-id="${n.id}" onclick="selectItem('${n.id}')">
+        <div class="item-info">
+          <div class="item-title">${n.title || '(untitled)'}</div>
+          <div class="item-meta">${n.date || ''} · ${n.tag || ''}</div>
+        </div>
+        ${n.highlighted ? '<span class="item-badge badge-featured">★ highlighted</span>' : ''}
+        <span class="item-badge ${n.show!==false ? 'badge-show' : 'badge-hide'}">${n.show!==false ? 'visible' : 'hidden'}</span>
+      </div>`;
+  });
+  html += `</div>
+    <button class="btn btn-ghost" onclick="newItem()" style="margin-bottom:1.5rem">＋ Add new note</button>
+    <div id="editorArea"></div>`;
+  return html;
+}
+
+/* ── Life list ── */
+function renderLifeList() {
+  const items = state.data.life;
+  let html = `<div class="items-list" id="itemsList">`;
+  items.forEach(n => {
+    html += `
+      <div class="item-row" data-id="${n.id}" onclick="selectItem('${n.id}')">
+        <span class="item-rank">${n.icon || ''}</span>
+        <div class="item-info">
+          <div class="item-title">${n.title || '(untitled)'}</div>
+          <div class="item-meta">${n.desc || ''}</div>
+        </div>
+      </div>`;
+  });
+  html += `</div>
+    <button class="btn btn-ghost" onclick="newItem()" style="margin-bottom:1.5rem">＋ Add new card</button>
+    <div id="editorArea"></div>`;
+  return html;
+}
+
+/* ── Experience list ── */
+function renderExperienceList() {
+  const items = state.data.experience;
+  let html = `<div class="items-list" id="itemsList">`;
+  items.forEach(e => {
+    html += `
+      <div class="item-row" data-id="${e.id}" onclick="selectItem('${e.id}')">
+        <div class="item-info">
+          <div class="item-title">${e.role || '(untitled)'}</div>
+          <div class="item-meta">${e.org || ''} · ${e.date || ''}</div>
+        </div>
+      </div>`;
+  });
+  html += `</div>
+    <button class="btn btn-ghost" onclick="newItem()" style="margin-bottom:1.5rem">＋ Add new entry</button>
+    <div id="editorArea"></div>`;
+  return html;
+}
+
+/* ════════════════════════════════════════════════════════════
+   ITEM SELECTION + EDITOR
+════════════════════════════════════════════════════════════ */
+function attachListEvents() {} // click handlers inline
+
+function selectItem(id) {
+  document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+  const row = document.querySelector(`.item-row[data-id="${id}"]`);
+  if (row) row.classList.add('selected');
+
+  const { section, data } = state;
+  const items = data[section];
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+  state.selected = id;
+
+  const area = document.getElementById('editorArea');
+  if (section === 'projects') area.innerHTML = buildProjectEditor(item);
+  else if (section === 'notes')  area.innerHTML = buildNoteEditor(item);
+  else if (section === 'life')   area.innerHTML = buildLifeEditor(item);
+  else if (section === 'experience') area.innerHTML = buildExperienceEditor(item);
+
+  area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ════════════════════════════════════════════════════════════
+   EDITORS
+════════════════════════════════════════════════════════════ */
+
+/* ── Project editor ── */
+function buildProjectEditor(p) {
+  const tags = (p.tags || []).join(', ');
+  const tagsDisplay = (p.tags_display || []).join(', ');
+  return `
+  <div class="editor-panel">
+    <div class="editor-header">
+      <p class="editor-title">Editing: ${p.title || 'New Project'}</p>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">id: ${p.id}</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>ID (filename, no spaces)</label>
+        <input id="f-id" value="${p.id || ''}" placeholder="my-project"/>
+        <p class="help">Changing this renames the file. Same ID = overwrite.</p>
+      </div>
+      <div class="form-group">
+        <label>Rank (1 = top, featured card)</label>
+        <input id="f-rank" type="number" value="${p.rank || ''}"/>
+      </div>
+      <div class="form-group">
+        <label>Title</label>
+        <input id="f-title" value="${esc(p.title || '')}"/>
+      </div>
+      <div class="form-group">
+        <label>Year</label>
+        <input id="f-year" value="${esc(p.year || '')}"/>
+      </div>
+      <div class="form-group">
+        <label>Type (shown on card)</label>
+        <input id="f-type" value="${esc(p.type || '')}"/>
+      </div>
+      <div class="form-group">
+        <label>Badge (e.g. Hackathon)</label>
+        <input id="f-badge" value="${esc(p.badge || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Short description (card preview)</label>
+        <textarea id="f-desc" rows="3">${esc(p.desc || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Filter tags (comma separated)</label>
+        <input id="f-tags" value="${esc(tags)}" placeholder="embedded, ai-ml"/>
+        <p class="help">Options: embedded, signals, ai-ml, robotics, accessibility, sustainability</p>
+      </div>
+      <div class="form-group">
+        <label>Display tags (shown as pills)</label>
+        <input id="f-tags-display" value="${esc(tagsDisplay)}" placeholder="Python, ESP32"/>
+      </div>
+      <div class="form-group">
+        <label>GitHub URL</label>
+        <input id="f-github" value="${esc(p.github || '')}"/>
+      </div>
+      <div class="form-group">
+        <label>Card image path</label>
+        <input id="f-image" value="${esc(p.image || '')}" placeholder="assets/img/myproject.png"/>
+      </div>
+      <div class="form-group">
+        <div class="check-row">
+          <input type="checkbox" id="f-show" ${p.show ? 'checked' : ''}/>
+          <label for="f-show">Show on main page (top 8)</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="check-row">
+          <input type="checkbox" id="f-featured" ${p.featured ? 'checked' : ''}/>
+          <label for="f-featured">Featured (spans 2 columns)</label>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Project detail body</label>
+        <p class="help" style="margin-bottom:.4rem">Use [SECTION: Title] for headers. Use [IMAGE: assets/img/file.png | Caption] to insert images.</p>
+        <textarea id="f-body" class="tall">${esc(p.detail?.body || '')}</textarea>
+      </div>
+      <div class="form-group full">
+        <label>Status</label>
+        <input id="f-status" value="${esc(p.detail?.status || '')}"/>
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:1rem">
+      <label>Links (one per line: Label | URL)</label>
+      <textarea id="f-links" rows="4">${(p.detail?.links || []).map(l => l.label + ' | ' + l.url).join('\n')}</textarea>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-success" onclick="saveProject()">Save &amp; Export JSON</button>
+      <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+      <button class="btn btn-danger" onclick="deleteItem('${p.id}')">Delete</button>
+    </div>
+  </div>`;
+}
+
+/* ── Note editor ── */
+function buildNoteEditor(n) {
+  return `
+  <div class="editor-panel">
+    <div class="editor-header">
+      <p class="editor-title">Editing note: ${n.title || 'New Note'}</p>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">id: ${n.id}</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>ID (filename)</label>
+        <input id="f-id" value="${n.id || ''}"/>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input id="f-date" value="${esc(n.date || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Title</label>
+        <input id="f-title" value="${esc(n.title || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Preview (shown on card)</label>
+        <textarea id="f-preview" rows="2">${esc(n.preview || '')}</textarea>
+      </div>
+      <div class="form-group">
+        <label>Tag</label>
+        <select id="f-tag">
+          ${['embedded','signals','ai-ml','robotics','accessibility','sustainability'].map(t =>
+            `<option value="${t}" ${n.tag===t?'selected':''}>${t}</option>`
+          ).join('')}
+        </select>
+      </div>
+      <div class="form-group" style="display:flex;flex-direction:column;gap:.75rem;justify-content:center">
+        <div class="check-row">
+          <input type="checkbox" id="f-highlighted" ${n.highlighted ? 'checked' : ''}/>
+          <label for="f-highlighted">Highlighted (shows first, gets star)</label>
+        </div>
+        <div class="check-row">
+          <input type="checkbox" id="f-show" ${n.show!==false ? 'checked' : ''}/>
+          <label for="f-show">Visible on site</label>
+        </div>
+      </div>
+      <div class="form-group full">
+        <label>Body</label>
+        <p class="help" style="margin-bottom:.4rem">Use [IMAGE: assets/img/file.png | Caption] to insert images inline.</p>
+        <textarea id="f-body" class="tall">${esc(n.detail?.body || '')}</textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-success" onclick="saveNote()">Save &amp; Export JSON</button>
+      <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+      <button class="btn btn-danger" onclick="deleteItem('${n.id}')">Delete</button>
+    </div>
+  </div>`;
+}
+
+/* ── Life editor ── */
+function buildLifeEditor(item) {
+  return `
+  <div class="editor-panel">
+    <div class="editor-header">
+      <p class="editor-title">Editing: ${item.title || 'New Card'}</p>
+      <span style="font-family:var(--mono);font-size:.65rem;color:var(--muted)">id: ${item.id}</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>ID (filename)</label>
+        <input id="f-id" value="${item.id || ''}"/>
+      </div>
+      <div class="form-group">
+        <label>Icon (emoji)</label>
+        <input id="f-icon" value="${item.icon || ''}"/>
+      </div>
+      <div class="form-group full">
+        <label>Title</label>
+        <input id="f-title" value="${esc(item.title || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Short description (card preview)</label>
+        <input id="f-desc" value="${esc(item.desc || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Body</label>
+        <p class="help" style="margin-bottom:.4rem">Use [IMAGE: assets/img/file.png | Caption] to insert images inline. Separate paragraphs with a blank line.</p>
+        <textarea id="f-body" class="tall">${esc(item.detail?.body || '')}</textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-success" onclick="saveLife()">Save &amp; Export JSON</button>
+      <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+      <button class="btn btn-danger" onclick="deleteItem('${item.id}')">Delete</button>
+    </div>
+  </div>`;
+}
+
+/* ── Experience editor ── */
+function buildExperienceEditor(e) {
+  return `
+  <div class="editor-panel">
+    <div class="editor-header">
+      <p class="editor-title">Editing: ${e.role || 'New Entry'}</p>
+    </div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Date range</label>
+        <input id="f-date" value="${esc(e.date || '')}"/>
+      </div>
+      <div class="form-group">
+        <label>Organization</label>
+        <input id="f-org" value="${esc(e.org || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Role / Title</label>
+        <input id="f-role" value="${esc(e.role || '')}"/>
+      </div>
+      <div class="form-group full">
+        <label>Description</label>
+        <textarea id="f-desc" rows="5">${esc(e.desc || '')}</textarea>
+      </div>
+      <div class="form-group full">
+        <label>Skills (comma separated)</label>
+        <input id="f-tags" value="${(e.tags || []).join(', ')}"/>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-success" onclick="saveExperience('${e.id}')">Save &amp; Copy HTML</button>
+      <button class="btn btn-ghost" onclick="cancelEdit()">Cancel</button>
+    </div>
+    <div id="expHtmlOutput" style="display:none;margin-top:1rem">
+      <label style="font-family:var(--mono);font-size:.62rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;display:block;margin-bottom:.4rem">Generated HTML — paste into index.html experience section</label>
+      <textarea id="expHtmlText" style="background:var(--bg3);border:1px solid var(--border);border-radius:4px;padding:.75rem;font-family:var(--mono);font-size:.7rem;color:var(--ink2);width:100%;min-height:200px;resize:vertical" readonly></textarea>
+    </div>
+  </div>`;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SAVE FUNCTIONS — export JSON for GitHub upload
+════════════════════════════════════════════════════════════ */
+function v(id) { return document.getElementById(id)?.value || ''; }
+function checked(id) { return document.getElementById(id)?.checked || false; }
+
+function saveProject() {
+  const id = v('f-id').trim();
+  if (!id) { toast('ID is required', 'err'); return; }
+  const links = v('f-links').split('\n').filter(Boolean).map(line => {
+    const [label, ...rest] = line.split('|');
+    return { label: label.trim(), url: rest.join('|').trim() };
+  });
+  const obj = {
+    id,
+    rank: parseInt(v('f-rank')) || 99,
+    show: checked('f-show'),
+    featured: checked('f-featured'),
+    tags: v('f-tags').split(',').map(t=>t.trim()).filter(Boolean),
+    type: v('f-type'),
+    year: v('f-year'),
+    badge: v('f-badge'),
+    title: v('f-title'),
+    desc: v('f-desc'),
+    tags_display: v('f-tags-display').split(',').map(t=>t.trim()).filter(Boolean),
+    github: v('f-github'),
+    image: v('f-image'),
+    detail: {
+      body: v('f-body'),
+      status: v('f-status'),
+      links,
+      tags_display: v('f-tags-display').split(',').map(t=>t.trim()).filter(Boolean)
+    }
+  };
+  downloadJSON(obj, id + '.json',
+    'data/projects/' + id + '.json',
+    'Also update data/projects/index.json if this is a new project (add { "id": "' + id + '", "rank": ' + (obj.rank) + ', "show": ' + obj.show + ', "featured": ' + obj.featured + ' })');
+}
+
+function saveNote() {
+  const id = v('f-id').trim();
+  if (!id) { toast('ID is required', 'err'); return; }
+  const obj = {
+    id,
+    date: v('f-date'),
+    title: v('f-title'),
+    preview: v('f-preview'),
+    tag: v('f-tag'),
+    highlighted: checked('f-highlighted'),
+    show: checked('f-show'),
+    detail: { body: v('f-body'), media: [] }
+  };
+  downloadJSON(obj, id + '.json',
+    'data/notes/' + id + '.json',
+    'Also update data/notes/index.json if this is a new note (add { "id": "' + id + '", "show": true })');
+}
+
+function saveLife() {
+  const id = v('f-id').trim();
+  if (!id) { toast('ID is required', 'err'); return; }
+  const obj = {
+    id,
+    icon: v('f-icon'),
+    title: v('f-title'),
+    desc: v('f-desc'),
+    detail: { body: v('f-body'), media: [] }
+  };
+  downloadJSON(obj, id + '.json',
+    'data/life/' + id + '.json',
+    'Also update data/life/index.json if this is a new card (add "' + id + '" to the array)');
+}
+
+function saveExperience(id) {
+  const tags = v('f-tags').split(',').map(t=>t.trim()).filter(Boolean);
+  const tagSpans = tags.map(t => `<span class="skill-tag">${t}</span>`).join('');
+  const html = `
+      <div class="timeline-item">
+        <div><p class="tl-date">${v('f-date')}</p><p class="tl-org">${v('f-org')}</p></div>
+        <div>
+          <h3 class="tl-role">${v('f-role')}</h3>
+          <p class="tl-desc">${v('f-desc')}</p>
+          <div class="tl-tags">${tagSpans}</div>
+        </div>
+      </div>`;
+  const out = document.getElementById('expHtmlOutput');
+  document.getElementById('expHtmlText').value = html.trim();
+  out.style.display = 'block';
+  navigator.clipboard.writeText(html).then(() => toast('HTML copied to clipboard! Paste into index.html', 'ok'));
+}
+
+/* ════════════════════════════════════════════════════════════
+   NEW ITEM
+════════════════════════════════════════════════════════════ */
+function newItem() {
+  const { section } = state;
+  const templates = {
+    projects: { id: 'new-project', rank: 99, show: false, featured: false, tags: [], type: '', year: new Date().getFullYear().toString(), badge: '', title: '', desc: '', tags_display: [], github: '', image: '', detail: { body: '', status: '', links: [] } },
+    notes: { id: 'new-note', date: '', title: '', preview: '', tag: 'embedded', highlighted: false, show: true, detail: { body: '', media: [] } },
+    life: { id: 'new-card', icon: '✨', title: '', desc: '', detail: { body: '', media: [] } },
+    experience: { id: 'new-exp', date: '', org: '', role: '', desc: '', tags: [] }
+  };
+  const item = templates[section];
+  state.data[section].push(item);
+  renderSection();
+  selectItem('new-' + (section === 'projects' ? 'project' : section === 'notes' ? 'note' : section === 'life' ? 'card' : 'exp'));
+}
+
+function deleteItem(id) {
+  if (!confirm('Delete "' + id + '"? You will need to manually remove the file from GitHub.')) return;
+  state.data[state.section] = state.data[state.section].filter(i => i.id !== id);
+  state.selected = null;
+  renderSection();
+  toast('Removed from local list. Delete the file from GitHub manually.', 'ok');
+}
+
+function cancelEdit() {
+  state.selected = null;
+  document.getElementById('editorArea').innerHTML = '';
+  document.querySelectorAll('.item-row').forEach(r => r.classList.remove('selected'));
+}
+
+/* ════════════════════════════════════════════════════════════
+   EXPORT
+════════════════════════════════════════════════════════════ */
+function downloadJSON(obj, filename, githubPath, extraNote) {
+  const json = JSON.stringify(obj, null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  toast('Downloaded ' + filename + '. Upload to GitHub at: ' + githubPath + (extraNote ? '\n' + extraNote : ''), 'ok');
+}
+
+function exportAll() {
+  const { section, data } = state;
+  if (section === 'experience') {
+    toast('Use "Save & Copy HTML" on each entry to get the index.html snippet.', 'ok');
+    return;
+  }
+  toast('Use the Save button on each item to export individual files.', 'ok');
+}
+
+/* ════════════════════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════════════════════ */
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/"/g,'&quot;')
+    .replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let _toastTimer;
+function toast(msg, type='ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => { el.className = ''; }, 5000);
+}
+
+/* ── Init ── */
+showSection('projects');
+</script>
+</body>
+</html>
