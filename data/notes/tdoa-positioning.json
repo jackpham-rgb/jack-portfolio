@@ -1,1 +1,12 @@
-{"id":"tdoa-positioning","date":"Fall 2025","title":"TDOA positioning: from equations to working code","preview":"The gap between a clean least-squares multilateration formula on paper and a system that actually works in a noisy room is wider than expected...","tag":"signals","highlighted":true,"detail":{"body":"Time-difference-of-arrival positioning looks elegant on paper. You have N speakers emitting beacon signals, you cross-correlate with a reference, find the peaks, compute time deltas, and solve a least-squares system. Done.\n\nIn practice: the peaks are not clean. Room reflections create secondary peaks that are sometimes larger than the direct-path peak. The sampling rate creates a quantization floor on TDOA resolution. Background noise shifts the correlation baseline.\n\nWhat actually worked: averaging 8 consecutive cross-correlation windows before peak detection, using a minimum peak-height threshold relative to the correlation maximum, and running a sanity check that TDOA values are physically plausible given speaker geometry. After those three fixes, positioning error dropped from ~40 cm to ~6 cm RMS.","media":[]}}
+{
+  "id": "tdoa-positioning",
+  "date": "Fall 2025",
+  "title": "Lab 6B: Acoustic Positioning System",
+  "preview": "This lab stood out to me the most. It made me rethink how GPS works, but instead of satellites, we used sound. The moment the algorithm printed a real coordinate, it clicked.",
+  "tag": "signals",
+  "highlighted": true,
+  "detail": {
+    "body": "This lab stood out to me the most in EECS16A. It made me rethink how GPS works, except instead of satellites bouncing signals off space, we used speakers and a microphone in a room. The idea is the same though: if you know how long a signal takes to arrive from multiple known points, you can figure out where you are.\n\nThe part that really clicked for me was cross-correlation. You play a known signal from each speaker, record what the microphone hears, and then find the delay by looking for the peak in R(t) = sum of x(n) times y(n + t). That peak tells you the time difference, which gives you distance via d = v times dt. With three speakers, you get three distances, and you solve for position using least squares: x = A plus times b. The moment Python printed an actual coordinate from just audio math, it felt like magic that made complete sense.",
+    "media": []
+  }
+}

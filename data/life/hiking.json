@@ -2,15 +2,9 @@
   "id": "hiking",
   "icon": "🏕️",
   "title": "Hiking & Camping",
-  "desc": "I enjoy hiking, camping, and spending time outdoors when I need space away from school and projects.",
+  "desc": "I like hiking and camping. It gives me time to really touch grass and live off the internet for a while.",
   "detail": {
-    "body": "I enjoy hiking and camping because it gives me time to slow down and reconnect with the world outside of classes and engineering work. One of my favorite outdoor memories was camping in Yosemite, where I saw a deer up close. It was cute and peaceful, even though the night was cold, dark, and a little intense. These trips remind me to appreciate quiet moments, nature, and the small details around me.",
-    "media": [
-      {
-        "type": "image",
-        "src": "assets/img/yosemite-hiking.jpg",
-        "caption": "Camping and hiking in Yosemite"
-      }
-    ]
+    "body": "I like hiking and camping. It gives me the time to really touch grass and try to live off the internet for a while. My favorite feeling is after driving for 6 hours, finally getting to the curvy road with the cold breeze coming through the trees in Yosemite, and stopping for a much needed rest.\n\n[IMAGE: assets/img/parked_car_camping.jpg | The arrival after 6 hours of driving]\n\nOne time at the campsite, I saw a deer up close. It was cute and peaceful, even though the night was cold, dark, and a little intense.\n\n[IMAGE: assets/img/deer_camping.jpg | A deer at the campsite]\n\nI love these experiences. They make me feel like an alien visiting Earth for the first time, reminding me to enjoy quiet moments, nature, and the small details around me.",
+    "media": []
   }
 }
