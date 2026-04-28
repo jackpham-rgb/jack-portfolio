@@ -2,15 +2,9 @@
   "id": "cooking",
   "icon": "🍜",
   "title": "Cooking & Exploring New Cuisine",
-  "desc": "I enjoy experimenting with food and creating fusion dishes that mix different flavors and cultures.",
+  "desc": "I experiment with food and create fusion dishes that mix different flavors and cultures.",
   "detail": {
-    "body": "Outside of engineering, I enjoy cooking and exploring new cuisines. One dish I am proud of making is peanut butter noodles with shrimp and lamb, a fusion idea inspired by Thai and Korean flavors. Cooking gives me another way to be creative, experiment with combinations, and enjoy small moments outside of school.",
-    "media": [
-      {
-        "type": "image",
-        "src": "assets/img/peanut-butter-noodles.jpg",
-        "caption": "Peanut butter noodles with shrimp and lamb"
-      }
-    ]
+    "body": "Every weekend, I find myself going down a rabbit hole of cookbooks and weird recipe videos on TikTok. One dish I am proud of making is peanut butter noodles with shrimp and lamb, inspired by Thai and Korean flavors.\n\n[IMAGE: assets/img/peanut_noodle.jpg | Peanut butter noodles with shrimp and lamb]\n\nI also followed a TikTok hack to make pizza from scratch, and it was so fun to make. Cooking or trying a new technique is always a good way for me to be creative and work with chemistry in a culinary way.\n\nHere are the burnt pizzas, lol.\n\n[IMAGE: assets/img/pizza.jpg | The burnt pizzas, lol]",
+    "media": []
   }
 }

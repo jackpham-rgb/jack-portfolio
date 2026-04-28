@@ -1,1 +1,12 @@
-{"id":"eeg-noise","date":"Spring 2026","title":"EEG signal quality: garbage in, garbage out","preview":"Before any ML model touches EEG data, the preprocessing pipeline decides everything. Most attention detection failures are not model failures...","tag":"ai-ml","highlighted":true,"detail":{"body":"EEG data is extraordinarily noisy. A 60 Hz power line artifact can completely drown out the 8-12 Hz alpha band activity that indicates relaxed attention. Eye blinks create voltage spikes 10x larger than the neural signals we care about. Muscle activity near the electrodes creates broadband noise.\n\nOur preprocessing pipeline: notch filter at 60 Hz and harmonics, bandpass filter 1-50 Hz, independent component analysis to remove eye-blink artifacts, epoch rejection for remaining artifact-contaminated segments.\n\nAfter clean preprocessing, a simple SVM on band-power features achieved 78% accuracy. Before preprocessing, the same SVM on raw data achieved 51% — barely above chance. The model was not the bottleneck. The data quality was.","media":[]}}
+{
+  "id": "eeg-noise",
+  "date": "Spring 2026",
+  "title": "EEG Signal Quality: Garbage In, Garbage Out",
+  "preview": "Working on the EEG project made me realize that neuroscience is a field where signal processing directly matters. The data is messy, but the patterns are real if you clean it right.",
+  "tag": "signals",
+  "highlighted": false,
+  "detail": {
+    "body": "Working on the EEG project made me realize that neuroscience is a genuinely interesting field, and that signal processing has a direct home in it. The brain produces real, measurable signals. The problem is that everything else does too.\n\nA 60 Hz power line can completely drown out the alpha band. Eye blinks create spikes way larger than the neural signals we care about. Before we cleaned the data, our SVM hit 51% accuracy, which is barely above random guessing. After a proper pipeline including a notch filter at 60 Hz, a bandpass from 1 to 50 Hz, and ICA to remove eye artifacts, the same model jumped to 78%. The model was never the problem. The data quality was.\n\nThat gap, from 51% to 78%, just from preprocessing, is what made me appreciate how much engineering goes into science before any machine learning even starts.",
+    "media": []
+  }
+}
