@@ -1186,15 +1186,21 @@ async function loadJSON(path) {
 }
 
 /* ── Modal ── */
+// Save scroll position ONCE when first modal opens; nested modals don't overwrite it
 let _savedScrollY = 0;
+let _modalDepth = 0;
 function openModal(html) {
-  _savedScrollY = window.scrollY;
+  if (_modalDepth === 0) {
+    _savedScrollY = window.scrollY;
+    document.body.style.top = `-${_savedScrollY}px`;
+    document.body.classList.add('modal-open');
+  }
+  _modalDepth++;
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.top = `-${_savedScrollY}px`;
-  document.body.classList.add('modal-open');
 }
 function closeModal() {
+  _modalDepth = 0;
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
   document.body.style.top = '';
@@ -1684,6 +1690,27 @@ function openNoteModal(n) {
 /* ════════════════════════════════════════════════════════════
    LIFE
 ════════════════════════════════════════════════════════════ */
+function renderLifeBody(detail) {
+  // Renders body paragraphs and [IMAGE:] markers, no section headers
+  const body = detail.body || '';
+  const media = detail.media || [];
+  let mediaIdx = 0;
+  const parts = body.split('\n\n').map(chunk => {
+    const t = chunk.trim();
+    if (!t) return '';
+    if (t.startsWith('[IMAGE:')) {
+      if (mediaIdx < media.length) return renderMedia([media[mediaIdx++]]);
+      // fallback: parse inline marker
+      const inner = t.replace('[IMAGE:', '').replace(']', '').trim();
+      const [src, caption] = inner.split('|').map(s => s.trim());
+      return renderMedia([{ type: 'image', src, caption }]);
+    }
+    return `<p style="margin-bottom:.8rem;font-size:.93rem;color:var(--ink2);line-height:1.82">${t}</p>`;
+  }).join('');
+  const trailing = media.slice(mediaIdx);
+  return parts + (trailing.length ? renderMedia(trailing) : '');
+}
+
 function renderLife(data) {
   const grid = document.getElementById('lifeGrid');
   grid.innerHTML = '';
@@ -1691,12 +1718,8 @@ function renderLife(data) {
     const div = document.createElement('div');
     div.className = 'life-card';
     div.onclick = () => openModal(`
-      <h3 style="margin-bottom:.75rem">${item.icon} ${item.title}</h3>
-      <div class="modal-section">
-        <p class="modal-section-title">// About</p>
-        <p>${(item.detail.body || '').replace(/\n\n/g, '<br><br>')}</p>
-      </div>
-      ${renderMedia(item.detail.media)}
+      <h3 style="margin-bottom:1rem">${item.icon} ${item.title}</h3>
+      ${renderLifeBody(item.detail)}
     `);
     div.innerHTML = `
       <div class="life-icon">${item.icon}</div>
