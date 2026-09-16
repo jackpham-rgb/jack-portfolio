@@ -1,1137 +1,333 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jack Pham — EECS @ Berkeley</title>
   <meta name="description" content="Jack Pham — EECS student at UC Berkeley. Circuits, embedded systems, signal processing, and intelligent hardware." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Typography: NYT-inspired stack for both dark and light modes -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Libre+Franklin:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
-  /* ═══════════════════════════════════════════════
-     TOKENS
-  ═══════════════════════════════════════════════ */
-
-  /* ── DARK: Quiet midnight blue (Apple-like restraint) ── */
+  /* ── Tokens: one light theme, one accent ── */
   :root {
-    --bg:         #0A1220;
-    --bg2:        #0E1728;
-    --bg3:        #111C30;
-    --border:     #1E2C42;
-    --border2:    #1D2A3D;
+    --bg:      #ffffff;
+    --text:    #1a1a1a;
+    --muted:   #555555;
+    --border:  #dddddd;
+    --accent:  #1a3a6b;
 
-    --ink:        #F5F8FC;   /* main headings */
-    --ink2:       #D9E2F0;   /* body text */
-    --muted:      #A8B6C9;   /* secondary text */
-    --muted2:     #7F8EA3;   /* muted labels */
-
-    --accent:     #4C8DFF;   /* one primary accent — no more */
-    --accent2:    #78DCE8;   /* used very sparingly */
-    --accent-dim: rgba(76,141,255,0.1);
-
-    --tag-bg:     #0E1C30;
-    --tag-text:   #7AABFF;
-    --card-bg:    #111C30;
-    --card-hov:   #162035;
-    --card-shadow: 0 2px 12px rgba(0,0,0,0.35);
-    --card-shadow-hov: 0 6px 24px rgba(0,0,0,0.45);
-
-    /* Typography: NYT stack — same for both dark and light */
-    --serif: 'Playfair Display', Georgia, serif;
-    --body:  'Lora', Georgia, serif;
-    --ui:    'Libre Franklin', sans-serif;
-    --mono:  'DM Mono', monospace;
-    --sans:  'Libre Franklin', sans-serif;  /* fallback alias */
-
-    /* Type scale */
-    --t-hero:    48px;
-    --t-section: 30px;
-    --t-card:    18px;
-    --t-body:    16px;
-    --t-small:   12px;
-
-    --max:  1120px;
-    --gap:  clamp(1.25rem, 4vw, 2.5rem);
-    --rad:  16px;   /* Apple-like rounded cards */
-    --rad-sm: 8px;
-
-    color-scheme: dark;
-  }
-
-  /* ── LIGHT: NYT Paper and Ink ── */
-  [data-theme="light"] {
-    --bg:         #FFFFFF;
-    --bg2:        #FAFAFA;
-    --bg3:        #F4F4F4;
-    --border:     #E2E2E2;
-    --border2:    #D0D0D0;
-
-    --ink:        #121212;   /* off-black headlines */
-    --ink2:       #333333;   /* article body */
-    --muted:      #666666;   /* bylines, timestamps */
-    --muted2:     #999999;   /* captions */
-
-    --accent:     #326891;   /* NYT muted blue */
-    --accent2:    #326891;
-    --accent-dim: rgba(50,104,145,0.08);
-
-    --tag-bg:     #F0F0F0;
-    --tag-text:   #444444;
-    --card-bg:    #FFFFFF;
-    --card-hov:   #FAFAFA;
-    --card-shadow: 0 1px 4px rgba(0,0,0,0.08);
-    --card-shadow-hov: 0 4px 16px rgba(0,0,0,0.12);
-
-    /* Typography inherits from :root — same NYT stack in both modes */
+    --serif: Georgia, 'Times New Roman', Times, serif;
+    --max: 760px;
 
     color-scheme: light;
   }
 
-  /* ═══════════════════════════════════════════════
-     RESET & BASE
-  ═══════════════════════════════════════════════ */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; font-size: 16px; }
+  html { font-size: 16px; }
 
   body {
     background: var(--bg);
-    color: var(--ink2);
-    font-family: var(--body);   /* Lora for body text */
+    color: var(--text);
+    font-family: var(--serif);
     font-weight: 400;
-    font-size: var(--t-body);
-    line-height: 1.75;
-    transition: background .35s, color .35s;
-    min-height: 100vh;
-  }
-
-  /* UI elements — Libre Franklin across both modes */
-  nav, .filter-btn, .btn, .pcard-type, .pcard-year,
-  .pcard-tag, .skill-tag, .section-label, .hero-eyebrow,
-  .nav-links a, .nav-logo, .focus-pill, .sidebar-title,
-  .tl-date, .tl-org, .note-date, .note-tag, .life-title,
-  .footer-links a, .footer-copy, .badge, .hero-status,
-  .pcard-more-label, .see-more-link, .modal-type,
-  .modal-section-title, .modal-close, .toggle-opt {
-    font-family: var(--ui);
-  }
-
-  /* Headings — Playfair Display across both modes */
-  h1, h2, h3, .footer-name { font-family: var(--serif); }
-
-  a { color: inherit; text-decoration: none; }
-  button { font-family: inherit; }
-
-  /* ═══════════════════════════════════════════════
-     TYPOGRAPHY — NYT stack, same in both modes
-  ═══════════════════════════════════════════════ */
-  h1 {
-    /* font-family set by rule above (Playfair Display) */
-    font-size: 48px;
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -.01em;
-    color: var(--ink);
-  }
-  h1 em { font-style: italic; color: var(--accent); }
-
-  h2 {
-    font-size: 30px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.2;
-  }
-  h2 em { font-style: italic; color: var(--accent); }
-
-  h3 {
-    font-size: var(--t-card);  /* 18px */
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.3;
-  }
-
-  p { color: var(--ink2); font-size: var(--t-body); line-height: 1.75; font-weight: 400; }
-
-  /* Light: section dividers in NYT style */
-  [data-theme="light"] .section-head {
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: .65rem;
-    margin-bottom: 2rem;
-  }
-
-  .mono { font-family: var(--mono); }
-  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gap); }
-
-  /* ═══════════════════════════════════════════════
-     ANIMATIONS
-  ═══════════════════════════════════════════════ */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes pulse-dot {
-    0%,100% { box-shadow: 0 0 0 0 rgba(52,211,153,.5); }
-    50%      { box-shadow: 0 0 0 6px rgba(52,211,153,0); }
-  }
-  @keyframes flicker {
-    0%,100% { opacity: 1; } 50% { opacity: .45; }
-  }
-
-  .reveal { opacity: 0; animation: fadeUp .7s ease forwards; }
-  .r1{animation-delay:.05s} .r2{animation-delay:.18s}
-  .r3{animation-delay:.32s} .r4{animation-delay:.48s}
-  .r5{animation-delay:.65s}
-
-  /* ═══════════════════════════════════════════════
-     NAV
-  ═══════════════════════════════════════════════ */
-  nav {
-    position: sticky; top: 0; z-index: 300;
-    background: rgba(10, 18, 32, 0.78);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid var(--border2);
-    transition: background .35s, border-color .35s;
-  }
-  [data-theme="light"] nav {
-    background: rgba(255,255,255,0.92);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-inner {
-    max-width: var(--max); margin: 0 auto;
-    padding: 0 var(--gap); height: 68px;
-    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  }
-  .nav-logo {
-    font-size: 14px; font-weight: 600;
-    color: var(--ink); letter-spacing: .01em;
-  }
-  .nav-logo strong { color: var(--accent); }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a {
-    font-size: 14px; font-weight: 500;
-    color: var(--ink2); transition: color .2s;
-    position: relative; padding-bottom: 2px;
-  }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-    height: 1px; background: var(--accent);
-    transform: scaleX(0); transform-origin: left;
-    transition: transform .2s ease;
-  }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-
-  /* Light nav: dark text on white */
-  [data-theme="light"] .nav-links a { color: #333333; }
-  [data-theme="light"] .nav-links a:hover { color: #121212; }
-  [data-theme="light"] .nav-logo { color: #121212; }
-
-  /* ── Theme toggle ── */
-  .theme-toggle {
-    display: flex; align-items: center; gap: 2px;
-    background: var(--bg3); border: 1px solid var(--border);
-    border-radius: 50px; padding: 3px;
-    flex-shrink: 0;
-    transition: background .35s, border-color .35s;
-  }
-  .toggle-opt {
-    width: 36px; height: 30px;
-    border-radius: 50px; border: none; background: none;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; transition: background .2s, color .2s;
-    color: var(--muted2); user-select: none; line-height: 1;
-    /* ◐ and ◯ are geometric — use serif for crisp rendering */
-    font-family: 'Georgia', serif;
-    font-size: 1.05rem;
-  }
-  .toggle-opt.active {
-    background: var(--accent-dim);
-    color: var(--accent);
-  }
-  /* Slightly different sizes for optical balance */
-  #optDark  { font-size: 1.1rem;  letter-spacing: 0; }
-  #optLight { font-size: 1.05rem; letter-spacing: 0; }
-
-  /* ═══════════════════════════════════════════════
-     HERO
-  ═══════════════════════════════════════════════ */
-  .hero {
-    padding: clamp(4rem, 9vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
-    border-bottom: 1px solid var(--border);
-    position: relative; overflow: hidden;
-  }
-  /* Dark: one subtle very light glow top-right only */
-  [data-theme="dark"] .hero::before {
-    content: '';
-    position: absolute; top: -20%; right: 0%;
-    width: 480px; height: 480px;
-    background: radial-gradient(circle, rgba(76,141,255,.05) 0%, transparent 65%);
-    pointer-events: none;
-  }
-  /* Light: clean, nothing extra */
-  [data-theme="light"] .hero { border-bottom: 2px solid var(--ink); }
-
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 3rem; align-items: start;
-  }
-  .hero-eyebrow {
-    font-size: var(--t-small); font-weight: 500;
-    letter-spacing: .06em; text-transform: uppercase;
-    color: var(--muted2); margin-bottom: 1.25rem;
-    display: flex; align-items: center; gap: .7rem;
-  }
-  /* Light mode: NYT uses a thin horizontal rule feel */
-  [data-theme="light"] .hero-eyebrow {
-    color: var(--muted); letter-spacing: .08em;
-    border-top: 1px solid var(--border); padding-top: .75rem;
-  }
-  [data-theme="light"] .hero-eyebrow::before { display: none; }
-  [data-theme="dark"] .hero-eyebrow::before {
-    content: ''; display: inline-block;
-    width: 18px; height: 1px; background: var(--accent); flex-shrink: 0;
-  }
-
-  .hero-sub {
-    font-size: 20px; font-weight: 400;
-    color: var(--ink2); max-width: 520px;
-    margin: 1.25rem 0 2rem;
+    font-size: 16px;
     line-height: 1.6;
   }
-  [data-theme="light"] .hero-sub { color: #333333; }
 
-  .hero-btns { display: flex; flex-wrap: wrap; gap: .6rem; }
+  a { color: var(--accent); text-decoration: underline; }
+  a:hover { color: var(--text); }
 
-  .btn {
-    display: inline-flex; align-items: center; gap: .4rem;
-    font-family: var(--mono); font-size: .72rem;
-    letter-spacing: .1em; text-transform: uppercase;
-    padding: .65rem 1.4rem;
-    border: 1px solid; border-radius: var(--rad);
-    font-weight: 500;
-    transition: all .18s; cursor: pointer;
-    white-space: nowrap;
-  }
-  .btn-primary {
-    background: var(--accent); border-color: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { opacity: .85; }
-  .btn-ghost {
-    background: transparent; border-color: var(--border);
-    color: var(--ink2);
-  }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--ink); }
-  .btn-resume {
-    background: var(--accent-dim); border-color: var(--accent);
-    color: var(--accent);
-  }
-  .btn-resume:hover { background: var(--accent); color: #fff; }
+  h1, h2, h3 { font-family: var(--serif); font-weight: 600; color: var(--text); line-height: 1.25; }
+  h1 { font-size: 30px; }
+  h2 { font-size: 21px; margin-bottom: .9rem; }
+  h3 { font-size: 17px; }
 
-  .hero-status {
-    display: flex; align-items: center; gap: .4rem; flex-wrap: wrap;
-    font-family: var(--ui); font-size: .88rem;
-    color: var(--muted); margin-top: 2rem; font-weight: 400;
-  }
-  .hero-status strong { color: var(--ink); font-weight: 600; }
+  p { margin-bottom: .75rem; }
+  p:last-child { margin-bottom: 0; }
 
-  .focus-strip {
-    display: flex; flex-wrap: wrap; gap: .45rem;
-    padding: 1.5rem 0 0;
-  }
-  .focus-pill {
-    font-family: var(--mono); font-size: .62rem;
-    letter-spacing: .1em; text-transform: uppercase;
-    padding: .3rem .85rem;
-    border: 1px solid var(--border); border-radius: 50px;
-    color: var(--muted); font-weight: 500;
-    transition: border-color .2s, color .2s;
-  }
-  .focus-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 
-  /* Avatar */
-  .avatar-wrap { width: clamp(220px,24vw,310px); flex-shrink: 0; margin-top: .5rem; }
-  .avatar-box {
-    width: 100%; aspect-ratio: 1/1;
-    border: 1px solid var(--border); border-radius: var(--rad);
-    overflow: hidden; background: var(--bg3);
-  }
-  .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  ul.plain-list { list-style: none; padding: 0; }
+  ul.plain-list li { margin-bottom: .4rem; }
+  ul.plain-list li:last-child { margin-bottom: 0; }
 
+  /* ── Header ── */
+  .site-header { padding: 2.5rem 0 1.25rem; }
+  .header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
+  .header-text { flex: 1; min-width: 0; }
+  .title-line { font-size: 17px; color: var(--muted); margin-bottom: .6rem; }
+  .contact-line, .links-line, .status-line { font-size: 15px; color: var(--muted); margin-bottom: .3rem; }
+  .links-line a { margin: 0 .1rem; }
+  .status-line { margin-top: .5rem; }
 
-  /* ═══════════════════════════════════════════════
-     SECTION SKELETON
-  ═══════════════════════════════════════════════ */
-  .section {
-    padding: clamp(3rem, 6vw, 5rem) 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .section-head {
-    display: flex; align-items: flex-end; justify-content: space-between;
-    gap: 1rem; margin-bottom: 2.25rem; flex-wrap: wrap;
-    padding-bottom: 0;
-  }
-  .section-label {
-    font-family: var(--mono); font-size: .65rem;
-    letter-spacing: .2em; text-transform: uppercase;
-    color: var(--muted); font-weight: 500;
-    display: flex; align-items: center; gap: .45rem; margin-bottom: .4rem;
-  }
-  .section-label::before { content: '§'; color: var(--accent); }
-
-  .see-more-link {
-    font-family: var(--mono); font-size: .65rem;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--accent2); font-weight: 500;
-    background: none; border: none; cursor: pointer;
-    display: flex; align-items: center; gap: .4rem;
-    transition: gap .2s;
-  }
-  .see-more-link:hover { gap: .7rem; }
-
-  /* ═══════════════════════════════════════════════
-     ABOUT
-  ═══════════════════════════════════════════════ */
-  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
-  .about-text p { font-size: 1rem; color: var(--ink2); line-height: 1.85; margin-bottom: .9rem; }
-  .about-text p:last-child { margin-bottom: 0; }
-
-  .sidebar-block {
-    border: 1px solid var(--border); border-radius: var(--rad);
-    padding: 1.25rem; margin-bottom: .8rem;
-    background: var(--card-bg);
-    box-shadow: var(--card-shadow);
-    transition: background .3s, border-color .3s;
-  }
-  [data-theme="light"] .sidebar-block { border-radius: 4px; border-color: var(--border); }
-  .sidebar-title {
-    font-family: var(--mono); font-size: .6rem;
-    letter-spacing: .18em; text-transform: uppercase;
-    color: var(--muted); font-weight: 500; margin-bottom: .75rem;
-  }
-  .skill-list { display: flex; flex-wrap: wrap; gap: .35rem; }
-  .skill-tag {
-    font-family: var(--mono); font-size: .62rem; font-weight: 500;
-    padding: .2rem .6rem; border-radius: 3px;
-    background: var(--tag-bg); color: var(--tag-text);
-    border: 1px solid var(--border);
-  }
-  .skill-tag.a { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
-  .skill-tag.b { background: rgba(52,211,153,.08); border-color: rgba(52,211,153,.3); color: var(--accent2); }
-
-  /* ═══════════════════════════════════════════════
-     FILTER BAR (shared by projects + notes)
-  ═══════════════════════════════════════════════ */
-  .filter-bar { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.75rem; }
-  .filter-btn {
-    font-family: var(--mono); font-size: .62rem; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase;
-    padding: .32rem .8rem;
-    border: 1px solid var(--border); border-radius: 50px;
-    background: transparent; color: var(--muted);
-    cursor: pointer; transition: all .18s;
-  }
-  .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
-
-  /* ═══════════════════════════════════════════════
-     PROJECT GRID
-  ═══════════════════════════════════════════════ */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1rem;
-  }
-  .pcard {
-    background: var(--card-bg); padding: 1.5rem;
-    display: flex; flex-direction: column; gap: .65rem;
-    position: relative; overflow: hidden; cursor: pointer;
-    border: 1px solid var(--border);
-    border-radius: var(--rad);
-    box-shadow: var(--card-shadow);
-    transition: transform .22s ease, box-shadow .22s ease,
-                border-color .22s ease, background .22s ease;
-  }
-  .pcard:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--card-shadow-hov);
-    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
-    background: var(--card-hov);
-  }
-  /* Light mode cards: clean white, NYT border */
-  [data-theme="light"] .pcard {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    box-shadow: var(--card-shadow);
-  }
-  [data-theme="light"] .pcard:hover {
-    border-color: var(--accent);
-    box-shadow: var(--card-shadow-hov);
-    transform: translateY(-2px);
-  }
-  /* No bottom accent line — card lift does the job */
-  /* featured spans 2 cols only on wide grids — JS adds/removes class by count */
-  .pcard.featured { grid-column: span 1; }
-  .pcard.featured .pcard-title { font-size: 1.2rem; }
-  @media (min-width: 700px) {
-    .pcard.featured.do-span { grid-column: span 2; }
-    .pcard.featured.do-span .pcard-title { font-size: 1.35rem; }
+  .avatar-wrap { flex-shrink: 0; }
+  .avatar-img {
+    width: 120px; height: 120px; object-fit: cover;
+    border: 1px solid var(--border); display: block;
   }
 
-  .pcard-img {
-    width: 100%; aspect-ratio: 16 / 7;
-    border-radius: 3px; background: var(--bg3);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted); font-family: var(--mono); font-size: .58rem;
-    border: 1px solid var(--border); overflow: hidden; flex-shrink: 0;
-  }
-  .pcard.featured .pcard-img { aspect-ratio: 16 / 6; }
-  .pcard-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  /* SVG diagrams scale naturally with width — no distortion */
-  .pcard-img img[src$=".svg"] { object-fit: contain; background: var(--bg2); padding: .5rem; }
+  .jump-nav { margin-top: 1.5rem; font-size: 14px; color: var(--muted); }
+  .jump-nav a { margin: 0 .15rem; }
 
-  .pcard-meta { display: flex; align-items: center; justify-content: space-between; gap: .4rem; }
-  .pcard-type { font-family: var(--mono); font-size: .57rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
-  .pcard-year { font-family: var(--mono); font-size: .57rem; color: var(--muted); }
+  /* ── Sections ── */
+  section { padding: 2.5rem 0; border-top: 1px solid var(--border); }
+  .site-header + section { border-top: 1px solid var(--border); }
 
-  .pcard-title { font-size: 1.08rem; }
-  .pcard-desc  { font-size: .84rem; color: var(--ink2); line-height: 1.65; flex: 1; }
+  .about-text p { margin-bottom: .9rem; }
+  .about-sub { margin-top: 1.75rem; }
+  .about-sub h3 { margin-bottom: .5rem; }
+  .about-sub p, .about-sub li { font-size: 15px; color: var(--text); }
+  .edu-block { margin-bottom: .8rem; }
+  .edu-block:last-child { margin-bottom: 0; }
+  .edu-org { font-weight: 600; }
+  .edu-line { font-size: 15px; color: var(--muted); }
 
-  .pcard-tags { display: flex; flex-wrap: wrap; gap: .28rem; }
-  .pcard-tag {
-    font-family: var(--mono); font-size: .56rem; font-weight: 500;
-    padding: .12rem .45rem; border-radius: 3px;
-    background: var(--tag-bg); border: 1px solid var(--border);
-    color: var(--tag-text);
+  /* ── Entry list (projects / experience) ── */
+  .entry-list .entry { padding: 1.25rem 0; border-top: 1px solid var(--border); }
+  .entry-list .entry:first-child { padding-top: 0; border-top: none; }
+  .entry-head {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem;
   }
+  .entry-head h3 { margin: 0; }
+  .entry-meta { font-size: 13px; color: var(--muted); white-space: nowrap; }
+  .entry-desc { font-size: 15px; margin-bottom: .5rem; }
+  .entry-bullets { margin: 0 0 .5rem 1.15rem; font-size: 15px; }
+  .entry-bullets li { margin-bottom: .3rem; }
+  .entry-bullets li:last-child { margin-bottom: 0; }
+  .entry-tags { font-size: 13px; color: var(--muted); margin-bottom: .35rem; }
+  .entry-links { font-size: 14px; margin-bottom: 0; }
+  .entry-links a { margin-right: 1rem; cursor: pointer; }
 
-  .pcard-links {
-    display: flex; gap: .7rem; align-items: center;
-    margin-top: auto; padding-top: .6rem;
-    border-top: 1px solid var(--border);
-  }
-  .pcard-link {
-    font-family: var(--mono); font-size: .62rem; font-weight: 500;
-    letter-spacing: .08em; color: var(--accent);
-    display: flex; align-items: center; gap: .28rem;
-    transition: color .2s; border: none; background: none; cursor: pointer; padding: 0;
-  }
-  .pcard-link:hover { color: var(--accent2); }
-
-  .badge {
-    font-family: var(--mono); font-size: .53rem; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--accent); border: 1px solid var(--accent);
-    border-radius: 3px; padding: .1rem .42rem;
-    animation: flicker 2.5s ease-in-out infinite;
-  }
-
-  .pcard-more {
-    background: var(--bg3); border: 2px dashed var(--border);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: .5rem;
-    cursor: pointer; min-height: 150px;
-    transition: border-color .2s, background .2s;
-  }
-  .pcard-more:hover { border-color: var(--accent); background: var(--accent-dim); }
-  .pcard-more-label {
-    font-family: var(--mono); font-size: .65rem; font-weight: 500;
-    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
-  }
-  .pcard-more:hover .pcard-more-label { color: var(--accent); }
-  .pcard-more-icon { font-size: 1.3rem; color: var(--muted); margin-bottom: .1rem; }
-
-  /* ═══════════════════════════════════════════════
-     EXPERIENCE TIMELINE
-  ═══════════════════════════════════════════════ */
-  .timeline-item {
-    display: grid; grid-template-columns: 175px 1fr;
-    gap: 2rem; padding: 1.75rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .timeline-item:last-child { border-bottom: none; }
-  .tl-date { font-family: var(--mono); font-size: .64rem; font-weight: 500; color: var(--muted); margin-bottom: .3rem; }
-  .tl-org  { font-family: var(--mono); font-size: .7rem;  font-weight: 500; color: var(--accent); }
-  .tl-role { font-size: 1.1rem; margin-bottom: .45rem; }
-  .tl-desc { font-size: .88rem; color: var(--ink2); line-height: 1.78; }
-  .tl-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .65rem; }
-
-  /* ═══════════════════════════════════════════════
-     NOTES / FIELD JOURNAL
-  ═══════════════════════════════════════════════ */
-  .notes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 1rem;
-  }
-  .note-card {
-    border: 1px solid var(--border); border-radius: var(--rad);
-    padding: 1.3rem; background: var(--card-bg);
-    display: flex; flex-direction: column; gap: .5rem;
-    cursor: pointer;
-    box-shadow: var(--card-shadow);
-    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
-  }
-  .note-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--card-shadow-hov);
-    border-color: color-mix(in srgb, var(--accent2) 40%, var(--border));
-    background: var(--card-hov);
-  }
-  [data-theme="light"] .note-card { border-radius: 4px; }
-  [data-theme="light"] .note-card:hover { border-color: var(--accent); }
-  .note-card.note-hidden { display: none; }
-
-  .note-date { font-family: var(--mono); font-size: .58rem; font-weight: 500; color: var(--muted); }
-  .note-formula {
-    font-family: var(--mono); font-size: .85rem;
-    color: var(--ink); background: var(--bg3);
-    border-left: 2px solid var(--accent);
-    padding: .55rem 1rem; margin: .85rem 0;
-    border-radius: 0 4px 4px 0; letter-spacing: .02em;
-  }
-  [data-theme="light"] .note-formula {
-    background: #F4F4F4; border-left-color: var(--accent);
-  }
-  .note-body-content p { color: var(--ink2); font-size: .95rem; }
-  .note-title { font-size: 1rem; }
-  .note-preview { font-size: .83rem; color: var(--ink2); line-height: 1.65; flex: 1; }
-  .note-footer { display: flex; align-items: center; justify-content: space-between; margin-top: .3rem; }
-  .note-tag {
-    font-family: var(--mono); font-size: .56rem; font-weight: 500;
-    letter-spacing: .08em; text-transform: uppercase;
-    padding: .12rem .45rem; border-radius: 3px;
-    background: var(--tag-bg); color: var(--tag-text);
-  }
-  .note-highlight {
-    font-family: var(--mono); font-size: .55rem; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--accent2); border: 1px solid rgba(52,211,153,.3);
-    border-radius: 3px; padding: .1rem .4rem;
-  }
-
-  /* ═══════════════════════════════════════════════
-     LIFE / BEYOND
-  ═══════════════════════════════════════════════ */
-  .life-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1rem;
-  }
-  .life-card {
-    border: 1px solid var(--border); border-radius: var(--rad);
-    padding: 1.3rem 1rem; background: var(--card-bg);
-    text-align: center; cursor: pointer;
-    box-shadow: var(--card-shadow);
-    display: flex; flex-direction: column; align-items: center; gap: .5rem;
-    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, background .22s ease;
-  }
-  .life-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--card-shadow-hov);
-    border-color: color-mix(in srgb, var(--accent2) 40%, var(--border));
-    background: var(--card-hov);
-  }
-  [data-theme="light"] .life-card { border-radius: 4px; }
-  [data-theme="light"] .life-card:hover { border-color: var(--accent); }
-  .life-icon { font-size: 1.65rem; }
-  .life-title { font-family: var(--mono); font-size: .65rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
-  .life-desc  { font-size: .8rem; color: var(--muted); line-height: 1.55; }
-
-  /* ═══════════════════════════════════════════════
-     MODAL
-  ═══════════════════════════════════════════════ */
+  /* ── Modal (project case studies) ── */
   .modal-overlay {
     display: none; position: fixed; inset: 0; z-index: 500;
-    background: rgba(0,0,0,.78); backdrop-filter: blur(8px);
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-    padding: 2rem var(--gap);
+    background: rgba(0,0,0,.5);
+    overflow-y: auto;
+    padding: 2rem 24px;
     align-items: flex-start; justify-content: center;
   }
   .modal-overlay.open { display: flex; }
-  /* Prevent body scroll on iOS when modal open */
   body.modal-open { overflow: hidden; position: fixed; width: 100%; }
   .modal {
-    background: var(--bg2); border: 1px solid var(--border);
-    border-radius: var(--rad); max-width: 740px; width: 100%;
-    margin: auto; padding: 2.5rem; position: relative;
-    box-shadow: 0 24px 64px rgba(0,0,0,0.45);
-    animation: fadeUp .3s ease;
-  }
-  [data-theme="light"] .modal {
-    border-radius: 4px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.14);
-    border: 1px solid var(--border);
+    background: var(--bg); border: 1px solid var(--border);
+    max-width: 680px; width: 100%;
+    margin: auto; padding: 2rem; position: relative;
   }
   .modal-close {
-    position: absolute; top: 1.25rem; right: 1.25rem;
-    font-family: var(--mono); font-size: .68rem; font-weight: 500;
-    color: var(--muted); background: var(--bg3);
-    border: 1px solid var(--border); border-radius: 4px;
-    padding: .3rem .7rem; cursor: pointer; transition: color .2s;
+    position: absolute; top: 1.1rem; right: 1.1rem;
+    font-size: 13px; color: var(--muted);
+    background: none; border: 1px solid var(--border);
+    padding: .25rem .6rem; cursor: pointer;
   }
-  .modal-close:hover { color: var(--ink); }
-  .modal-type {
-    font-family: var(--mono); font-size: .62rem; font-weight: 500;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: .5rem;
-  }
-  .modal h3 { font-size: 1.6rem; padding-right: 4rem; margin-bottom: .5rem; }
-  .modal-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: 1.25rem; }
-  .modal-section { margin-top: 1.4rem; }
-  .modal-section-title {
-    font-family: var(--mono); font-size: .62rem; font-weight: 500;
-    letter-spacing: .16em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .55rem;
-  }
-  .modal-section p { font-size: .9rem; color: var(--ink2); line-height: 1.82; white-space: pre-line; }
-  .modal-img {
-    width: 100%; border-radius: 4px;
-    background: var(--bg3); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--muted); font-family: var(--mono); font-size: .6rem;
-    margin-top: 1.5rem; min-height: 120px;
-  }
-  /* In renderMedia(), <img> and <iframe> are in <figure> — no .modal-img used */
+  .modal-close:hover { color: var(--text); }
+  .modal-type { font-size: 13px; color: var(--muted); margin-bottom: .4rem; }
+  .modal h3 { font-size: 22px; padding-right: 4rem; margin-bottom: .5rem; }
+  .modal-tags { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
+  .modal-section { margin-top: 1.1rem; }
+  .modal-section-title { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: .3rem; }
+  .modal-section p { font-size: 15px; white-space: pre-line; }
   .modal figure img {
     width: 100%; height: auto; display: block;
-    border-radius: 6px; border: 1px solid var(--border);
-    max-height: 480px; object-fit: contain; background: var(--bg2);
-  }
-  .modal figure img[src$=".svg"] {
-    /* SVGs: let them breathe, no forced height */
-    max-height: none; padding: .5rem; background: var(--bg2);
-  }
-
-  /* ═══════════════════════════════════════════════
-     FOOTER
-  ═══════════════════════════════════════════════ */
-  /* ════ Project table rows ════ */
-  .proj-table-row:hover td { background: var(--card-hov); }
-  .proj-table-row:last-child td { border-bottom: none !important; }
-
-  /* ════ Contact modal ════ */
-  .contact-option {
-    display: flex; align-items: center; gap: 1rem;
-    padding: 1rem 1.1rem;
-    border: 1px solid var(--border); border-radius: var(--rad);
-    background: var(--card-bg); text-decoration: none;
-    transition: border-color .2s, background .2s, transform .18s;
-    cursor: pointer;
-  }
-  .contact-option:hover {
-    border-color: var(--accent); background: var(--card-hov);
-    transform: translateX(3px);
-  }
-  .contact-icon {
-    width: 38px; height: 38px; border-radius: 50%;
-    background: var(--accent-dim); border: 1px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--ui); font-size: 1rem; color: var(--accent);
-    flex-shrink: 0; font-weight: 600;
-  }
-  .contact-label {
-    font-family: var(--ui); font-size: .85rem; font-weight: 600;
-    color: var(--ink); margin-bottom: .15rem;
-  }
-  .contact-sub {
-    font-family: var(--mono); font-size: .7rem; color: var(--muted2);
-  }
-  .contact-arrow {
-    margin-left: auto; color: var(--muted2); font-size: 1rem;
-    flex-shrink: 0; transition: color .2s;
-  }
-  .contact-option:hover .contact-arrow { color: var(--accent); }
-
-  footer {
-    background: var(--bg2); border-top: 1px solid var(--border);
-    padding: 2.5rem 0;
-  }
-  [data-theme="light"] footer {
-    background: #FAFAFA; border-top: 2px solid var(--ink);
-  }
-  .footer-inner {
-    max-width: var(--max); margin: 0 auto; padding: 0 var(--gap);
-    display: flex; justify-content: space-between;
-    align-items: center; flex-wrap: wrap; gap: 1.25rem;
-  }
-  .footer-name { font-family: var(--serif); font-size: 1.3rem; font-style: italic; color: var(--ink); }
-  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-  .footer-links a {
-    font-family: var(--mono); font-size: .63rem; font-weight: 500;
-    letter-spacing: .1em; text-transform: uppercase;
-    color: var(--muted); transition: color .2s;
-  }
-  .footer-links a:hover { color: var(--accent); }
-  .footer-copy { font-family: var(--mono); font-size: .58rem; color: var(--muted); }
-
-  /* ═══════════════════════════════════════════════
-     RESPONSIVE
-  ═══════════════════════════════════════════════ */
-  /* ════════ Notes archive list view ════════ */
-  .notes-archive-list {
     border: 1px solid var(--border);
-    border-radius: var(--rad);
-    overflow: hidden;
+    max-height: 420px; object-fit: contain; background: #fff;
+    margin-top: 1rem;
   }
-  .notes-archive-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 1rem; padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
-    transition: background .18s;
-    background: var(--card-bg);
+  .modal figcaption { font-size: 13px; color: var(--muted); margin-top: .4rem; text-align: center; }
+  .modal-links a { display: inline-block; margin: .8rem .8rem 0 0; }
+  .note-formula {
+    font-family: 'Courier New', monospace; font-size: 14px;
+    border-left: 2px solid var(--accent); padding: .4rem .8rem;
+    margin: .6rem 0; background: #f7f7f7;
   }
-  .notes-archive-row:last-child { border-bottom: none; }
-  .notes-archive-row:hover { background: var(--card-hov); }
-  .notes-archive-title {
-    font-family: var(--serif); font-size: .95rem;
-    color: var(--ink); font-weight: 600;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
-  [data-theme="light"] .notes-archive-row:hover { background: #FAFAFA; }
 
-  @media (max-width: 900px) {
-    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-    /* auto-fill handles column count — no override needed */
-/* life-grid auto-fills */
-/* notes-grid auto-fills */
-  }
-  @media (max-width: 640px) {
-    .hero-inner { grid-template-columns: 1fr; }
-    .avatar-wrap { display: none; }
-    .nav-links { display: none; }
-    /* auto-fill already collapses to 1 col at narrow width */
+  /* ── Footer ── */
+  footer { padding: 2rem 0 3rem; border-top: 1px solid var(--border); }
+  footer p { font-size: 14px; color: var(--muted); }
+  .footer-copy { margin-top: .3rem; font-size: 13px; }
 
-    .timeline-item { grid-template-columns: 1fr; gap: .35rem; }
-.notes-grid { grid-template-columns: 1fr; }
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .header-row { flex-direction: column-reverse; align-items: flex-start; gap: 1rem; }
+    .avatar-img { width: 88px; height: 88px; }
+    .entry-head { flex-direction: column; gap: .15rem; }
   }
   </style>
 </head>
 <body>
 
-<!-- ════════════════════ NAV ════════════════════ -->
-<nav>
-  <div class="nav-inner">
-
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#notes">Field Notes</a></li>
-      <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub ↗</a></li>
-      <li><a href="#" onclick="openContactModal();return false;">Contact</a></li>
-    </ul>
-    <div class="theme-toggle" title="Toggle theme">
-      <!-- ◐ = half-filled circle = night / dark -->
-      <button class="toggle-opt active" id="optDark"  onclick="setTheme('dark')"  title="Dark">◐</button>
-      <!-- ◯ = empty circle = day / light -->
-      <button class="toggle-opt"        id="optLight" onclick="setTheme('light')" title="Light">◯</button>
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header class="site-header container">
+  <div class="header-row">
+    <div class="header-text">
+      <h1>Jack Pham</h1>
+      <p class="title-line">EECS Student, UC Berkeley</p>
+      <p class="contact-line">Berkeley, CA · <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a></p>
+      <p class="links-line">
+        <a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a> ·
+        <a href="#" data-resume download>Resume (PDF)</a>
+      </p>
+      <p class="status-line">Open to internships, research collaborations, and interesting projects.</p>
+    </div>
+    <div class="avatar-wrap">
+      <img class="avatar-img" src="assets/img/ava-1.jpg" alt="Jack Pham" onerror="this.parentElement.style.display='none'">
     </div>
   </div>
-</nav>
-
-<!-- ════════════════════ HERO ════════════════════ -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-inner">
-      <div>
-        <p class="hero-eyebrow reveal r1">EECS · UC Berkeley · Hardware · Signals</p>
-        <h1 class="reveal r2">Jack<br><em>Pham</em></h1>
-        <p class="hero-sub reveal r3">
-          EECS student at UC Berkeley. I design and build electronic systems,
-          focusing on circuits, PCB layout, signals, and embedded hardware.
-          Built with purpose.
-        </p>
-        <div class="hero-btns reveal r4">
-          <a href="#projects" class="btn btn-primary">View Projects</a>
-          <a href="#" data-resume class="btn btn-resume" download>&#8595; Resume</a>
-          <a href="https://github.com/jackpham-rgb" class="btn btn-ghost" target="_blank">GitHub ↗</a>
-          <a href="https://www.linkedin.com/in/jackpham1611/" class="btn btn-ghost" target="_blank">LinkedIn ↗</a>
-          <button class="btn btn-ghost" onclick="openContactModal()">Contact</button>
-        </div>
-        <div class="hero-status reveal r5">
-          <strong>Open to internships</strong> &nbsp;&middot;&nbsp; Berkeley, CA &nbsp;&middot;&nbsp;
-          <a href="mailto:jack_pham@berkeley.edu" style="color:var(--accent)">jack_pham@berkeley.edu</a>
-        </div>
-        <div class="focus-strip reveal r5">
-          <span class="focus-pill">Circuit Design</span>
-          <span class="focus-pill">PCB Layout</span>
-          <span class="focus-pill">Embedded Systems</span>
-          <span class="focus-pill">Signal Processing</span>
-          <span class="focus-pill">Robotics</span>
-          <span class="focus-pill">Edge AI</span>
-          <span class="focus-pill">IC / Silicon</span>
-        </div>
-      </div>
-      <div class="avatar-wrap reveal r2">
-        <div class="avatar-box" id="avatarBox">
-          <!-- Set your photo filename in SITE_CONFIG below -->
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <nav class="jump-nav">
+    <a href="#about">About</a> ·
+    <a href="#projects">Projects</a> ·
+    <a href="#experience">Experience</a> ·
+    <a href="#honors">Honors</a>
+  </nav>
+</header>
 
 <!-- ════════════════════ ABOUT ════════════════════ -->
-<section class="section" id="about">
+<section id="about">
   <div class="container">
-    <div class="section-head">
-      <div><p class="section-label">About</p><h2>Engineer &amp; <em>builder</em></h2></div>
+    <h2>About</h2>
+    <div class="about-text">
+      <p>
+        I am an Electrical Engineering and Computer Science (B.S.) student at UC Berkeley,
+        focused on circuits, embedded systems, and signal processing — building reliable
+        hardware and robotic systems that connect theory to real use, driven by a physics-rooted
+        habit of understanding how something works before building from the fundamentals.
+      </p>
+      <p>Outside of research, I enjoy hiking, photography, and cooking.</p>
     </div>
-    <div class="about-grid">
-      <div class="about-text">
-        <p>
-          I am an Electrical Engineering and Computer Science (B.S.) student at UC Berkeley,
-          focused on circuits, embedded systems, and signal processing. My work spans
-          circuit design, PCB layout, and hardware-centered robotic systems, with an emphasis
-          on building reliable devices that connect theory to real use.
-        </p>
-        <p>
-          Not just in engineering, I am also interested in physics, from mechanics to
-          electromagnetism to quantum ideas. That curiosity still shapes how I approach
-          problems. I like to understand how a system works first, then build from the fundamentals.
-        </p>
-        <p>
-          Outside of school, I enjoy creative work, photography, hiking, and exploring food culture.
-        </p>
+
+    <div class="about-sub">
+      <h3>Core Skills</h3>
+      <p>
+        Circuit Design, PCB Layout, Embedded C/C++, ESP32 / Arduino / Raspberry Pi,
+        Signal Processing, ROS / Robotics, Python, TensorFlow / TFLite, NumPy / SciPy / cvxpy,
+        C / C++ / Java / MATLAB, Linux / Bash / Git, Docker / Gazebo, Soldering &amp; Lab Instrumentation.
+      </p>
+    </div>
+
+    <div class="about-sub">
+      <h3>Education</h3>
+      <div class="edu-block">
+        <p class="edu-org">University of California, Berkeley</p>
+        <p class="edu-line">B.S. Electrical Engineering &amp; Computer Sciences · GPA 3.54 · August 2025 – May 2028 (Expected)</p>
       </div>
-      <div>
-        <div class="sidebar-block">
-          <p class="sidebar-title">Core skills</p>
-          <div class="skill-list">
-            <span class="skill-tag a">Circuit Design</span>
-            <span class="skill-tag a">PCB Layout</span>
-            <span class="skill-tag a">Embedded C/C++</span>
-            <span class="skill-tag a">ESP32 / Arduino / RPi</span>
-            <span class="skill-tag a">Signal Processing</span>
-            <span class="skill-tag a">ROS / Robotics</span><span class="skill-tag b">Python</span>
-            <span class="skill-tag b">TensorFlow / TFLite</span>
-            <span class="skill-tag b">NumPy / SciPy / cvxpy</span>
-            <span class="skill-tag">C / C++ / Java / MATLAB</span>
-            <span class="skill-tag">Linux / Bash / Git</span>
-            <span class="skill-tag">Docker / Gazebo / ROS</span>
-            <span class="skill-tag">Soldering / Lab Instruments</span>
-          </div>
-        </div>
-        <div class="sidebar-block">
-          <p class="sidebar-title">Education</p>
-          <p style="font-family:var(--mono);font-size:.7rem;color:var(--ink2);line-height:1.75">
-            <strong style="color:var(--accent)">UC Berkeley</strong><br>
-            B.S. EECS · GPA 3.33 · Aug 2025 – Dec 2027<br><br>
-            <strong style="color:var(--muted)">Cypress College</strong><br>
-            A.S. Math &amp; Physics · GPA 3.94 · 2023 – 2025
-          </p>
-        </div>
-        <div class="sidebar-block">
-          <p class="sidebar-title">Currently</p>
-          <p style="font-family:var(--mono);font-size:.68rem;color:var(--ink2);line-height:1.8">
-            &#8594; Underwater Robotics — Electrical Subteam<br>
-            &#8594; Fung Fellowship — Methane Monitoring<br>
-            &#8594; EEG Attention Detection research<br>
-            &#8594; Open to internships, research collaborations, and interesting projects
-          </p>
-        </div>
+      <div class="edu-block">
+        <p class="edu-org">Cypress College</p>
+        <p class="edu-line">A.S. Mathematics &amp; Physics · GPA 3.94 · February 2023 – May 2025</p>
       </div>
+    </div>
+
+    <div class="about-sub">
+      <h3>Currently</h3>
+      <ul class="plain-list">
+        <li>Product Engineer Co-Op, Skyworks Solutions (Irvine, CA)</li>
+        <li>Electrical Subteam, Underwater Robotics Team (UC Berkeley)</li>
+        <li><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank">UC Berkeley Fung Fellowship — Methane Monitoring</a></li>
+        <li>EEG Attention Detection research</li>
+      </ul>
     </div>
   </div>
 </section>
 
 <!-- ════════════════════ PROJECTS ════════════════════ -->
-<section class="section" id="projects">
+<section id="projects">
   <div class="container">
-    <div class="section-head">
-      <div><p class="section-label">Work</p><h2>Selected <em>projects</em></h2></div>
-    </div>
-    <div class="filter-bar" id="projectFilterBar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="embedded">Embedded</button>
-      <button class="filter-btn" data-filter="signals">Signals</button>
-      <button class="filter-btn" data-filter="ai-ml">AI / ML</button>
-      <button class="filter-btn" data-filter="robotics">Robotics</button>
-      <button class="filter-btn" data-filter="accessibility">Accessibility</button>
-      <button class="filter-btn" data-filter="sustainability">Sustainability</button>
-    </div>
-    <div class="projects-grid" id="projectsGrid"></div>
-    <div id="projectsArchive" style="display:none;margin-top:1px">
-      <div class="projects-grid" id="archiveGrid"></div>
-      <div style="text-align:center;padding:1.5rem 0">
-        <button class="btn btn-ghost" onclick="hideProjectArchive()">&#8593; Show less</button>
-      </div>
-    </div>
+    <h2>Selected Projects</h2>
+    <div class="entry-list" id="projectsList"></div>
   </div>
 </section>
 
 <!-- ════════════════════ EXPERIENCE ════════════════════ -->
-<section class="section" id="experience">
+<section id="experience">
   <div class="container">
-    <div class="section-head">
-      <div><p class="section-label">Experience</p><h2>Where I've <em>worked</em></h2></div>
-    </div>
-    <div class="timeline">
+    <h2>Experience</h2>
+    <div class="entry-list">
 
-      <div class="timeline-item">
-        <div><p class="tl-date">Jun – Aug 2024</p><p class="tl-org">TACC · UT Austin</p></div>
-        <div>
-          <h3 class="tl-role">Summer Researcher</h3>
-          <p class="tl-desc">Built a multi-robot task allocation and path-planning framework in Python, cvxpy, and ROS, improving simulated disaster-response efficiency by 70%. Validated in Gazebo on TACC supercomputing infrastructure, cutting planning computation time by 45%.</p>
-          <div class="tl-tags">
-            <span class="skill-tag a">ROS</span><span class="skill-tag a">Python</span>
-            <span class="skill-tag a">cvxpy</span><span class="skill-tag">Gazebo</span><span class="skill-tag">HPC</span>
-          </div>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Product Engineer Co-Op</h3>
+          <span class="entry-meta">Skyworks Solutions · Irvine, CA · June 2026 – Present</span>
         </div>
-      </div>
+        <ul class="entry-bullets">
+          <li>Isolate yield trends and root causes on high-volume RF front-end products, applying Cpk, SPC, and ANOVA methods to semiconductor die, wafer, and module test data.</li>
+          <li>Characterize RF chip performance on GaAs HBT and SAW amplifier devices using network and spectrum analyzers.</li>
+          <li>Built a Python-based Parameter Review workbook merging ~44,000 test rows across 100 test types, and maintain STDF-to-CSV pipelines in Python, C++, and Rust across seven-plus vendor formats.</li>
+        </ul>
+        <p class="entry-tags">RF Test · Yield Analysis · SPC / ANOVA · Python · C++ · Rust</p>
+      </article>
 
-      <div class="timeline-item">
-        <div><p class="tl-date">2025 – Present</p><p class="tl-org">UC Berkeley</p></div>
-        <div>
-          <h3 class="tl-role">Underwater Robotics — Electrical Subteam</h3>
-          <p class="tl-desc">Investigating power dissipation and thermal behavior of NVIDIA Jetson modules in autonomous underwater robots. Supporting electrical integration, power regulation, embedded hardware interfacing, and debugging of onboard systems connected to 16 sensors and actuators.</p>
-          <div class="tl-tags">
-            <span class="skill-tag a">Embedded Hardware</span><span class="skill-tag">Jetson</span><span class="skill-tag">Power Systems</span>
-          </div>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Underwater Robotics — Electrical Subteam</h3>
+          <span class="entry-meta">UC Berkeley · February 2026 – Present</span>
         </div>
-      </div>
+        <ul class="entry-bullets">
+          <li>Investigating power dissipation and thermal behavior of NVIDIA Jetson modules in autonomous underwater robots.</li>
+          <li>Supporting electrical integration, power regulation, and embedded hardware debugging across 16 onboard sensors and actuators.</li>
+        </ul>
+        <p class="entry-tags">Embedded Hardware · Jetson · Power Systems</p>
+      </article>
 
-      <div class="timeline-item">
-        <div><p class="tl-date">Feb – Jul 2025</p><p class="tl-org">NOCCCD</p></div>
-        <div>
-          <h3 class="tl-role">Physics Tutor — Cypress College</h3>
-          <p class="tl-desc">Supported students in physics topics including mechanics, electromagnetism, circuits, relativity, and thermodynamics. Created MATLAB and Jupyter visualizations to make difficult concepts easier to understand, while developing stronger communication, patience, and teaching skills through 40+ tutoring hours.</p>
-          <div class="tl-tags">
-            <span class="skill-tag">Teaching</span><span class="skill-tag">Communication</span>
-            <span class="skill-tag">Physics</span><span class="skill-tag b">Jupyter</span>
-            <span class="skill-tag">MATLAB</span><span class="skill-tag">Problem Solving</span>
-          </div>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Physics Tutor</h3>
+          <span class="entry-meta">North Orange County Community College District · February – July 2025</span>
         </div>
-      </div>
+        <ul class="entry-bullets">
+          <li>Developed Python and Jupyter simulations for electromagnetism and thermodynamics, contributing to a 20% average improvement in student exam performance across 40+ tutoring hours.</li>
+        </ul>
+      </article>
 
-      <div class="timeline-item">
-        <div><p class="tl-date">Jan – Dec 2024</p><p class="tl-org">Cypress College</p></div>
-        <div>
-          <h3 class="tl-role">Student Ambassador — Charger Experience</h3>
-          <p class="tl-desc">Helped prospective and current students navigate campus resources, events, and student services. Supported 75+ student cases per semester and engaged with 500+ prospective students through outreach events, while also improving internal workflows using Python, SQL, and live data visualizations.</p>
-          <div class="tl-tags">
-            <span class="skill-tag">Outreach</span><span class="skill-tag">Student Support</span>
-            <span class="skill-tag">Communication</span><span class="skill-tag">Leadership</span>
-            <span class="skill-tag b">Python</span><span class="skill-tag b">SQL</span>
-            <span class="skill-tag">Data Visualization</span>
-          </div>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Summer Researcher</h3>
+          <span class="entry-meta">TACC · UT Austin · June – August 2024</span>
         </div>
-      </div>
+        <ul class="entry-bullets">
+          <li>Built a multi-robot task allocation and path-planning framework (Python, cvxpy, ROS) that improved simulated disaster-response efficiency by 70%.</li>
+          <li>Validated the system in Gazebo on TACC's HPC cluster, cutting planning computation time by 45%.</li>
+        </ul>
+        <p class="entry-tags">ROS · Python · cvxpy · Gazebo · HPC</p>
+      </article>
 
-      <div class="timeline-item">
-        <div><p class="tl-date">2024</p><p class="tl-org">Conferences</p></div>
-        <div>
-          <h3 class="tl-role">Research Presenter</h3>
-          <p class="tl-desc">Presented at SCCUR (Southern California Conferences for Undergraduate Research), San Bernardino, Nov 2024, and at the STARS Celebration Conference, San Diego, Sep 2024.</p>
-          <div class="tl-tags">
-            <span class="skill-tag">Research Communication</span><span class="skill-tag">Robotics</span>
-          </div>
+      <article class="entry">
+        <div class="entry-head">
+          <h3>Student Ambassador — Charger Experience</h3>
+          <span class="entry-meta">Cypress College · January – December 2024</span>
         </div>
-      </div>
+      </article>
 
     </div>
   </div>
 </section>
 
-<!-- ════════════════════ FIELD NOTES ════════════════════ -->
-<section class="section" id="notes">
+<!-- ════════════════════ HONORS ════════════════════ -->
+<section id="honors">
   <div class="container">
-    <div class="section-head">
-      <div><p class="section-label">Field Notes</p><h2>Lab logs &amp; <em>thinking</em></h2></div>
-      <button class="see-more-link" id="notesArchiveBtn" onclick="toggleNotesArchive()">Full archive &#8594;</button>
-    </div>
-    <div class="filter-bar" id="notesFilterBar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="highlighted">Highlighted</button>
-      <button class="filter-btn" data-filter="embedded">Embedded</button>
-      <button class="filter-btn" data-filter="signals">Signals</button>
-      <button class="filter-btn" data-filter="ai-ml">AI / ML</button>
-      <button class="filter-btn" data-filter="robotics">Robotics</button>
-    </div>
-    <div class="notes-grid" id="notesGrid"></div>
-
-    <!-- Archive: full list view, hidden by default -->
-    <div id="notesArchivePanel" style="display:none;margin-top:1.5rem">
-      <div id="notesArchiveList" class="notes-archive-list"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════════ BEYOND ════════════════════ -->
-<section class="section" id="beyond">
-  <div class="container">
-    <div class="section-head">
-      <div><p class="section-label">Beyond Engineering</p><h2>The rest of <em>the picture</em></h2></div>
-    </div>
-    <div class="life-grid" id="lifeGrid"></div>
+    <h2>Honors</h2>
+    <ul class="plain-list">
+      <li><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank">UC Berkeley Fung Fellow</a> — Spring 2026</li>
+      <li>PEARC26 Student Program Participant — Texas Advanced Computing Center (TACC)</li>
+      <li>Presenter, SCCUR and STARS Celebration Conference — 2024</li>
+    </ul>
   </div>
 </section>
 
 <!-- ════════════════════ FOOTER ════════════════════ -->
 <footer>
-  <div class="footer-inner">
-
-    <ul class="footer-links">
-      <li><a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a></li>
-      <li><a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a></li>
-      <li><a href="#" data-email>Email</a></li>
-      <li><a href="#" data-resume download>Resume</a></li>
-    </ul>
-
+  <div class="container">
+    <p>
+      <a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a> ·
+      <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a> ·
+      <a href="#" data-email>Email</a> ·
+      <a href="#" data-resume download>Resume</a>
+    </p>
   </div>
 </footer>
 
-<!-- ════════════════════ MODAL ════════════════════ -->
-<!-- ════════════ CONTACT MODAL ════════════ -->
-<div class="modal-overlay" id="contactOverlay" onclick="closeContactOnBg(event)">
-  <div class="modal" style="max-width:480px">
-    <button class="modal-close" onclick="closeContactModal()">&#10005; close</button>
-    <h3 style="margin-bottom:1.25rem">Let's connect</h3>
-
-    <div style="display:flex;flex-direction:column;gap:.75rem">
-
-      <a href="mailto:jack_pham@berkeley.edu" class="contact-option">
-        <div class="contact-icon">&#9993;</div>
-        <div>
-          <p class="contact-label">Email me</p>
-          <p class="contact-sub">jack_pham@berkeley.edu</p>
-        </div>
-        <span class="contact-arrow">&#8599;</span>
-      </a>
-
-      <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" class="contact-option">
-        <div class="contact-icon">in</div>
-        <div>
-          <p class="contact-label">LinkedIn</p>
-          <p class="contact-sub">linkedin.com/in/jackpham1611</p>
-        </div>
-        <span class="contact-arrow">&#8599;</span>
-      </a>
-
-      <a href="https://github.com/jackpham-rgb" target="_blank" class="contact-option">
-        <div class="contact-icon" style="font-size:.9rem">gh</div>
-        <div>
-          <p class="contact-label">GitHub</p>
-          <p class="contact-sub">github.com/jackpham-rgb</p>
-        </div>
-        <span class="contact-arrow">&#8599;</span>
-      </a>
-
-    </div>
-
-
-  </div>
-</div>
-
+<!-- ════════════════════ MODAL (project case studies) ════════════════════ -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
   <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&#10005; close</button>
+    <button class="modal-close" onclick="closeModal()">&#10005; Close</button>
     <div id="modalContent"></div>
   </div>
 </div>
@@ -1139,68 +335,28 @@
 <!-- ════════════════════ JS ════════════════════ -->
 <script>
 /* ════════════════════════════════════════════════════════════
-   SITE CONFIG — change filenames here, nothing else needed
+   SITE CONFIG
 ════════════════════════════════════════════════════════════ */
 const SITE_CONFIG = {
-  avatarFile:  'assets/img/ava-1.jpg',        // change to your actual photo filename
-  resumeFile:  'assets/Pham_Jack_Resume.pdf', // change to your actual resume filename
-  email:       'jack_pham@berkeley.edu',
+  resumeFile: 'assets/Pham_Jack_Resume.pdf',
+  email:      'jack_pham@berkeley.edu',
 };
 
-/* Apply avatar and resume links from config */
 (function applySiteConfig() {
-  // Avatar
-  const box = document.getElementById('avatarBox');
-  if (box) {
-    const img = document.createElement('img');
-    img.src = SITE_CONFIG.avatarFile;
-    img.alt = 'Jack Pham';
-    img.onerror = () => { box.style.display = 'none'; }; // hide silently if file not found
-    box.appendChild(img);
-  }
-  // Resume links
-  document.querySelectorAll('[data-resume]').forEach(el => {
-    el.href = SITE_CONFIG.resumeFile;
-  });
-  // Email links
-  document.querySelectorAll('[data-email]').forEach(el => {
-    el.href = 'mailto:' + SITE_CONFIG.email;
-    if (el.dataset.emailText) el.textContent = SITE_CONFIG.email;
-  });
+  document.querySelectorAll('[data-resume]').forEach(el => { el.href = SITE_CONFIG.resumeFile; });
+  document.querySelectorAll('[data-email]').forEach(el => { el.href = 'mailto:' + SITE_CONFIG.email; });
 })();
 
-/* ── Theme ── */
-function setTheme(t) {
-  document.documentElement.setAttribute('data-theme', t);
-  document.getElementById('optDark').classList.toggle('active', t === 'dark');
-  document.getElementById('optLight').classList.toggle('active', t === 'light');
-  localStorage.setItem('jp-theme', t);
-}
-setTheme(localStorage.getItem('jp-theme') || 'dark');
-
-/* ── Data loading ── */
-async function loadJSON(path) {
-  const r = await fetch(path);
-  if (!r.ok) throw new Error('Failed to load ' + path);
-  return r.json();
-}
-
 /* ── Modal ── */
-// Save scroll position ONCE when first modal opens; nested modals don't overwrite it
 let _savedScrollY = 0;
-let _modalDepth = 0;
 function openModal(html) {
-  if (_modalDepth === 0) {
-    _savedScrollY = window.scrollY;
-    document.body.style.top = `-${_savedScrollY}px`;
-    document.body.classList.add('modal-open');
-  }
-  _modalDepth++;
+  _savedScrollY = window.scrollY;
+  document.body.style.top = `-${_savedScrollY}px`;
+  document.body.classList.add('modal-open');
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal() {
-  _modalDepth = 0;
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.classList.remove('modal-open');
   document.body.style.top = '';
@@ -1212,8 +368,7 @@ function closeModalOnBg(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 /* ════════════════════════════════════════════════════════════
-   MEDIA RENDERER
-   Renders image or YouTube embed from a media array
+   MEDIA RENDERER — image or YouTube embed from a media array
 ════════════════════════════════════════════════════════════ */
 function getYouTubeId(url) {
   const m = url.match(/(?:v=|youtu\.be\/)([^&?/]+)/);
@@ -1227,25 +382,21 @@ function renderMedia(mediaArr) {
       const id = getYouTubeId(m.src);
       if (!id) return '';
       return `
-        <figure style="margin-top:1.5rem">
-          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:8px;border:1px solid var(--border)">
-            <iframe
-              src="https://www.youtube.com/embed/${id}"
+        <figure>
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid var(--border)">
+            <iframe src="https://www.youtube.com/embed/${id}"
               style="position:absolute;top:0;left:0;width:100%;height:100%;border:none"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen loading="lazy">
-            </iframe>
+              allowfullscreen loading="lazy"></iframe>
           </div>
-          ${m.caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);margin-top:.5rem;font-family:var(--ui);text-align:center">${m.caption}</figcaption>` : ''}
+          ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}
         </figure>`;
     }
     if (m.type === 'image') {
       return `
-        <figure style="margin-top:1.5rem">
-          <img src="${m.src}" alt="${m.caption || ''}"
-            style="width:100%;border-radius:8px;border:1px solid var(--border);display:block;object-fit:cover;max-height:360px"
-            onerror="this.parentElement.style.display='none'">
-          ${m.caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);margin-top:.5rem;font-family:var(--ui);text-align:center">${m.caption}</figcaption>` : ''}
+        <figure>
+          <img src="${m.src}" alt="${m.caption || ''}" onerror="this.parentElement.style.display='none'">
+          ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}
         </figure>`;
     }
     return '';
@@ -1253,184 +404,57 @@ function renderMedia(mediaArr) {
 }
 
 /* ════════════════════════════════════════════════════════════
-   PROJECTS
+   PROJECTS — plain reverse-chronological list, no filtering
 ════════════════════════════════════════════════════════════ */
 let allProjects = [];
-let projectFilter = 'all';
-const PROJECT_LIMIT = 8;
 
-function buildProjectCard(p, featured) {
-  const div = document.createElement('div');
-  div.className = 'pcard' + (featured ? ' featured' : '');
-  div.dataset.tags = p.tags.join(',');
-  div.onclick = () => openProjectModal(p);
-
-  const badge = p.badge ? `<span class="badge">${p.badge}</span>` : '';
-  const ghLink = p.github
-    ? `<a href="${p.github}" class="pcard-link" target="_blank" onclick="event.stopPropagation()">&#8599; GitHub</a>` : '';
-
-  const imgEl = p.image
-    ? `<div class="pcard-img"><img src="${p.image}" alt="${p.title}" onerror="this.style.display='none'"></div>`
-    : '';  /* no image set — don't render the slot at all */
-
+function buildProjectEntry(p) {
+  const div = document.createElement('article');
+  div.className = 'entry';
+  const badge = (p.badge && !p.type.includes(p.badge)) ? p.badge : '';
+  const meta = [p.type, p.year, badge].filter(Boolean).join(' · ');
+  const ghLink = p.github ? `<a href="${p.github}" target="_blank">GitHub &#8594;</a>` : '';
   div.innerHTML = `
-    ${imgEl}
-    <div class="pcard-meta">
-      <span class="pcard-type">${p.type}</span>
-      <div style="display:flex;gap:.4rem;align-items:center">
-        ${badge}<span class="pcard-year">${p.year}</span>
-      </div>
+    <div class="entry-head">
+      <h3>${p.title}</h3>
+      <span class="entry-meta">${meta}</span>
     </div>
-    <h3 class="pcard-title">${p.title}</h3>
-    <p class="pcard-desc">${p.desc}</p>
-    <div class="pcard-tags">${p.tags_display.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
-    <div class="pcard-links">${ghLink}<button class="pcard-link">&#8594; Case study</button></div>
+    <p class="entry-desc">${p.desc}</p>
+    <p class="entry-tags">${(p.tags_display || []).join(' · ')}</p>
+    <p class="entry-links">${ghLink}<a data-open-case>Case study &#8594;</a></p>
   `;
+  div.querySelector('[data-open-case]').addEventListener('click', () => openProjectModal(p));
   return div;
-}
-
-function buildProjectMoreBtn() {
-  const div = document.createElement('div');
-  div.className = 'pcard pcard-more';
-  div.id = 'moreBtn';
-  div.onclick = openProjectsTable;
-  div.innerHTML = `
-    <div class="pcard-more-icon">&#xB7;&#xB7;&#xB7;</div>
-    <span class="pcard-more-label">See more projects</span>
-    <span style="font-size:.7rem;color:var(--muted2);font-family:var(--ui)">click to see full list</span>`;
-  return div;
-}
-
-function openProjectsTable() {
-  // Build table of ALL projects (shown + hidden)
-  const rows = allProjects.map(p => `
-    <tr class="proj-table-row" onclick="openProjectModal(window._allProjectsMap['${p.id}'])" style="cursor:pointer">
-      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--serif);font-size:.9rem;color:var(--ink)">${p.title}</td>
-      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--ui);font-size:.78rem;color:var(--muted);white-space:nowrap">${p.year}</td>
-      <td style="padding:.75rem 1rem;border-bottom:1px solid var(--border);font-family:var(--ui);font-size:.78rem;color:var(--muted)">${p.tags.join(', ')}</td>
-    </tr>`).join('');
-  // Store lookup map for row clicks
-  window._allProjectsMap = {};
-  allProjects.forEach(p => window._allProjectsMap[p.id] = p);
-
-  openModal(`
-    <h3 style="margin-bottom:1.5rem">All Projects</h3>
-    <table style="width:100%;border-collapse:collapse">
-      <thead>
-        <tr>
-          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Title</th>
-          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Year</th>
-          <th style="padding:.5rem 1rem;border-bottom:2px solid var(--border);font-family:var(--ui);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left">Category</th>
-        </tr>
-      </thead>
-      <tbody>${rows}</tbody>
-    </table>
-    <p style="margin-top:1rem;font-size:.75rem;color:var(--muted2);font-family:var(--ui)">Click any row to view project details.</p>
-  `);
 }
 
 function renderProjects() {
-  const grid    = document.getElementById('projectsGrid');
-  const archive = document.getElementById('archiveGrid');
-  grid.innerHTML = '';
-  archive.innerHTML = '';
-
-  const shown  = allProjects.filter(p => p.show);
-  const hidden = allProjects.filter(p => !p.show);
-
-  shown.forEach((p, i) => {
-    const card = buildProjectCard(p, i === 0);
-    // Only span 2 columns when there are 3+ visible cards (enough to fill row)
-    if (i === 0 && shown.length >= 3) card.classList.add('do-span');
-    grid.appendChild(card);
-  });
-  if (hidden.length > 0) grid.appendChild(buildProjectMoreBtn());
-  hidden.forEach(p => archive.appendChild(buildProjectCard(p, false)));
+  const list = document.getElementById('projectsList');
+  list.innerHTML = '';
+  allProjects.forEach(p => list.appendChild(buildProjectEntry(p)));
 }
-
-function filterProjects(tag) {
-  projectFilter = tag;
-  document.querySelectorAll('#projectFilterBar .filter-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.filter === tag));
-
-  const cards = document.querySelectorAll('#projectsGrid .pcard:not(.pcard-more)');
-  let visibleCount = 0;
-  cards.forEach(card => {
-    if (tag === 'all') { card.style.display = ''; visibleCount++; return; }
-    const tags = (card.dataset.tags || '').split(',');
-    const visible = tags.includes(tag);
-    card.style.display = visible ? '' : 'none';
-    if (visible) visibleCount++;
-  });
-
-  // Featured card: only span when 3+ cards visible
-  const featured = document.querySelector('#projectsGrid .pcard.featured');
-  if (featured) featured.classList.toggle('do-span', visibleCount >= 3);
-
-  // More button: hide if no archived cards match
-  const moreBtn = document.getElementById('moreBtn');
-  if (moreBtn) {
-    if (tag === 'all') { moreBtn.style.display = ''; }
-    else {
-      const archiveHasMatch = allProjects.filter(p => !p.show)
-        .some(p => p.tags.includes(tag));
-      moreBtn.style.display = archiveHasMatch ? '' : 'none';
-    }
-  }
-
-  // Empty state
-  let emptyMsg = document.getElementById('projectsEmptyState');
-  if (visibleCount === 0) {
-    if (!emptyMsg) {
-      emptyMsg = document.createElement('p');
-      emptyMsg.id = 'projectsEmptyState';
-      emptyMsg.style.cssText = 'padding:2rem;color:var(--muted2);font-family:var(--ui);font-size:.85rem;grid-column:1/-1;text-align:center';
-      document.getElementById('projectsGrid').appendChild(emptyMsg);
-    }
-    emptyMsg.textContent = 'No projects in this category yet.';
-  } else if (emptyMsg) {
-    emptyMsg.remove();
-  }
-}
-
-document.getElementById('projectFilterBar').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (btn) filterProjects(btn.dataset.filter);
-});
-
-
 
 function openProjectModal(p) {
   const d = p.detail;
 
-  // Links block
   let linksBlock = '';
   if (d.links && d.links.length > 0) {
-    const linkBtns = d.links.map(l =>
-      `<a href="${l.url}" class="btn btn-resume" target="_blank"
-        style="margin-right:.5rem;margin-bottom:.5rem">&#8599; ${l.label}</a>`
-    ).join('');
-    linksBlock = `<div style="margin-top:1.5rem;display:flex;flex-wrap:wrap">${linkBtns}</div>`;
+    const linkBtns = d.links.map(l => `<a href="${l.url}" target="_blank">&#8599; ${l.label}</a>`).join('');
+    linksBlock = `<div class="modal-links">${linkBtns}</div>`;
   } else if (p.github) {
-    linksBlock = `<div style="margin-top:1.5rem">
-      <a href="${p.github}" class="btn btn-resume" target="_blank">&#8599; View on GitHub</a></div>`;
+    linksBlock = `<div class="modal-links"><a href="${p.github}" target="_blank">&#8599; View on GitHub</a></div>`;
   }
 
-  // Tags to display (prefer detail override if present)
   const displayTags = (d.tags_display || p.tags_display || []);
 
-  // If the project has a body string, use the rich body renderer
   if (d.body) {
     const bodyHtml = renderProjectBody(d.body);
     openModal(`
       <p class="modal-type">${p.type} · ${p.year}</p>
-      <h3 style="margin-bottom:.75rem">${p.title}</h3>
-      <div class="modal-tags" style="margin-bottom:1.25rem">
-        ${displayTags.map(t => `<span class="pcard-tag">${t}</span>`).join('')}
-      </div>
+      <h3>${p.title}</h3>
+      <p class="modal-tags">${displayTags.join(' · ')}</p>
       ${bodyHtml}
-      <div class="modal-section" style="margin-top:1.25rem">
-        <p class="modal-section-title">// Status</p>
+      <div class="modal-section">
+        <p class="modal-section-title">Status</p>
         <p>${d.status || ''}</p>
       </div>
       ${linksBlock}
@@ -1438,324 +462,85 @@ function openProjectModal(p) {
     return;
   }
 
-  // Legacy format (summary/why/problem/approach fields)
   const extraSections = (d.sections || []).map(s => `
     <div class="modal-section">
-      <p class="modal-section-title">// ${s.title}</p>
+      <p class="modal-section-title">${s.title}</p>
       <p>${s.body}</p>
     </div>`).join('');
 
   const resultsBlock = d.results ? `
     <div class="modal-section">
-      <p class="modal-section-title">// Results</p>
+      <p class="modal-section-title">Results</p>
       <p>${d.results}</p>
     </div>` : '';
 
   openModal(`
     <p class="modal-type">${p.type} · ${p.year}</p>
     <h3>${p.title}</h3>
-    <div class="modal-tags">${displayTags.map(t => `<span class="pcard-tag">${t}</span>`).join('')}</div>
-    <div class="modal-section"><p class="modal-section-title">// Summary</p><p>${d.summary || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Why I built it</p><p>${d.why || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Core challenge</p><p>${d.problem || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">// Approach</p><p>${d.approach || ''}</p></div>
+    <p class="modal-tags">${displayTags.join(' · ')}</p>
+    <div class="modal-section"><p class="modal-section-title">Summary</p><p>${d.summary || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">Why I built it</p><p>${d.why || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">Core challenge</p><p>${d.problem || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">Approach</p><p>${d.approach || ''}</p></div>
     ${extraSections}
     ${resultsBlock}
-    <div class="modal-section"><p class="modal-section-title">// Status</p><p>${d.status || ''}</p></div>
+    <div class="modal-section"><p class="modal-section-title">Status</p><p>${d.status || ''}</p></div>
     ${linksBlock}
     ${renderMedia(d.media || [])}
   `);
 }
 
-/* ── Project body renderer ─────────────────────────────────────────────────
-   Parses the body string with [SECTION: ...] and [IMAGE: src | caption] markers
-   and renders them in order, exactly as placed in the JSON.
-──────────────────────────────────────────────────────────────────────────── */
+/* ── Project body renderer: [SECTION: ...] / [IMAGE: src | caption] markers ── */
 function renderProjectBody(body) {
   return body.split('\n\n').map(chunk => {
     const t = chunk.trim();
     if (!t) return '';
 
-    // Section header
     if (t.startsWith('[SECTION:')) {
       const title = t.replace('[SECTION:', '').replace(']', '').trim();
-      return `<div class="modal-section" style="margin-top:1.5rem">
-        <p class="modal-section-title">// ${title}</p>`;
-      // Note: section div is closed by next non-section block — we handle
-      // this by wrapping everything in a flat stream instead
+      return `<div class="modal-section"><p class="modal-section-title">${title}</p>`;
     }
 
-    // Image marker: [IMAGE: path | caption]
     if (t.startsWith('[IMAGE:')) {
       const inner = t.replace('[IMAGE:', '').replace(']', '').trim();
       const [src, caption] = inner.split('|').map(s => s.trim());
-      return `<figure style="margin:.75rem 0 1rem">
-        <img src="${src}" alt="${caption || ''}"
-          style="width:100%;border-radius:6px;border:1px solid var(--border);
-                 display:block;object-fit:cover;max-height:400px"
-          onerror="this.parentElement.style.display='none'">
-        ${caption ? `<figcaption style="font-size:.75rem;color:var(--muted2);
-          margin-top:.4rem;font-family:var(--ui);text-align:center">${caption}</figcaption>` : ''}
+      return `<figure>
+        <img src="${src}" alt="${caption || ''}" onerror="this.parentElement.style.display='none'">
+        ${caption ? `<figcaption>${caption}</figcaption>` : ''}
       </figure>`;
     }
 
-    // URL-only line — render as a link
     if (/^https?:\/\/\S+$/.test(t)) {
-      return `<p style="margin:.3rem 0;font-family:var(--mono);font-size:.75rem">
-        <a href="${t}" target="_blank" style="color:var(--accent)">${t}</a></p>`;
+      return `<p><a href="${t}" target="_blank">${t}</a></p>`;
     }
 
-    // Line containing a URL with label prefix (e.g. "View ... → https://...")
     if (t.includes('https://') && (t.includes('→') || t.includes(':'))) {
       const urlMatch = t.match(/(https?:\/\/\S+)/);
       if (urlMatch) {
         const url = urlMatch[1];
         const label = t.replace(url, '').replace(/[→:]+$/, '').trim();
-        return `<p style="margin:.4rem 0;font-size:.88rem;color:var(--ink2)">
-          ${label ? label + ' ' : ''}
-          <a href="${url}" target="_blank"
-            style="color:var(--accent);font-family:var(--mono);font-size:.78rem">${url}</a></p>`;
+        return `<p>${label ? label + ' ' : ''}<a href="${url}" target="_blank">${url}</a></p>`;
       }
     }
 
-    // Bullet list lines (starts with -)
     if (t.startsWith('- ')) {
       const items = t.split('\n').filter(l => l.startsWith('- '));
-      const lis = items.map(l =>
-        `<li style="margin-bottom:.3rem">${l.slice(2)}</li>`).join('');
-      return `<ul style="margin:.5rem 0 .75rem 1.25rem;font-size:.9rem;
-        color:var(--ink2);line-height:1.75">${lis}</ul>`;
+      const lis = items.map(l => `<li>${l.slice(2)}</li>`).join('');
+      return `<ul style="margin:.4rem 0 .6rem 1.25rem;font-size:15px">${lis}</ul>`;
     }
 
-    // Formula heuristic (short, contains math chars)
     const hasMath = /[=→·^ᵀ‖∑Σεᵢ]/.test(t);
     const isShort = t.split(' ').length < 16;
     if (hasMath && isShort) {
       return `<p class="note-formula">${t}</p>`;
     }
 
-    // Default paragraph
-    return `<p style="margin-bottom:.75rem;font-size:.93rem;
-      color:var(--ink2);line-height:1.82">${t}</p>`;
-
+    return `<p>${t}</p>`;
   }).join('');
 }
 
 /* ════════════════════════════════════════════════════════════
-   NOTES — archive is a list view, click to open modal
-════════════════════════════════════════════════════════════ */
-let allNotes = [];
-let notesFilter = 'all';
-let notesArchiveOpen = false;
-const NOTES_LIMIT = 3;
-
-function buildNoteCard(n) {
-  const div = document.createElement('div');
-  div.className = 'note-card';
-  div.dataset.tag = n.tag;
-  div.onclick = () => openNoteModal(n);
-  div.innerHTML = `
-    <p class="note-date">${n.date}</p>
-    <h3 class="note-title">${n.title}</h3>
-    <p class="note-preview">${n.preview}</p>
-    <div class="note-footer">
-      <span class="note-tag">${n.tag}</span>
-      ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
-    </div>
-  `;
-  return div;
-}
-
-function getFilteredNotes() {
-  if (notesFilter === 'highlighted') return allNotes.filter(n => n.highlighted);
-  if (notesFilter !== 'all') return allNotes.filter(n => n.tag === notesFilter);
-  return allNotes;
-}
-
-function renderNotes() {
-  const grid = document.getElementById('notesGrid');
-  grid.innerHTML = '';
-
-  const filtered = getFilteredNotes();
-  // Show only up to NOTES_LIMIT — no placeholders if fewer exist
-  const shown = filtered.slice(0, NOTES_LIMIT);
-
-  if (shown.length === 0) {
-    const msg = document.createElement('p');
-    msg.style.cssText = 'padding:1.5rem 0;color:var(--muted2);font-family:var(--ui);font-size:.85rem;';
-    msg.textContent = 'No notes in this category yet.';
-    grid.appendChild(msg);
-  } else {
-    shown.forEach(n => grid.appendChild(buildNoteCard(n)));
-  }
-
-  // Update archive button visibility
-  const archiveBtn = document.getElementById('notesArchiveBtn');
-  archiveBtn.style.display = filtered.length > NOTES_LIMIT ? '' : 'none';
-}
-
-function renderNotesArchive() {
-  // Archive = full list view with titles only, click to open modal
-  const filtered = getFilteredNotes();
-  const list = document.getElementById('notesArchiveList');
-  list.innerHTML = '';
-  filtered.forEach(n => {
-    const row = document.createElement('div');
-    row.className = 'notes-archive-row';
-    row.onclick = () => openNoteModal(n);
-    row.innerHTML = `
-      <div style="display:flex;align-items:center;gap:1rem;flex:1;min-width:0">
-        <span class="note-tag" style="flex-shrink:0">${n.tag}</span>
-        <span class="notes-archive-title">${n.title}</span>
-      </div>
-      <div style="display:flex;align-items:center;gap:.75rem;flex-shrink:0">
-        ${n.highlighted ? '<span class="note-highlight">&#9733;</span>' : ''}
-        <span class="note-date">${n.date}</span>
-        <span style="color:var(--muted2);font-size:.75rem">&#8594;</span>
-      </div>
-    `;
-    list.appendChild(row);
-  });
-}
-
-function openNotesArchive() {
-  notesArchiveOpen = true;
-  renderNotesArchive();
-  document.getElementById('notesArchivePanel').style.display = 'block';
-  document.getElementById('notesArchiveBtn').innerHTML = '&#8593; Show less';
-  document.getElementById('notesArchiveBtn').onclick = closeNotesArchive;
-}
-function closeNotesArchive() {
-  notesArchiveOpen = false;
-  document.getElementById('notesArchivePanel').style.display = 'none';
-  document.getElementById('notesArchiveBtn').innerHTML = 'View all &#8594;';
-  document.getElementById('notesArchiveBtn').onclick = openNotesArchive;
-  document.getElementById('notes').scrollIntoView({ behavior: 'smooth' });
-}
-
-document.getElementById('notesFilterBar').addEventListener('click', e => {
-  const btn = e.target.closest('.filter-btn');
-  if (!btn) return;
-  notesFilter = btn.dataset.filter;
-  document.querySelectorAll('#notesFilterBar .filter-btn').forEach(b =>
-    b.classList.toggle('active', b.dataset.filter === notesFilter));
-  renderNotes();
-  if (notesArchiveOpen) renderNotesArchive();
-});
-
-function openNoteModal(n) {
-  const media = n.detail.media || [];
-  let mediaIdx = 0;
-
-  // Split body on double newlines, render each chunk
-  const bodyHtml = (n.detail.body || '')
-    .split('\n\n')
-    .map(para => {
-      const t = para.trim();
-      if (!t) return '';
-
-      // Inline SVG/image marker — consume next media item
-      if (t.startsWith('[SVG:') || t.startsWith('[Image:')) {
-        if (mediaIdx < media.length) return renderMedia([media[mediaIdx++]]);
-        return '';
-      }
-
-      // Formula heuristic: short, contains math chars, no sentence punctuation
-      const hasMath = /[=→·^ᵀ‖∑Σ₀₁₂₃₄₅₆₇₈₉⁺⁻]/.test(t);
-      const isShort = t.split(' ').length < 14;
-      const noSentence = !/[.!?]$/.test(t);
-      if (hasMath && isShort && noSentence) {
-        return `<p class="note-formula">${t}</p>`;
-      }
-
-      return `<p style="margin-bottom:.8rem;line-height:1.85;font-size:.95rem;color:var(--ink2)">${t}</p>`;
-    })
-    .join('');
-
-  // Remaining media (not consumed inline)
-  const trailingMedia = media.slice(mediaIdx);
-
-  openModal(`
-    <p class="modal-type">Field Note · ${n.date}</p>
-    <h3 style="margin-bottom:.5rem">${n.title}</h3>
-    <div style="display:flex;gap:.5rem;margin:.5rem 0 1.5rem;flex-wrap:wrap">
-      <span class="note-tag">${n.tag}</span>
-      ${n.highlighted ? '<span class="note-highlight">&#9733; Highlighted</span>' : ''}
-    </div>
-    ${bodyHtml}
-    ${trailingMedia.length ? renderMedia(trailingMedia) : ''}
-  `);
-}
-
-/* ════════════════════════════════════════════════════════════
-   LIFE
-════════════════════════════════════════════════════════════ */
-function renderLifeBody(detail) {
-  // Renders body paragraphs and [IMAGE:] markers, no section headers
-  const body = detail.body || '';
-  const media = detail.media || [];
-  let mediaIdx = 0;
-  const parts = body.split('\n\n').map(chunk => {
-    const t = chunk.trim();
-    if (!t) return '';
-    if (t.startsWith('[IMAGE:')) {
-      if (mediaIdx < media.length) return renderMedia([media[mediaIdx++]]);
-      // fallback: parse inline marker
-      const inner = t.replace('[IMAGE:', '').replace(']', '').trim();
-      const [src, caption] = inner.split('|').map(s => s.trim());
-      return renderMedia([{ type: 'image', src, caption }]);
-    }
-    return `<p style="margin-bottom:.8rem;font-size:.93rem;color:var(--ink2);line-height:1.82">${t}</p>`;
-  }).join('');
-  const trailing = media.slice(mediaIdx);
-  return parts + (trailing.length ? renderMedia(trailing) : '');
-}
-
-function renderLife(data) {
-  const grid = document.getElementById('lifeGrid');
-  grid.innerHTML = '';
-  data.forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'life-card';
-    div.onclick = () => openModal(`
-      <h3 style="margin-bottom:1rem">${item.icon} ${item.title}</h3>
-      ${renderLifeBody(item.detail)}
-    `);
-    div.innerHTML = `
-      <div class="life-icon">${item.icon}</div>
-      <p class="life-title">${item.title}</p>
-      <p class="life-desc">${item.desc}</p>
-    `;
-    grid.appendChild(div);
-  });
-}
-
-/* ════════════════════════════════════════════════════════════
-   SCROLL REVEAL
-════════════════════════════════════════════════════════════ */
-function initReveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.07 });
-
-  document.querySelectorAll(
-    '.pcard, .timeline-item, .sidebar-block, .note-card, .life-card'
-  ).forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(14px)';
-    el.style.transition = 'opacity .5s ease, transform .5s ease';
-    obs.observe(el);
-  });
-}
-
-/* ════════════════════════════════════════════════════════════
-   INIT — loads from data/projects/, data/notes/, data/life/
+   INIT
 ════════════════════════════════════════════════════════════ */
 async function loadJSON(path) {
   const r = await fetch(path);
@@ -1775,59 +560,15 @@ async function loadIndexedItems(folder) {
   return items;
 }
 
-/* ── Contact modal ── */
-function openContactModal() {
-  _savedScrollY = window.scrollY;
-  document.getElementById('contactOverlay').classList.add('open');
-  document.body.style.top = `-${_savedScrollY}px`;
-  document.body.classList.add('modal-open');
-  // Apply email/resume from config to contact modal elements
-  document.querySelectorAll('#contactOverlay [data-email]').forEach(el => {
-    el.href = 'mailto:' + SITE_CONFIG.email;
-    if (el.dataset.emailText) el.textContent = SITE_CONFIG.email;
-  });
-}
-function closeContactModal() {
-  document.getElementById('contactOverlay').classList.remove('open');
-  document.body.classList.remove('modal-open');
-  document.body.style.top = '';
-  window.scrollTo({ top: _savedScrollY, behavior: 'instant' });
-}
-function closeContactOnBg(e) {
-  if (e.target === document.getElementById('contactOverlay')) closeContactModal();
-}
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal(); closeContactModal(); }
-});
-
 async function init() {
   try {
-    const [projectIndex, noteIndex, lifeItems] = await Promise.all([
-      loadIndexedItems('projects'),
-      loadIndexedItems('notes'),
-      loadIndexedItems('life'),
-    ]);
-
-    // Projects — sort by rank, respect show flag
-    allProjects = projectIndex.sort((a, b) => (a.rank || 99) - (b.rank || 99));
-
-    // Notes — highlighted bubble to top, then index order
-    allNotes = noteIndex
-      .filter(n => n.show !== false)
-      .sort((a, b) => (b.highlighted ? 1 : 0) - (a.highlighted ? 1 : 0));
-
+    allProjects = (await loadIndexedItems('projects'))
+      .sort((a, b) => (a.rank || 99) - (b.rank || 99));
     renderProjects();
-    renderNotes();
-    renderLife(lifeItems);
-    initReveal();
-
-    // Init notes archive button
-    document.getElementById('notesArchiveBtn').onclick = openNotesArchive;
-
   } catch (err) {
     console.error('Data load error:', err);
-    document.getElementById('projectsGrid').innerHTML =
-      '<p style="padding:2rem;color:var(--muted);font-family:var(--ui);font-size:.8rem">Run via GitHub Pages or a local server to load content.</p>';
+    document.getElementById('projectsList').innerHTML =
+      '<p>Run via GitHub Pages or a local server to load content.</p>';
   }
 }
 

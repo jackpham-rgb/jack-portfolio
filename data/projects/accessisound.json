@@ -2,7 +2,7 @@
   "id": "accessisound",
   "tags": ["embedded", "ai-ml", "accessibility"],
   "type": "Embedded ML · Accessibility",
-  "year": "2024",
+  "year": "Spring 2026",
   "badge": "Hackathon",
   "title": "AccessiSound — ESP32-S3 Sound Recognition",
   "desc": "Standalone assistive device classifying environmental sounds in real time on-device using TFLite Micro. Alerts visually impaired users via distinct vibration and audio patterns. No cloud, no phone — $17 BOM.",
