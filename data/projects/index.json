@@ -1,55 +1,61 @@
 [
   {
-    "id": "drone-ugv",
+    "id": "serdes-link",
     "rank": 1,
     "show": true,
     "featured": true
   },
   {
-    "id": "eeg",
+    "id": "drone-ugv",
     "rank": 2,
+    "show": true,
+    "featured": true
+  },
+  {
+    "id": "eeg",
+    "rank": 3,
     "show": true,
     "featured": false
   },
   {
     "id": "accessisound",
-    "rank": 3,
+    "rank": 4,
     "show": true,
     "featured": true
   },
   {
     "id": "methane",
-    "rank": 4,
-    "show": true,
-    "featured": false
-  },
-  {
-    "id": "kitchen",
     "rank": 5,
     "show": true,
     "featured": false
   },
   {
-    "id": "door",
+    "id": "kitchen",
     "rank": 6,
     "show": true,
     "featured": false
   },
   {
-    "id": "acoustic",
+    "id": "door",
     "rank": 7,
     "show": true,
     "featured": false
   },
   {
-    "id": "voice",
+    "id": "acoustic",
     "rank": 8,
     "show": true,
     "featured": false
   },
   {
-    "id": "multirobot",
+    "id": "voice",
     "rank": 9,
+    "show": true,
+    "featured": false
+  },
+  {
+    "id": "multirobot",
+    "rank": 10,
     "show": true,
     "featured": false
   }
