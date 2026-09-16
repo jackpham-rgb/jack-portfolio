@@ -1,56 +1,56 @@
 [
   {
+    "id": "drone-ugv",
+    "rank": 1,
+    "show": true,
+    "featured": true
+  },
+  {
+    "id": "eeg",
+    "rank": 2,
+    "show": true,
+    "featured": false
+  },
+  {
     "id": "accessisound",
     "rank": 3,
     "show": true,
     "featured": true
   },
   {
-    "id": "kitchen",
-    "rank": 2,
-    "show": true,
-    "featured": false
-  },
-  {
-    "id": "eeg",
+    "id": "methane",
     "rank": 4,
     "show": true,
     "featured": false
   },
   {
-    "id": "door",
-    "rank": 9,
-    "show": false,
-    "featured": false
-  },
-  {
-    "id": "methane",
+    "id": "kitchen",
     "rank": 5,
     "show": true,
     "featured": false
   },
   {
-    "id": "acoustic",
+    "id": "door",
     "rank": 6,
     "show": true,
     "featured": false
   },
   {
-    "id": "voice",
+    "id": "acoustic",
     "rank": 7,
     "show": true,
     "featured": false
   },
   {
-    "id": "multirobot",
+    "id": "voice",
     "rank": 8,
     "show": true,
     "featured": false
   },
   {
-    "id": "drone-ugv",
-    "rank": 1,
+    "id": "multirobot",
+    "rank": 9,
     "show": true,
-    "featured": true
+    "featured": false
   }
 ]
