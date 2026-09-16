@@ -1,4 +1,4 @@
-# Jack Pham — Portfolio
+# Jack Pham's Portfolio
 
 Live at https://jackpham-rgb.github.io/jack-portfolio/
 

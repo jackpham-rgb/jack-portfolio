@@ -46,7 +46,7 @@
   <circle cx="71"  cy="244" r="10" fill="#326891" opacity="0.9"/>
   <text x="71"  y="248" text-anchor="middle" fill="#FFF" font-size="8" font-weight="700">R3</text>
 
-  <!-- Tasks (T) — star/diamond markers -->
+  <!-- Tasks (T): star/diamond markers -->
   <polygon points="190,108 196,120 210,120 200,128 203,142 190,134 177,142 180,128 170,120 184,120"
     fill="#E2E2E2" stroke="#666" stroke-width="0.75"/>
   <text x="190" y="128" text-anchor="middle" fill="#666" font-size="7" font-weight="600">T1</text>

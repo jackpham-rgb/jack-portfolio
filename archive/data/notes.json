@@ -7,7 +7,7 @@
     "tag": "embedded",
     "highlighted": false,
     "detail": {
-      "body": "The ESP32-C3 Mini has 400 KB of SRAM total. By the time you account for the Arduino stack (~8 KB), I2S DMA buffers (~8 KB), and audio ring buffers (~4 KB), you have about 380 KB left. Our TFLite Micro model needs 50 KB of tensor arena minimum. That sounds comfortable until you realize the firmware code itself also lives in SRAM during execution.\n\nThe key lesson: always profile memory before writing a single line of ML inference code. On microcontrollers, the model is the last thing you fit in — everything else gets allocated first.\n\nWe ended up reducing the tensor arena from 60 KB (S3 target) to 50 KB and trimming the model's conv layer filters from 32 to 24, losing about 2% test accuracy but gaining stable execution with zero OOM crashes."
+      "body": "The ESP32-C3 Mini has 400 KB of SRAM total. By the time you account for the Arduino stack (~8 KB), I2S DMA buffers (~8 KB), and audio ring buffers (~4 KB), you have about 380 KB left. Our TFLite Micro model needs 50 KB of tensor arena minimum. That sounds comfortable until you realize the firmware code itself also lives in SRAM during execution.\n\nThe key lesson: always profile memory before writing a single line of ML inference code. On microcontrollers, the model is the last thing you fit in: everything else gets allocated first.\n\nWe ended up reducing the tensor arena from 60 KB (S3 target) to 50 KB and trimming the model's conv layer filters from 32 to 24, losing about 2% test accuracy but gaining stable execution with zero OOM crashes."
     }
   },
   {
@@ -40,7 +40,7 @@
     "tag": "ai-ml",
     "highlighted": true,
     "detail": {
-      "body": "EEG data is extraordinarily noisy. A 60 Hz power line artifact can completely drown out the 8-12 Hz alpha band activity that indicates relaxed attention. Eye blinks create voltage spikes 10x larger than the neural signals we care about. Muscle activity near the electrodes creates broadband noise.\n\nOur preprocessing pipeline: notch filter at 60 Hz and harmonics, bandpass filter 1-50 Hz, independent component analysis to remove eye-blink artifacts, epoch rejection for remaining artifact-contaminated segments.\n\nAfter clean preprocessing, a simple SVM on band-power features achieved 78% accuracy. Before preprocessing, the same SVM on raw data achieved 51% — barely above chance. The model was not the bottleneck. The data quality was."
+      "body": "EEG data is extraordinarily noisy. A 60 Hz power line artifact can completely drown out the 8-12 Hz alpha band activity that indicates relaxed attention. Eye blinks create voltage spikes 10x larger than the neural signals we care about. Muscle activity near the electrodes creates broadband noise.\n\nOur preprocessing pipeline: notch filter at 60 Hz and harmonics, bandpass filter 1-50 Hz, independent component analysis to remove eye-blink artifacts, epoch rejection for remaining artifact-contaminated segments.\n\nAfter clean preprocessing, a simple SVM on band-power features achieved 78% accuracy. Before preprocessing, the same SVM on raw data achieved 51%, barely above chance. The model was not the bottleneck. The data quality was."
     }
   }
 ]
