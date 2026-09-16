@@ -67,7 +67,7 @@
     fill="none" stroke="#326891" stroke-width="1.4"/>
 
   <!-- Received signal (delayed) -->
-  <text x="308" y="155" font-size="8" fill="#666" font-weight="600">Received y(t) — delayed by Δt</text>
+  <text x="308" y="155" font-size="8" fill="#666" font-weight="600">Received y(t), delayed by Δt</text>
   <line x1="308" y1="185" x2="540" y2="185" stroke="#E2E2E2" stroke-width="0.75"/>
   <polyline points="360,185 372,169 384,185 396,185 408,169 420,185 432,185"
     fill="none" stroke="#666" stroke-width="1.4"/>
@@ -98,13 +98,13 @@
   <text x="701" y="78" text-anchor="middle" font-size="9" font-weight="600" fill="#121212" letter-spacing="0.07em">C. LOCALIZATION MATH</text>
 
   <!-- Step 1 -->
-  <text x="588" y="102" font-size="9" font-weight="600" fill="#121212">Step 1 — convert delay to distance</text>
+  <text x="588" y="102" font-size="9" font-weight="600" fill="#121212">Step 1: convert delay to distance</text>
   <rect x="588" y="108" width="222" height="34" rx="2" fill="#F7F5F0" stroke="#E2E2E2" stroke-width="0.75"/>
   <text x="699" y="122" text-anchor="middle" font-size="11" fill="#326891" font-family="'Courier New',monospace" font-weight="600">d = v · Δt</text>
   <text x="699" y="136" text-anchor="middle" font-size="8" fill="#999">v ≈ 343 m/s (speed of sound)</text>
 
   <!-- Step 2 -->
-  <text x="588" y="160" font-size="9" font-weight="600" fill="#121212">Step 2 — three beacons, three circles</text>
+  <text x="588" y="160" font-size="9" font-weight="600" fill="#121212">Step 2: three beacons, three circles</text>
   <!-- mini circles -->
   <circle cx="699" cy="204" r="28" fill="none" stroke="#326891" stroke-width="1" stroke-dasharray="3,3" opacity="0.7"/>
   <circle cx="699" cy="204" r="20" fill="none" stroke="#666" stroke-width="1" stroke-dasharray="3,3" opacity="0.6"/>
@@ -115,7 +115,7 @@
 
   <!-- Step 3 -->
   <line x1="588" y1="242" x2="810" y2="242" stroke="#E2E2E2" stroke-width="0.75"/>
-  <text x="588" y="260" font-size="9" font-weight="600" fill="#121212">Step 3 — least-squares solve</text>
+  <text x="588" y="260" font-size="9" font-weight="600" fill="#121212">Step 3: least-squares solve</text>
   <text x="588" y="276" font-size="9" fill="#666" font-family="'Courier New',monospace">Ax = b</text>
   <text x="640" y="276" font-size="8.5" fill="#999">overdetermined system</text>
   <text x="588" y="294" font-size="9" fill="#326891" font-family="'Courier New',monospace" font-weight="600">x̂ = A⁺b</text>
