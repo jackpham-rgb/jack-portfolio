@@ -1,0 +1,22 @@
+{
+  "id": "fdtd-channel",
+  "tags": ["signals"],
+  "type": "FDTD · Signal Integrity · Personal Research",
+  "year": "September 2026",
+  "badge": "Personal Research",
+  "title": "FDTD Channel Solver",
+  "desc": "A finite-difference time-domain solver built from the telegrapher's equations, watching a signal physically propagate down a transmission line to measure reflection, S-parameters, and frequency-dependent loss, each stage checked against analytic theory.",
+  "tags_display": ["Python", "C++", "FDTD", "Transmission Lines", "S-Parameters", "Signal Integrity"],
+  "github": "https://github.com/jackpham-rgb/fdtd-channel",
+  "detail": {
+    "body": "September 2026 · FDTD · Signal Integrity · Personal Research\n\nView the full project, code, and documentation: https://github.com/jackpham-rgb/fdtd-channel\n\n[SECTION: What this is]\n\nAn FDTD (finite-difference time-domain) transmission-line solver built directly from the telegrapher's equations, in three stages: a 1D lossless line with a matched source and resistive load, where the reflection coefficient measured from the simulated waveform is checked against the analytic formula; an impedance-step two-port turned into a virtual network analyzer, extracting S11(f) and S21(f) from the simulated fields via time-domain gating and checking them against the analytic ABCD-matrix result; and a lossy line with series resistance and shunt conductance added, so insertion loss actually rolls off with frequency instead of staying flat.\n\n[SECTION: Why I built this]\n\nI wanted channel behavior to come out of physics I implemented myself, a signal actually propagating and reflecting in simulated time, rather than starting from a Touchstone file or an S-parameter black box the way scikit-rf-based tools like my SerDes Link Model do. Building the field solver from the ground up forces every assumption about the channel to be explicit.\n\n[SECTION: What I learned]\n\nEvery stage broke before it worked. In Stage A, a resistive load's own stability limit landed almost exactly on the interior Courant limit and blew the simulation up to NaN within a couple thousand steps, fixed by taking whichever stability limit was smaller with real safety margin instead of satisfying each one at the edge. A second bug scaled the source with the number of timesteps rather than physical time, caught by noticing that a smaller timestep made the blow-up happen faster, not slower. Stage B hit a multi-bounce amplitude mistake and a windowing bug while separating incident, reflected, and transmitted waves by time-domain gating. Stage C surfaced a low-frequency resolution limitation while validating the lossy propagation constant.\n\n[SECTION: Results]\n\nStage A: measured reflection coefficients for five terminations matched analytic theory to within 0.03% in four of five cases, with the fifth (a matched 50-ohm load, where the true answer is exactly zero) still correct to 0.0114. Stage B: S11(f)/S21(f) extracted from the simulated fields for three impedance/slab-length combinations matched the analytic two-port result. Stage C: measured attenuation for three (R, G) combinations matched the analytic lossy propagation constant, including the lossless limit as a sanity check.\n\n[SECTION: Honesty line]\n\nAn educational, from-first-principles FDTD field solver, not a replacement for commercial EM tools like HFSS or ADS. The value is that channel behavior is derived from the telegrapher's equations and checked against analytic theory at every stage, not fit to match a target answer.",
+    "links": [
+      { "label": "GitHub + Documentation", "url": "https://github.com/jackpham-rgb/fdtd-channel" },
+      { "label": "Stage A Writeup (Telegrapher's equation)", "url": "https://github.com/jackpham-rgb/fdtd-channel/blob/main/docs/01-telegrapher.md" },
+      { "label": "Stage B Writeup (S-parameters)", "url": "https://github.com/jackpham-rgb/fdtd-channel/blob/main/docs/02-sparameters.md" },
+      { "label": "Stage C Writeup (Loss)", "url": "https://github.com/jackpham-rgb/fdtd-channel/blob/main/docs/03-loss.md" }
+    ],
+    "status": "Stage A (1D reflection), Stage B (two-port S-parameters), and Stage C (lossy line, frequency-dependent loss) complete, each validated against analytic theory.",
+    "tags_display": ["Python", "C++", "FDTD", "Transmission Lines", "S-Parameters", "Signal Integrity", "Numerical Methods"]
+  }
+}
