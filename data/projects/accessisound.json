@@ -1,21 +1,45 @@
 {
   "id": "accessisound",
-  "tags": ["embedded", "ai-ml", "accessibility"],
+  "tags": [
+    "embedded",
+    "ai-ml",
+    "accessibility"
+  ],
   "type": "Embedded ML · Accessibility · Computer Vision",
   "year": "Spring 2026",
   "badge": "Hackathon",
   "title": "AccessiSound: ESP32-S3 Assistive Device",
   "desc": "An ESP32-S3 assistive device that recognizes speech and surrounding sounds and gives real-time descriptions to support accessibility. Three real versions: a hackathon prototype, a custom home rebuild, and a gift version with kitchen object recognition that a friend still uses every day.",
-  "tags_display": ["ESP32-S3", "ESP32-CAM", "Embedded C++", "TFLite Micro", "MFCC Feature Extraction", "Computer Vision"],
+  "tags_display": [
+    "ESP32-S3",
+    "ESP32-CAM",
+    "Embedded C++",
+    "TFLite Micro",
+    "MFCC Feature Extraction",
+    "Computer Vision"
+  ],
   "github": "https://github.com/jackpham-rgb/accessisound-esp32s3",
-  "image": "",
+  "image": "assets/img/accessisound-v2-model.png",
   "detail": {
-    "body": "Spring 2026 · Embedded ML · Accessibility · ESP32-S3\n\nView the full project, code, and documentation: https://github.com/jackpham-rgb/accessisound-esp32s3\n\n[SECTION: What this is]\n\nAn assistive device built around an ESP32-S3 that listens to the room, recognizes speech and surrounding sounds, and gives real-time descriptions to support accessibility. It has three real versions, and the kitchen object recognition device I used to list as a separate project is the third one.\n\n[SECTION: The three versions]\n\nv1, March 7, 2026: built at SoDA Hacks at UC Berkeley, my first hackathon, on an ESP32-S3-BOX-3 dev kit that CSUA lent out for the event. I trained the system using basic inputs, online datasets, and CSUA HPC resources. Its physical form is the off-the-shelf dev kit, not an enclosure I designed.\n\nv2: after the hackathon I bought my own ESP32-S3 board and parts and rebuilt it at home, with an ESP32-CAM, a 1.54 inch ST7789 display, a microphone, a USB-C charging circuit and a LiPo battery, in a custom enclosure that ended up looking like a vintage Macintosh 128K. I have no photo of the finished unit, so the repo includes a Fusion 360 reconstruction of the enclosure, layout and wiring, with STL files for printing.\n\nv2.5: built while moving out of the dorm for summer break and adapted for a friend whose family has hearing and visual impairments. I added kitchen object recognition through the ESP32-CAM and a mochi character animation on the display to make it feel friendlier. I gave it to him as a thank you for helping me brainstorm the original hackathon idea, and he still uses it every day in his dorm kitchen.\n\n[IMAGE: assets/img/accessisound-v2-model.png | Fusion 360 reconstruction of the v2 enclosure (no photo of the physical unit exists)]\n\n[SECTION: How the sound recognition works]\n\nEach 32 ms slice of audio becomes 13 MFCC features (pre-emphasis, Hamming window, power spectrum, 26 mel filters, log, DCT). Thirty-two slices form a 0.53 second window that goes into a small CNN with about 7,400 parameters, and the device alerts when the top guess reaches 72 percent confidence. The repo includes a Python visualization of every step, checked against the firmware's own C++ code.\n\n[SECTION: Honesty line]\n\nThe model in the repo is a proof of concept trained on stand-in sounds from the ESC-50 dataset (about 47 to 53 percent test accuracy across 5 classes, where chance is 20 percent). The repo has the sound-recognition code but not yet the camera or animation code from v2.5.",
+    "body": "Spring 2026 · Embedded ML · Accessibility · ESP32-S3\n\nView the full project, code, and documentation: https://github.com/jackpham-rgb/accessisound-esp32s3\n\n[SECTION: What this is]\n\nAn assistive device built around an ESP32-S3 that listens to the room, recognizes speech and surrounding sounds, and gives real-time descriptions to support accessibility. It has three real versions, and the kitchen object recognition device I used to list as a separate project is the third one.\n\n[SECTION: The three versions]\n\n[IMAGE: assets/img/accessisound-v1-soda-hacks.jpg | Presenting v1 at SoDA Hacks, holding the ESP32-S3-BOX-3]\n\nv1, March 7, 2026: built at SoDA Hacks at UC Berkeley, my first hackathon, on an ESP32-S3-BOX-3 dev kit that CSUA lent out for the event. I trained the system using basic inputs, online datasets, and CSUA HPC resources. Its physical form is the off-the-shelf dev kit, not an enclosure I designed.\n\nv2: after the hackathon I bought my own ESP32-S3 board and parts and rebuilt it at home, with an ESP32-CAM, a 1.54 inch ST7789 display, a microphone, a USB-C charging circuit and a LiPo battery, in a custom enclosure that ended up looking like a vintage Macintosh 128K. I have no photo of the finished unit, so the repo includes a Fusion 360 reconstruction of the enclosure, layout and wiring, with STL files for printing.\n\nv2.5: built while moving out of the dorm for summer break and adapted for a friend whose family has hearing and visual impairments. I added kitchen object recognition through the ESP32-CAM and a mochi character animation on the display to make it feel friendlier. I gave it to him as a thank you for helping me brainstorm the original hackathon idea, and he still uses it every day in his dorm kitchen.\n\n[IMAGE: assets/img/accessisound-v2-model.png | Even though there is no photo of the physical v2 unit, this picture accurately represents the enclosure model made in Autodesk Fusion]\n\n[IMAGE: assets/img/accessisound-v2-internals.png | Inside the model: display, camera, microphone, DevKit, driver board, charger and battery, with every wire drawn]\n\n[SECTION: Hardware layout and wiring]\n\nv2 is built from off-the-shelf breakout modules wired point to point, not a custom PCB, so the useful drawing is a wiring diagram rather than a board layout. It shows the display, ESP32-CAM, INMP441 microphone, driver board, charger and battery, and every connection between them. Signal colors are unique per line, and the power path runs LiPo, TP4056 USB-C charger, 5 V boost converter, then the DevKit's 5V pin.\n\n[IMAGE: assets/img/accessisound-v2-wiring.png | v2 wiring diagram. The display is a photo of the real module, the other parts are renders from the Fusion model]\n\n[SECTION: How the sound recognition works]\n\nEach 32 ms slice of audio becomes 13 MFCC features (pre-emphasis, Hamming window, power spectrum, 26 mel filters, log, DCT). Thirty-two slices form a 0.53 second window that goes into a small CNN with about 7,400 parameters, and the device alerts when the top guess reaches 72 percent confidence. The repo includes a Python visualization of every step, checked against the firmware's own C++ code.\n\n[IMAGE: assets/img/accessisound-pipeline-steps.png | One 32 ms frame through pre-emphasis, Hamming window, power spectrum, mel filterbank, log and DCT to 13 MFCCs]\n\n[IMAGE: assets/img/accessisound-pipeline-features.png | The same processing over a whole clip. The cyan box is the 32-frame window the CNN sees]\n\n[SECTION: What broke]\n\nThe firmware and the training script turned out to compute different features. Training used librosa's MFCC squeezed over a 5 second clip, while the firmware runs a sliding window with pre-emphasis, an 80 Hz mel floor and different normalization. I found this by rewriting the firmware's math in NumPy and compiling the real C++ header to compare the two. On the same audio they agree only partly (mean correlation 0.78, worst coefficient 0.39), so a model trained by the script and run on the device has not been checked end to end. Fixing that is the next step.\n\n[IMAGE: assets/img/accessisound-train-vs-firmware.png | Firmware MFCC (left) against the training MFCC (middle), with per-coefficient correlation (right)]\n\n[SECTION: Honesty line]\n\nThe model in the repo is a proof of concept trained on stand-in sounds from the ESC-50 dataset (about 47 to 53 percent test accuracy across 5 classes, where chance is 20 percent). The repo has the sound-recognition code but not yet the camera or animation code from v2.5.",
     "links": [
-      { "label": "GitHub + Documentation", "url": "https://github.com/jackpham-rgb/accessisound-esp32s3" },
-      { "label": "v2 Model, Parts and Wiring", "url": "https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" }
+      {
+        "label": "GitHub + Documentation",
+        "url": "https://github.com/jackpham-rgb/accessisound-esp32s3"
+      },
+      {
+        "label": "v2 Model, Parts and Wiring",
+        "url": "https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2"
+      }
     ],
     "status": "v1 presented at SoDA Hacks (March 7, 2026). v2 rebuilt with a custom enclosure. v2.5 delivered to a friend and in daily use.",
-    "tags_display": ["ESP32-S3", "ESP32-CAM", "Embedded C++", "TFLite Micro", "MFCC Feature Extraction", "Computer Vision"]
+    "tags_display": [
+      "ESP32-S3",
+      "ESP32-CAM",
+      "Embedded C++",
+      "TFLite Micro",
+      "MFCC Feature Extraction",
+      "Computer Vision"
+    ]
   }
 }
