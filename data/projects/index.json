@@ -36,32 +36,26 @@
     "featured": false
   },
   {
-    "id": "kitchen",
+    "id": "door",
     "rank": 7,
     "show": true,
     "featured": false
   },
   {
-    "id": "door",
+    "id": "acoustic",
     "rank": 8,
     "show": true,
     "featured": false
   },
   {
-    "id": "acoustic",
+    "id": "voice",
     "rank": 9,
     "show": true,
     "featured": false
   },
   {
-    "id": "voice",
-    "rank": 10,
-    "show": true,
-    "featured": false
-  },
-  {
     "id": "multirobot",
-    "rank": 11,
+    "rank": 10,
     "show": true,
     "featured": false
   }
