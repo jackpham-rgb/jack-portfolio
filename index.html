@@ -47,7 +47,7 @@
         <li><b><a href="https://github.com/jackpham-rgb/MEproject2026F" target="_blank" rel="noopener">Budget robot arm</a></b> (Fall 2026). An Arduino Uno and four hobby servos grip an upright can, lift it, flip it 180° and set it down 90° away. Four concepts ranked in a decision matrix, CAD that passes 43 of 43 engineering checks, and LTspice models of the servo power rail. Designed and simulated; the physical build is next. <a href="https://jackpham-rgb.github.io/MEproject2026F/" target="_blank" rel="noopener">Interactive viewer</a>
           <div class="thumbs"><figure><img src="assets/img/projects/robot-arm-cad.gif" alt="Animated CAD of the robot arm" loading="lazy"><figcaption>Detail CAD running the firmware sequence.</figcaption></figure></div>
         </li>
-        <li><b><a href="https://github.com/jackpham-rgb/area-disaster-response" target="_blank" rel="noopener">2024 REU: fair multi-robot task allocation</a></b> (Summer 2024, TACC). Linear-programming task allocation, a fairness-weighted learning reward (FE-MADDPG) and conflict-based path search for five robot roles, rebuilt as a browser simulation. <a href="https://jackpham-rgb.github.io/area-disaster-response/simulation_v2.html" target="_blank" rel="noopener">Simulation</a></li>
+        <li><b><a href="project.html?p=drone-ugv">Drone-UGV disaster response</a></b> (2024 to 2026). Drones scout a disaster area and hand off to ground robots through a shared map. Three multi-agent learning methods, measured against doing nothing.</li>
         <li><b><a href="https://github.com/andersvestrum/eeg-attention-analysis" target="_blank" rel="noopener">EEG attention detection</a></b> (Spring 2026, team project). XGBoost classifier on EEG band-power features from 60 subjects; 64.3% accuracy on engaged vs low-attention states. <a href="journal.html#garbage-in">Journal entry</a></li>
         <li><b><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank" rel="noopener">Methane emission monitoring</a></b> (Spring 2026, Fung Fellowship, team of 4). A $15 household methane sensor built from off-the-shelf parts, shaped by 12 stakeholder interviews with Climate Action California. Findings went to the California Air Resources Board. <a href="journal.html#interviews-before-hardware">Journal entry</a>
           <div class="thumbs">
@@ -57,6 +57,7 @@
         </li>
         <li><b><a href="journal.html#signals-as-vectors">Acoustic positioning</a></b> (Fall 2025, EECS 16A). Locates a microphone in 2D from time differences of arrival, using cross-correlation and least squares.</li>
         <li><b><a href="journal.html#signals-as-vectors">Voice command classifier</a></b> (Fall 2025, EECS 16A). Mel-spectrogram features, PCA and nearest-centroid classification; about 97% on live recordings of one speaker.</li>
+        <li><b><a href="https://github.com/jackpham-rgb/area-disaster-response" target="_blank" rel="noopener">2024 REU: fair multi-robot task allocation</a></b> (Summer 2024, TACC). Linear-programming task allocation, a fairness-weighted learning reward (FE-MADDPG) and conflict-based path search for five robot roles, rebuilt as a browser simulation. <a href="https://jackpham-rgb.github.io/area-disaster-response/simulation_v2.html" target="_blank" rel="noopener">Simulation</a></li>
       </ul>
     </div>
   </section>
@@ -219,13 +220,6 @@
       <p>${p.line}</p>
       <span class="res">${p.headline}</span>`;
     box.appendChild(a);
-  });
-  // Remaining full projects go to the top of the "More projects" list.
-  const more = document.getElementById('more');
-  PROJECTS.filter(p => !FEATURED.includes(p.id)).reverse().forEach(p => {
-    const li = document.createElement('li');
-    li.innerHTML = `<b><a href="project.html?p=${p.id}">${p.title}</a></b> (${p.year}). ${p.line}`;
-    more.prepend(li);
   });
 </script>
 </body>
