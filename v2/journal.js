@@ -73,7 +73,7 @@ const JOURNAL = [
       'SoDA Hacks on March 7, 2026, was my first hackathon. In one day I built a sound-recognition assistant on an ESP32-S3-BOX-3 lent by CSUA, trained on basic recordings, online datasets and CSUA computing resources. Afterward I bought my own parts and rebuilt it with a custom enclosure, and later made a version for a friend whose family has hearing and vision impairments.',
       'Writing the pipeline up properly, I ran the same audio through the firmware’s feature code and the training script’s. They only partly agree, with a mean correlation of 0.78. The demo worked, but the pipeline was not consistent end to end, and that is the first thing to fix in the next revision.'
     ],
-    fig: { src: '../assets/img/v2/accessisound-v1.jpg', cap: 'Presenting v1 at SoDA Hacks.' }
+    fig: { src: '../assets/img/accessisound-v1-soda-hacks.jpg', cap: 'Presenting v1 at SoDA Hacks.' }
   },
   {
     id: 'signals-as-vectors',

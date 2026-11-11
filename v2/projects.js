@@ -120,8 +120,8 @@ const PROJECTS = [
     headline: '47 to 53% on 5 sound classes (chance 20%), all on-chip',
     tools: ['ESP32-S3', 'C++ / PlatformIO', 'TensorFlow Lite', 'Python', 'Fusion 360'],
     repo: 'https://github.com/jackpham-rgb/accessisound-esp32s3',
-    card: IMG + 'accessisound-v1.jpg',
-    hero: { src: IMG + 'accessisound-v2-model.png', cap: 'v2 enclosure, modeled in Fusion 360. It started as a copy of the ESP32-S3-BOX-3 and ended up looking like an early Macintosh.' },
+    card: '../assets/img/accessisound-v1-soda-hacks.jpg',
+    hero: { src: '../assets/img/accessisound-v2-model.png', cap: 'v2 enclosure, modeled in Fusion 360. It started as a copy of the ESP32-S3-BOX-3 and ended up looking like an early Macintosh.' },
 
     problem: [
       'A doorbell, a smoke alarm or a ringing phone carries information that a person with hearing loss can miss. The goal was a small battery device that recognizes those sounds and alerts with vibration, light and a display, with all processing on the chip.'
@@ -145,10 +145,10 @@ const PROJECTS = [
       'The v2.5 unit is in daily use in a dorm kitchen. The pipeline figures below are drawn with the firmware’s own math rewritten in NumPy.'
     ],
     figures: [
-      { src: IMG + 'accessisound-v1.jpg', cap: 'Presenting v1 at SoDA Hacks on the borrowed ESP32-S3-BOX-3.' },
-      { src: IMG + 'accessisound-v2-internals.png', cap: 'v2 internal layout and wiring.' },
-      { src: IMG + 'accessisound-pipeline_features.png', cap: 'One clip: waveform, spectrogram, mel spectrogram and MFCCs on a shared time axis.' },
-      { wide: true, src: IMG + 'accessisound-pipeline_train_vs_firmware.png', cap: 'The same audio through the firmware and the training pipeline. Similar, not identical.' }
+      { src: '../assets/img/accessisound-v1-soda-hacks.jpg', cap: 'Presenting v1 at SoDA Hacks on the borrowed ESP32-S3-BOX-3.' },
+      { src: '../assets/img/accessisound-v2-internals.png', cap: 'v2 internal layout and wiring.' },
+      { src: '../assets/img/accessisound-pipeline-features.png', cap: 'One clip: waveform, spectrogram, mel spectrogram and MFCCs on a shared time axis.' },
+      { wide: true, src: '../assets/img/accessisound-train-vs-firmware.png', cap: 'The same audio through the firmware and the training pipeline. Similar, not identical.' }
     ],
     broke: [
       'The firmware and the training script compute features differently: different pre-emphasis, filter range, window length and normalization. Comparing them coefficient by coefficient on the same audio gave a mean correlation of 0.78. A model trained this way has not yet been checked end to end on the device.'

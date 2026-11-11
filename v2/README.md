@@ -9,4 +9,4 @@ Live at https://jackpham-rgb.github.io/jack-portfolio/v2/
 - `projects.js`: all project content. Set `FEATURED` to choose the three home page cards.
 - `journal.html` and `journal.js`: dated entries on how each project went, newest first.
 - `style.css`: the whole look. The palette and fonts are listed at the top.
-- Images are in `../assets/img/v2/`.
+- Images come from `../assets/img/` (shared), `../assets/img/v2/` (2.0 only) and `../assets/img/life/`.

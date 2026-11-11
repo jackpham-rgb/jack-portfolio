@@ -1,9 +1,19 @@
 # Jack Pham's Portfolio
 
-Live at https://jackpham-rgb.github.io/jack-portfolio/
+- Original site: https://jackpham-rgb.github.io/jack-portfolio/
+- Portfolio 2.0: https://jackpham-rgb.github.io/jack-portfolio/v2/
+- Journal: https://jackpham-rgb.github.io/jack-portfolio/v2/journal.html
 
-Portfolio 2.0 is at https://jackpham-rgb.github.io/jack-portfolio/v2/, with a journal of how each project went at https://jackpham-rgb.github.io/jack-portfolio/v2/journal.html. See `v2/README.md` for how it is organized.
+Static HTML, CSS and JS with no build step. Edit the files and push to `main` to publish.
 
-Static HTML, CSS and JS with no build step. The original page keeps its content in `index.html`, and its project entries come from `data/projects/` (one JSON file per project, plus `index.json` for ordering).
+## Layout
 
-Edit the files directly and push to `main` to publish.
+```
+index.html          original site (content in the page, projects from data/)
+data/projects/      original site: one JSON file per project, index.json for order
+v2/                 Portfolio 2.0: home, project pages, journal (see v2/README.md)
+assets/             resume PDFs
+assets/img/         images shared by both sites
+assets/img/v2/      figures used only by 2.0
+assets/img/life/    photos for the "Outside work" section
+```
