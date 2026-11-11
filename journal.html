@@ -42,6 +42,7 @@
       <div>
         <h3><a class="self" href="#${e.id}">${e.title}</a></h3>
         ${p ? `<p class="entry-proj">Project: <a href="project.html?p=${p.id}">${p.title}</a></p>` : ''}
+        ${e.link ? `<p class="entry-proj">Repo: <a href="${e.link.url}" target="_blank" rel="noopener">${e.link.label}</a></p>` : ''}
         ${e.body.map(t => `<p>${t}</p>`).join('')}
         ${e.fig ? `<figure class="entry-fig"><img src="${e.fig.src}" alt="${e.fig.cap}" loading="lazy"><figcaption>${e.fig.cap}</figcaption></figure>` : ''}
       </div>`;

@@ -4,6 +4,16 @@
 */
 const JOURNAL = [
   {
+    id: 'game-theory-in-ee',
+    date: 'Fall 2026',
+    title: 'Bringing game theory into EE',
+    link: { label: 'rf-mixed-signal-security-game', url: 'https://github.com/jackpham-rgb/rf-mixed-signal-security-game' },
+    body: [
+      'This started with the AI and ML trend in tech, and it made me wonder how to bring game theory into EE. At first I was thinking about game theory in circuits, especially in the paths for electrons and wires. But after deeper research into the topic, I wanted to find an area that no one has tackled, or at least one that has not had as much consideration. That is why I landed here: signals and ML.',
+      'The project, still in progress, asks whether a device can randomize its clocking and dummy-current activity so that an RF or power-trace observer learns less, while staying within energy and latency limits. The first study found a smaller effect than it first looked: a randomized defense beats the best fixed one in 27 of 400 regimes, by at most about 0.05 bits per trace. Two independent implementations agree on that result.'
+    ]
+  },
+  {
     id: 'eye-that-looked-closed',
     date: 'Fall 2026',
     title: 'The eye that looked closed',
