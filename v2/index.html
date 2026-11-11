@@ -13,12 +13,12 @@
   <div class="title-block">
     <div>
       <h1>Jack Pham</h1>
-      <p class="tagline">EECS student at UC Berkeley. I model, build and verify hardware for moving signals: serial links, transmission-line channels and embedded sensing devices.</p>
+      <p class="tagline">Berkeley EECS student working on RF and analog circuits, digital design and verification, and embedded hardware. I model a design, build it, and check the two against each other.</p>
       <p class="links">
         <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a>
         <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="../assets/Pham_Jack_Resume.pdf" download>Resume (PDF)</a>
+        <a href="../assets/JackPham-Resume-IC-Circuits.pdf" download>Resume (PDF)</a>
       </p>
     </div>
     <img src="../assets/img/ava-1.jpg" alt="Jack Pham">
@@ -42,8 +42,13 @@
     <div class="more">
       <div class="mono muted">More projects</div>
       <ul id="more">
-        <li><b>EEG attention detection</b> (Spring 2026, team project). Classifies engaged vs low-attention states from EEG; about 64% accuracy on subjects held out of training. <a href="https://github.com/andersvestrum/eeg-attention-analysis" target="_blank" rel="noopener">Repo</a></li>
-        <li><b>Methane emission monitoring</b> (Spring 2026, Fung Fellowship). Prototype data-tracking platform shaped by 12 stakeholder interviews.</li>
+        <li><b>EEG attention detection</b> (Spring 2026, team project). XGBoost classifier on EEG band-power features from 60 subjects; 64.3% accuracy on engaged vs low-attention states. <a href="https://github.com/andersvestrum/eeg-attention-analysis" target="_blank" rel="noopener">Repo</a></li>
+        <li><b>Methane emission monitoring</b> (Spring 2026, Fung Fellowship, team of 4). A $15 household methane sensor built from off-the-shelf parts, shaped by 12 stakeholder interviews with Climate Action California. Findings went to the California Air Resources Board.
+          <div class="thumbs">
+            <figure><img src="../assets/img/v2/methane-team.jpg" alt="Fung Fellowship methane team" loading="lazy"><figcaption>The methane team at the Fung Fellowship showcase, Spring 2026. Photo: Fung Institute.</figcaption></figure>
+            <figure><img src="../assets/img/v2/methane-prototype.jpg" alt="Methane sensor prototype on a breadboard" loading="lazy"><figcaption>The sensor prototype on a breadboard. Photo: Fung Institute.</figcaption></figure>
+          </div>
+        </li>
         <li><b>Accessible door entry assistant</b> (2025 to 2026). Handheld RF trigger that presses an ADA automatic-door button for a user with limited mobility.</li>
         <li><b>Acoustic positioning</b> (Fall 2025, EECS 16A). Locates a microphone in 2D from time differences of arrival, using cross-correlation and least squares.</li>
         <li><b>Voice command classifier</b> (Fall 2025, EECS 16A). Mel-spectrogram features, PCA and nearest-centroid classification; about 97% on live recordings of one speaker.</li>
@@ -57,15 +62,15 @@
       <div><img class="about-photo" src="../assets/img/ava-1.jpg" alt="Jack Pham"></div>
       <div>
         <p>I study Electrical Engineering and Computer Sciences at UC Berkeley. I started at Cypress College in mathematics and physics, and physics left me with a habit: understand how something works before building it. If I can predict what a circuit or a channel will do, I can tell when a measurement is wrong. That habit is why I lean toward integrated circuits and signal integrity.</p>
-        <p>My target is IC design, analog and digital, with an interest in high-speed links and RF. Right now I am a product engineering co-op on RF front-end parts at Skyworks, and I am designing a SAR analog-to-digital converter (successive-approximation ADC), from a Python model and Verilog control logic down to transistor level. Its page goes up once there are simulated results to show.</p>
+        <p>My target is IC design, analog and digital, with an interest in high-speed links and RF. Right now I am a product engineering co-op on RF front-end parts at Skyworks, I volunteer on a community solar and storage microgrid in Huron, CA, and I am designing a SAR analog-to-digital converter (successive-approximation ADC), from a Python model and Verilog control logic down to transistor level. Its page goes up once there are simulated results to show.</p>
         <p>Outside engineering I hike, take photos and cook.</p>
       </div>
     </div>
     <div class="row">
       <div class="k">Education</div>
       <div>
-        <p><b>University of California, Berkeley</b>. B.S. Electrical Engineering and Computer Sciences, GPA 3.54, expected May 2028.</p>
-        <p><b>Cypress College</b>. A.S. Mathematics and Physics, GPA 3.94, 2023 to 2025.</p>
+        <p><b>University of California, Berkeley</b>. B.S. Electrical Engineering and Computer Sciences, expected May 2028.</p>
+        <p><b>Cypress College</b>. Associate Degree for Transfer in Mathematics and Physics, 2023 to 2025.</p>
       </div>
     </div>
     <div class="row">
@@ -90,7 +95,7 @@
         <tr><td>Mechanical CAD (Fusion 360)</td><td>Printable two-shell enclosure with mounting plate</td><td><a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" target="_blank" rel="noopener">hardware/v2</a></td></tr>
         <tr><td>RF lab instruments</td><td>Network and spectrum analyzer characterization of RF amplifier devices</td><td><a href="#experience">Skyworks co-op</a></td></tr>
         <tr><td>Test data tooling (Python, C++, Rust)</td><td>Parsers and merge tools for semiconductor test data across several file formats</td><td><a href="#experience">Skyworks co-op</a></td></tr>
-        <tr><td>Multi-agent RL and optimization (PyTorch, cvxpy, ROS)</td><td>Three RL methods trained and compared to a baseline; LP task allocation at the 2024 REU</td><td><a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
+        <tr><td>Multi-agent RL and optimization (PyTorch, linear programming)</td><td>Three RL methods trained and compared to a baseline; LP task allocation at the 2024 REU</td><td><a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
       </tbody>
     </table>
   </section>
@@ -102,9 +107,19 @@
       <h3>Product Engineer Co-Op, Skyworks Solutions</h3>
       <p class="meta">Irvine, CA · June 2026 to present</p>
       <ul>
+        <li>Characterize power amplifier and low-noise amplifier devices at Final Test with network and spectrum analyzers: insertion loss, gain and harmonic distortion.</li>
         <li>Trace yield trends and root causes on high-volume RF front-end products using process capability (Cpk), statistical process control and ANOVA on die, wafer and module test data.</li>
-        <li>Characterize RF amplifier devices with network and spectrum analyzers.</li>
         <li>Build Python tools that merge test results across test types for parameter review, and maintain test-data conversion pipelines in Python, C++ and Rust.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Volunteer Electrical Engineer, The LEAP Institute</h3>
+      <p class="meta">Huron, CA · October 2026 to present</p>
+      <ul>
+        <li>Electrical engineering support for a community-led solar, battery storage and EV charging microgrid serving a farmworker community, with graduate students at UCLA and USF.</li>
+        <li>Reviewed concept papers, budgets and a community survey (33 residents, 24 vendors) to find the main electrical loads: refrigerated storage, a cooling center, a commissary kitchen, and event lighting and stage power.</li>
+        <li>Found that six planned DC fast chargers conflict with the net zero goal, and raised it so the team could define where the net zero boundary sits.</li>
       </ul>
     </div>
 
@@ -121,8 +136,8 @@
       <h3>Summer Researcher, NSF REU at TACC</h3>
       <p class="meta">UT Austin · June to August 2024</p>
       <ul>
-        <li>Built a multi-robot task allocation and path planning framework in Python, cvxpy and ROS that improved simulated disaster-response efficiency by 70%.</li>
-        <li>Validated it in Gazebo on TACC’s HPC cluster, cutting planning time by 45%. This work is the origin of the <a href="project.html?p=drone-ugv">Drone-UGV project</a>.</li>
+        <li>Formulated multi-robot task allocation as a linear program that minimizes the largest workload gap across 5 robot types in a simulated disaster grid, run on an HPC cluster.</li>
+        <li>Combined it with a fairness-weighted learning reward (FE-MADDPG) to improve task-distribution efficiency by 70% over the baseline. This work is the origin of the <a href="project.html?p=drone-ugv">Drone-UGV project</a>.</li>
       </ul>
     </div>
 
@@ -136,8 +151,8 @@
   </section>
 
   <section id="resume">
-    <div class="sec-head"><h2>Resume</h2><p><a href="../assets/Pham_Jack_Resume.pdf" target="_blank" rel="noopener">Open in a new tab</a> · <a href="../assets/Pham_Jack_Resume.pdf" download>Download</a></p></div>
-    <iframe class="resume-frame" src="../assets/Pham_Jack_Resume.pdf" title="Jack Pham resume"></iframe>
+    <div class="sec-head"><h2>Resume</h2><p><a href="../assets/JackPham-Resume-IC-Circuits.pdf" target="_blank" rel="noopener">Open in a new tab</a> · <a href="../assets/JackPham-Resume-IC-Circuits.pdf" download>Download</a></p></div>
+    <iframe class="resume-frame" src="../assets/JackPham-Resume-IC-Circuits.pdf" title="Jack Pham resume"></iframe>
   </section>
 
   <section id="contact">

@@ -92,6 +92,8 @@ section { padding: 36px 0 8px; }
 .more { margin-top: 28px; display: grid; grid-template-columns: 220px 1fr; gap: 28px; }
 .more ul { list-style: none; }
 .more li { padding: 8px 0; border-top: 1px solid var(--rule); font-size: 15px; }
+.thumbs { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 10px 0 4px; max-width: 560px; }
+.thumbs img { aspect-ratio: 3 / 2; object-fit: cover; }
 .more li:last-child { border-bottom: 1px solid var(--rule); }
 .more li b { font-weight: 600; }
 

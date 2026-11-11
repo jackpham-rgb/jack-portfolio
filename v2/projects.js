@@ -120,7 +120,7 @@ const PROJECTS = [
     headline: '47 to 53% on 5 sound classes (chance 20%), all on-chip',
     tools: ['ESP32-S3', 'C++ / PlatformIO', 'TensorFlow Lite', 'Python', 'Fusion 360'],
     repo: 'https://github.com/jackpham-rgb/accessisound-esp32s3',
-    card: IMG + 'accessisound-v2-model.png',
+    card: IMG + 'accessisound-v1.jpg',
     hero: { src: IMG + 'accessisound-v2-model.png', cap: 'v2 enclosure, modeled in Fusion 360. It started as a copy of the ESP32-S3-BOX-3 and ended up looking like an early Macintosh.' },
 
     problem: [
