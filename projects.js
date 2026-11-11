@@ -15,6 +15,9 @@ const PROJECTS = [
     headline: 'Eye 126 mV × 0.41 UI, BER < 1e-15 (computed)',
     tools: ['Python', 'NumPy / SciPy', 'SystemVerilog', 'cocotb', 'Icarus Verilog', 'KiCad'],
     repo: 'https://github.com/jackpham-rgb/serdes-link',
+    links: [
+      { label: 'Test board schematic (PDF)', url: 'https://github.com/jackpham-rgb/serdes-link/blob/main/pcb/serdes_test_channel_schematic.pdf' }
+    ],
     card: IMG + 'serdes-card.png',
     hero: { src: IMG + 'serdes-eye_steps.png', cap: 'The eye after each equalizer, 5 Gb/s over 36 in of FR4. Left to right: raw channel, + TX FFE, + CTLE, + DFE.' },
 
@@ -23,7 +26,7 @@ const PROJECTS = [
       'A long trace passes slow changes well and fast changes badly, so each bit smears into the bit slots after it. I learned this is called inter-symbol interference, or ISI, so that is what I call it here. The usual way to see ISI is to overlay thousands of received bits. If ones and zeros stay apart, the gap in the middle looks like an eye. A closed eye means the receiver cannot tell a one from a zero.',
       'Targets: bit error rate (BER) below 1e-12, an open eye at that rate, and a receiver that tolerates a 200 ppm clock offset.'
     ],
-    diagram: 'bits → TX FFE → channel → CTLE → sampler → DFE → bits\n                                   ↑\n                                  CDR',
+    diagramImg: { src: IMG + 'serdes-block_diagram.png', cap: 'Block diagram. Dashed blocks are also built in SystemVerilog and checked against the model.' },
     approach: [
       'Each block removes the smear in a different way. The transmitter equalizer (TX FFE) sends a repeated bit slightly weaker, a 3.5 dB de-emphasis. The receiver amplifier (CTLE) boosts fast changes more than slow ones. The decision-feedback equalizer (DFE) subtracts the known smear of the last four decided bits, and its four weights tune themselves with sign-sign LMS. The clock recovery loop (CDR) has no clock wire to follow, so it watches zero crossings and nudges its sampling clock early or late each bit.',
       'Three decisions mattered most. I picked a 36 in channel because at 12 in the eye was already open and there was nothing to fix. I measured the eye statistically, from the response to one bit and every way its neighbors can add up, because simulating 1e12 bits to see one error is not practical. I chose the CTLE peaking, 5.5 dB, by sweeping it: too little leaves ISI and too much amplifies noise.'
@@ -36,19 +39,20 @@ const PROJECTS = [
         ['+ CTLE', '115 mV', '0.34 UI', '< 1e-15'],
         ['+ DFE', '126 mV', '0.41 UI', '< 1e-15']
       ],
-      note: 'UI is one bit time, 200 ps here. Channel loss is 14.9 dB at 2.5 GHz.'
+      note: 'UI is one bit time, 200 ps here. Channel loss is 14.9 dB at 2.5 GHz. The + DFE row uses ideal taps; the taps the adaptive loop actually learns are in the DFE figure.'
     },
     result: [
       'The computed raw error rate (1.9%) agrees with counting errors in 3,700 simulated bits (2.4%). The CDR locks and tracks a 200 ppm offset.',
       'In RTL, the PRBS bit generator matches the Python model on all 2,000 bits, the CDR loop filter matches on every one of about 4,000 steps, and the DFE agrees on over 99% of 4,000 decisions. All three run in cocotb with Icarus Verilog, and the repo has 43 passing tests.'
     ],
     figures: [
+      { wide: true, src: IMG + 'serdes-link_animation.gif', cap: 'The same bits sent four times, with one more equalizer switched on each time. Red dots are wrong reads; the eye on the right opens as each block is added.' },
       { wide: true, src: IMG + 'serdes-channel.png', cap: 'Channel loss and the response to a single bit.' },
       { src: IMG + 'serdes-ctle_sweep.png', cap: 'Eye height against CTLE peaking. Too little leaves ISI; too much adds noise.' },
       { src: IMG + 'serdes-bathtub.png', cap: 'Bathtub curves: error rate against sampling point. A wider floor leaves more room for clock error.' },
       { wide: true, src: IMG + 'serdes-jtol_and_lock.png', cap: 'Jitter tolerance and CDR lock with a 200 ppm offset.' },
       { wide: true, src: IMG + 'serdes-dfe_taps.png', cap: 'DFE tap adaptation.' },
-      { src: 'assets/img/serdes-test-channel-board.png', cap: 'KiCad test board: a 12 in line and a 1 in reference line. Designed and DRC-clean, not yet fabricated.' }
+      { wide: true, src: IMG + 'serdes-board_3d.png', cap: 'KiCad test board: two 12 in lines, one for each half of the differential pair, and a 1 in thru line used to subtract what the connectors add (de-embedding). Designed and DRC-clean, not yet fabricated.' }
     ],
     broke: [
       'The eye read closed when it was open. My eye-height measurement included the dead time before the first bit arrived, so it returned zero on an open eye. A 12 in plot showing an open eye next to a number saying closed gave it away. The measurement now skips start-up and samples at the eye center.',
@@ -77,7 +81,7 @@ const PROJECTS = [
       'The SerDes project uses a channel model. Before trusting one, I wanted to watch a signal travel down a line, reflect and lose energy, and see the numbers match theory.',
       'The method steps voltage and current forward in small slices of time and space. I learned it is called the finite-difference time-domain method, or FDTD. The goal was a solver whose reflection, S-parameter and loss results each agree with closed-form answers.'
     ],
-    diagram: 'C++17 leapfrog core  →  Python: build, run, measure  →  compare to analytic',
+    diagramImg: { src: IMG + 'fdtd-setups.png', cap: 'The three simulation setups, drawn to scale with the values the scripts use.' },
     approach: [
       'One core scheme in C++17, with voltage and current on staggered grids, extended three ways: a resistive load for reflection, position-dependent L(x) and C(x) for an impedance step, and series R plus shunt G for loss. A Python layer builds each case, runs it and measures the result.',
       'Decisions that mattered: a matched source, so every reflection comes from the load and not the source; a time step set by the smaller of two stability limits with a 0.2 safety factor; and time-domain gating to split incident, reflected and transmitted waves before taking S-parameters.'
@@ -87,8 +91,8 @@ const PROJECTS = [
       rows: [
         ['Reflection, 5 loads', '4 of 5 within 0.0003; matched load reads 0.0114 against 0'],
         ['S-parameters, 100 Ω slab in 50 Ω line', 'max |S11| error 0.0012, max |S21| error 0.0016'],
-        ['Loss, R = 200 Ω/m, G = 0.0002 S/m, 110 MHz to 1 GHz', 'within about 1.1 dB/m of 15 to 17.5 dB/m (5 to 7%)'],
-        ['Test suite', '5 terminations + causality, 3 slab cases, 3 loss cases + lossless limit']
+        ['Loss, R = 200 Ω/m, G = 0.0002 S/m, 110 MHz to 1 GHz', 'within 7% (1.1 dB/m)'],
+        ['Test suite', 'all pass, run in CI']
       ],
       note: 'The matched case has the largest error because the true reflection is zero, so any residual is all of the signal.'
     },
@@ -107,7 +111,8 @@ const PROJECTS = [
     ],
     learnt: [
       'Sweeping one variable, here the time step, and looking at what stays constant found a bug faster than reading the code.',
-      'Below about 100 MHz the measured loss flattens too early, so that band is outside the validated claim. This is a from-scratch teaching solver, not a replacement for HFSS or ADS.'
+      'Next step: real copper loss grows with the square root of frequency (the skin effect), but the solver holds resistance constant. Modeling that comes next.',
+      'Limits: the line is one-dimensional, and below about 100 MHz the measured loss flattens too early, so that band is left out of the claims. This is a from-scratch teaching solver, not a replacement for HFSS or ADS.'
     ]
   },
 

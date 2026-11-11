@@ -55,7 +55,7 @@
       </div>
       <div class="hero">${figure(p.hero)}</div>
       ${row('Problem', paras(p.problem))}
-      ${row('Approach', `<div class="diagram">${p.diagram}</div>` + paras(p.approach))}
+      ${row('Approach', (p.diagramImg ? `<figure class="diagram-fig"><img src="${p.diagramImg.src}" alt="${p.diagramImg.cap}"><figcaption>${p.diagramImg.cap}</figcaption></figure>` : `<div class="diagram">${p.diagram}</div>`) + paras(p.approach))}
       ${row('Result', table + `<div style="margin-top:14px">${paras(p.result)}</div>`)}
       <div class="figs">${p.figures.map(figure).join('')}</div>
       ${row('What broke', paras(p.broke))}
