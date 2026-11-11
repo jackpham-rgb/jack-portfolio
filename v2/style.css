@@ -112,6 +112,10 @@ th { font-weight: 600; border-bottom: 1.5px solid var(--ink); font-size: 14px; }
 td.num { font-family: var(--mono); font-size: 14px; color: var(--pass); white-space: nowrap; }
 .table-note { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
+/* ── Outside work ── */
+.life { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 12px; }
+.life img { aspect-ratio: 1; object-fit: cover; border: 1px solid var(--rule); }
+
 /* ── Skills (grouped like a datasheet characteristics table) ── */
 .skills td:first-child { width: 36%; font-weight: 600; }
 .skills tr.grp th {
@@ -172,6 +176,7 @@ figcaption b { font-family: var(--mono); font-weight: 500; color: var(--plot); m
   .featured { grid-template-columns: 1fr; }
   .sec-head, .row, .more { grid-template-columns: 1fr; gap: 8px; }
   .figs { grid-template-columns: 1fr; }
+  .life { grid-template-columns: 1fr 1fr; }
   .about-photo { width: 160px; }
   .resume-frame { height: 520px; }
   table { font-size: 14px; }
