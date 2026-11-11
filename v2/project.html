@@ -22,6 +22,7 @@
 </footer>
 
 <script src="projects.js"></script>
+<script src="journal.js"></script>
 <script>
   const id = new URLSearchParams(location.search).get('p');
   const p = PROJECTS.find(x => x.id === id);
@@ -59,6 +60,7 @@
       <div class="figs">${p.figures.map(figure).join('')}</div>
       ${row('What broke', paras(p.broke))}
       ${row('Learnt', paras(p.learnt))}
+      ${JOURNAL.filter(j => j.project === p.id).map(j => row('Journal', `<p><a href="journal.html#${j.id}">${j.title}</a> (${j.date})</p>`)).join('')}
       ${row('Tools', `<p class="tools">${p.tools.join(' · ')}</p>`)}
     `;
     page.querySelectorAll('section.row').forEach(s => s.style.paddingTop = '30px');

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Journal · Jack Pham</title>
+  <meta name="description" content="How Jack Pham's projects went, including what broke and what changed.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+  <p class="crumb"><a href="index.html">Jack Pham</a> / Journal</p>
+</div>
+
+<main class="wrap">
+  <div class="p-head">
+    <h1>Journal</h1>
+    <p class="line">Short entries on how my projects actually went: what broke, how I found it, and what changed afterward. Newest first.</p>
+  </div>
+  <div id="entries"></div>
+</main>
+
+<footer class="wrap">
+  <a href="index.html">Home</a>
+  <a href="index.html#projects">Projects</a>
+  <a href="mailto:jack_pham@berkeley.edu">Email</a>
+  <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+<script src="projects.js"></script>
+<script src="journal.js"></script>
+<script>
+  const box = document.getElementById('entries');
+  JOURNAL.forEach(e => {
+    const p = e.project && PROJECTS.find(x => x.id === e.project);
+    const el = document.createElement('article');
+    el.className = 'row entry';
+    el.id = e.id;
+    el.innerHTML = `
+      <div class="k">${e.date}</div>
+      <div>
+        <h3><a class="self" href="#${e.id}">${e.title}</a></h3>
+        ${p ? `<p class="entry-proj">Project: <a href="project.html?p=${p.id}">${p.title}</a></p>` : ''}
+        ${e.body.map(t => `<p>${t}</p>`).join('')}
+        ${e.fig ? `<figure class="entry-fig"><img src="${e.fig.src}" alt="${e.fig.cap}" loading="lazy"><figcaption>${e.fig.cap}</figcaption></figure>` : ''}
+      </div>`;
+    box.appendChild(el);
+  });
+  if (location.hash) document.querySelector(location.hash)?.scrollIntoView();
+</script>
+</body>
+</html>

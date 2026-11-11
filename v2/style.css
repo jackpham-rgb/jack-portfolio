@@ -146,6 +146,15 @@ figcaption b { font-family: var(--mono); font-weight: 500; color: var(--plot); m
 }
 .tools { font-family: var(--mono); font-size: 13px; color: var(--muted); }
 
+/* ── Journal ── */
+.entry { padding: 26px 0; border-top: 1px solid var(--rule); }
+.row.entry + .row.entry { margin-top: 0; }
+.entry h3 a.self { color: var(--ink); text-decoration: none; }
+.entry h3 a.self:hover { color: var(--plot); text-decoration: underline; }
+.entry h3 { margin-bottom: 10px; }
+.entry-proj { font-size: 14px; color: var(--muted); margin: -6px 0 10px; }
+.entry-fig { max-width: 560px; margin-top: 14px; }
+
 /* ── Phone ── */
 @media (max-width: 760px) {
   h1 { font-size: 34px; }
