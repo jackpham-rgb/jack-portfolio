@@ -83,20 +83,41 @@
   </section>
 
   <section id="skills">
-    <div class="sec-head"><h2>Skills</h2><p>Each skill points to the work that shows it.</p></div>
-    <table>
-      <thead><tr><th>Skill</th><th>Evidence</th><th>Proof</th></tr></thead>
+    <div class="sec-head"><h2>Skills</h2><p></p></div>
+    <table class="skills">
+      <thead><tr><th>Skill</th><th>Where I used it</th></tr></thead>
       <tbody>
-        <tr><td>Link and channel modeling (Python, NumPy, SciPy)</td><td>5 Gb/s SerDes model with FFE, CTLE, DFE and CDR; statistical eye and BER; 43 tests</td><td><a href="project.html?p=serdes-link">SerDes link</a></td></tr>
-        <tr><td>RTL and verification (SystemVerilog, cocotb, Icarus)</td><td>PRBS generator, DFE and CDR loop filter checked against the Python model over 2,000 to 4,000 cycles</td><td><a href="https://github.com/jackpham-rgb/serdes-link/tree/main/rtl" target="_blank" rel="noopener">rtl/</a></td></tr>
-        <tr><td>Electromagnetics and signal integrity (C++17)</td><td>FDTD solver; reflection, S-parameters and loss checked against theory</td><td><a href="project.html?p=fdtd-channel">FDTD solver</a></td></tr>
-        <tr><td>PCB design (KiCad)</td><td>Controlled-impedance test board, 12 in and 1 in lines, DRC-clean, not yet fabricated</td><td><a href="https://github.com/jackpham-rgb/serdes-link/tree/main/pcb" target="_blank" rel="noopener">pcb/</a></td></tr>
-        <tr><td>Embedded firmware (ESP32-S3, C++, PlatformIO)</td><td>On-device audio features and CNN inference; three hardware versions</td><td><a href="project.html?p=accessisound">AccessiSound</a></td></tr>
-        <tr><td>On-device ML (TensorFlow Lite)</td><td>7,429-parameter CNN, 47 to 53% on 5 classes (chance 20%)</td><td><a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/ml" target="_blank" rel="noopener">ml/</a></td></tr>
-        <tr><td>Mechanical CAD (Fusion 360)</td><td>Printable two-shell enclosure with mounting plate</td><td><a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" target="_blank" rel="noopener">hardware/v2</a></td></tr>
-        <tr><td>RF lab instruments</td><td>Network and spectrum analyzer characterization of RF amplifier devices</td><td><a href="#experience">Skyworks co-op</a></td></tr>
-        <tr><td>Test data tooling (Python, C++, Rust)</td><td>Parsers and merge tools for semiconductor test data across several file formats</td><td><a href="#experience">Skyworks co-op</a></td></tr>
-        <tr><td>Multi-agent RL and optimization (PyTorch, linear programming)</td><td>Three RL methods trained and compared to a baseline; LP task allocation at the 2024 REU</td><td><a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
+        <tr class="grp"><th colspan="2">Circuits and boards</th></tr>
+        <tr><td>PCB design (KiCad)</td><td>Controlled-impedance test board with a 12 in and a 1 in line, DRC-clean, not yet fabricated: <a href="https://github.com/jackpham-rgb/serdes-link/tree/main/pcb" target="_blank" rel="noopener">SerDes test board</a></td></tr>
+        <tr><td>RF measurement (network and spectrum analyzers)</td><td>Gain, insertion loss and harmonic distortion on PA and LNA devices at Final Test: <a href="#experience">Skyworks</a></td></tr>
+        <tr><td>Power regulation and hardware debug</td><td>Power, wiring and debugging across 16 sensors and actuators on an underwater robot: <a href="#experience">Underwater Robotics</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Digital design and verification</th></tr>
+        <tr><td>SystemVerilog RTL</td><td>PRBS generator, 4-tap DFE and CDR loop filter: <a href="https://github.com/jackpham-rgb/serdes-link/tree/main/rtl" target="_blank" rel="noopener">serdes-link/rtl</a></td></tr>
+        <tr><td>cocotb and Icarus Verilog</td><td>RTL checked against the Python model over 2,000 to 4,000 cycles: <a href="project.html?p=serdes-link">SerDes link</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Signals and modeling</th></tr>
+        <tr><td>High-speed link modeling (Python, NumPy, SciPy)</td><td>FFE, CTLE, DFE and CDR with a statistical eye and BER, 43 tests: <a href="project.html?p=serdes-link">SerDes link</a></td></tr>
+        <tr><td>Electromagnetic simulation (C++17)</td><td>FDTD solver with reflection, S-parameters and loss matched to theory: <a href="project.html?p=fdtd-channel">FDTD solver</a></td></tr>
+        <tr><td>Signal processing</td><td>MFCC audio features on a microcontroller; acoustic positioning by cross-correlation: <a href="project.html?p=accessisound">AccessiSound</a>, <a href="journal.html#signals-as-vectors">EECS 16A</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Embedded and machine learning</th></tr>
+        <tr><td>ESP32-S3 firmware (C++, PlatformIO)</td><td>I2S microphone, on-device features and inference, three hardware versions: <a href="project.html?p=accessisound">AccessiSound</a></td></tr>
+        <tr><td>TensorFlow Lite Micro</td><td>7,429-parameter CNN, 47 to 53% on 5 classes (chance 20%): <a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/ml" target="_blank" rel="noopener">accessisound/ml</a></td></tr>
+        <tr><td>Enclosure CAD (Fusion 360)</td><td>Printable two-shell enclosure with a mounting plate: <a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" target="_blank" rel="noopener">accessisound/hardware</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Test data and statistics</th></tr>
+        <tr><td>Yield analysis (Cpk, SPC, ANOVA)</td><td>Die, wafer and module test data on high-volume RF products: <a href="#experience">Skyworks</a></td></tr>
+        <tr><td>Test-data pipelines (Python, C++, Rust)</td><td>Parsers and merge tools across several test-data formats: <a href="#experience">Skyworks</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Learning and optimization</th></tr>
+        <tr><td>Multi-agent reinforcement learning (PyTorch)</td><td>Three methods trained and compared to a do-nothing baseline: <a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
+        <tr><td>Linear programming</td><td>Fair task allocation across 5 robot types: <a href="#experience">2024 REU</a></td></tr>
       </tbody>
     </table>
   </section>

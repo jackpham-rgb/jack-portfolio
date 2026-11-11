@@ -112,6 +112,14 @@ th { font-weight: 600; border-bottom: 1.5px solid var(--ink); font-size: 14px; }
 td.num { font-family: var(--mono); font-size: 14px; color: var(--pass); white-space: nowrap; }
 .table-note { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
+/* ── Skills (grouped like a datasheet characteristics table) ── */
+.skills td:first-child { width: 36%; font-weight: 600; }
+.skills tr.grp th {
+  padding-top: 20px; border-bottom: 1px solid var(--ink);
+  font-size: 15px; color: var(--plot);
+}
+.skills thead th { color: var(--muted); font-weight: 400; font-size: 13px; }
+
 /* ── Experience ── */
 .job + .job { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); }
 .job .meta { font-family: var(--mono); font-size: 13px; color: var(--muted); }
