@@ -22,14 +22,13 @@ const PROJECTS = [
     hero: { src: IMG + 'serdes-eye_steps.png', cap: 'The eye after each equalizer, 5 Gb/s over 36 in of FR4. Left to right: raw channel, + TX FFE, + CTLE, + DFE.' },
 
     problem: [
-      'Send 5 billion bits per second down 36 inches of circuit-board trace and still read every bit at the far end.',
-      'A long trace passes slow changes well and fast changes badly, so each bit smears into the bit slots after it. I learned this is called inter-symbol interference, or ISI, so that is what I call it here. The usual way to see ISI is to overlay thousands of received bits. If ones and zeros stay apart, the gap in the middle looks like an eye. A closed eye means the receiver cannot tell a one from a zero.',
-      'Targets: bit error rate (BER) below 1e-12, an open eye at that rate, and a receiver that tolerates a 200 ppm clock offset.'
+      'Send 5 billion bits per second down 36 inches of circuit-board trace and still read every bit. Targets: bit error rate (BER) below 1e-12 and a receiver that tolerates a 200 ppm clock offset.',
+      'A long trace smears each bit into the next few. I learned this is called inter-symbol interference, or ISI. Overlay thousands of received bits and the gap between ones and zeros looks like an eye; a closed eye means the receiver cannot tell them apart.'
     ],
     diagramImg: { src: IMG + 'serdes-block_diagram.png', cap: 'Block diagram. Dashed blocks are also built in SystemVerilog and checked against the model.' },
     approach: [
-      'Each block removes the smear in a different way. The transmitter equalizer (TX FFE) sends a repeated bit slightly weaker, a 3.5 dB de-emphasis. The receiver amplifier (CTLE) boosts fast changes more than slow ones. The decision-feedback equalizer (DFE) subtracts the known smear of the last four decided bits, and its four weights tune themselves with sign-sign LMS. The clock recovery loop (CDR) has no clock wire to follow, so it watches zero crossings and nudges its sampling clock early or late each bit.',
-      'Three decisions mattered most. I picked a 36 in channel because at 12 in the eye was already open and there was nothing to fix. I measured the eye statistically, from the response to one bit and every way its neighbors can add up, because simulating 1e12 bits to see one error is not practical. I chose the CTLE peaking, 5.5 dB, by sweeping it: too little leaves ISI and too much amplifies noise.'
+      'Four blocks fight the smear. The transmitter sends repeated bits slightly weaker (TX FFE, 3.5 dB). A receiver amplifier boosts fast changes (CTLE). A decision-feedback equalizer subtracts the smear of the last four bits with self-tuning taps (DFE). A clock-recovery loop finds when to sample (CDR).',
+      'Key choices: a 36 in channel, since at 12 in the eye was already open; a statistical eye instead of simulating 1e12 bits; and CTLE peaking of 5.5 dB, picked by sweep.'
     ],
     table: {
       head: ['Step', 'Eye height at 1e-12', 'Eye width at 1e-12', 'BER at eye center'],
@@ -39,29 +38,25 @@ const PROJECTS = [
         ['+ CTLE', '115 mV', '0.34 UI', '< 1e-15'],
         ['+ DFE', '126 mV', '0.41 UI', '< 1e-15']
       ],
-      note: 'UI is one bit time, 200 ps here. Channel loss is 14.9 dB at 2.5 GHz. The + DFE row uses ideal taps; the taps the adaptive loop actually learns are in the DFE figure.'
+      note: 'UI is one bit time (200 ps). Channel loss is 14.9 dB at 2.5 GHz. The + DFE row uses ideal taps.'
     },
     result: [
-      'The computed raw error rate (1.9%) agrees with counting errors in 3,700 simulated bits (2.4%). The CDR locks and tracks a 200 ppm offset.',
-      'In RTL, the PRBS bit generator matches the Python model on all 2,000 bits, the CDR loop filter matches on every one of about 4,000 steps, and the DFE agrees on over 99% of 4,000 decisions. All three run in cocotb with Icarus Verilog, and the repo has 43 passing tests.'
+      'The CDR locks and tracks a 200 ppm offset. In RTL (cocotb with Icarus Verilog), the PRBS generator matches the Python model on all 2,000 bits, the CDR loop filter on all of about 4,000 steps, and the DFE on over 99% of 4,000 decisions. 43 tests pass.'
     ],
     figures: [
-      { wide: true, src: IMG + 'serdes-link_animation.gif', cap: 'The same bits sent four times, with one more equalizer switched on each time. Red dots are wrong reads; the eye on the right opens as each block is added.' },
+      { wide: true, src: IMG + 'serdes-link_animation.gif', cap: 'The same bits sent four times, adding one equalizer each time. Red dots are wrong reads; the eye on the right opens as each block is added.' },
       { wide: true, src: IMG + 'serdes-channel.png', cap: 'Channel loss and the response to a single bit.' },
       { src: IMG + 'serdes-ctle_sweep.png', cap: 'Eye height against CTLE peaking. Too little leaves ISI; too much adds noise.' },
-      { src: IMG + 'serdes-bathtub.png', cap: 'Bathtub curves: error rate against sampling point. A wider floor leaves more room for clock error.' },
-      { wide: true, src: IMG + 'serdes-jtol_and_lock.png', cap: 'Jitter tolerance and CDR lock with a 200 ppm offset.' },
-      { wide: true, src: IMG + 'serdes-dfe_taps.png', cap: 'DFE tap adaptation.' },
-      { wide: true, src: IMG + 'serdes-board_3d.png', cap: 'KiCad test board: two 12 in lines, one for each half of the differential pair, and a 1 in thru line used to subtract what the connectors add (de-embedding). Designed and DRC-clean, not yet fabricated.' }
+      { src: IMG + 'serdes-bathtub.png', cap: 'Error rate against sampling point. A wider floor leaves more room for clock error.' },
+      { wide: true, src: IMG + 'serdes-board_3d.png', cap: 'KiCad test board: two 12 in lines (one per half of the differential pair) and a 1 in thru for de-embedding. Designed, not yet fabricated.' }
     ],
     broke: [
-      'The eye read closed when it was open. My eye-height measurement included the dead time before the first bit arrived, so it returned zero on an open eye. A 12 in plot showing an open eye next to a number saying closed gave it away. The measurement now skips start-up and samples at the eye center.',
-      'Both the DFE update and the CDR loop were first written as positive feedback. The DFE tap ran away and the CDR drifted to the edge of the eye from any starting point. Flipping one sign at a time and rerunning isolated each.'
+      'The eye read closed when it was open: the measurement counted the dead time before the first bit. A 12 in plot showing an open eye next to a "closed" number gave it away.',
+      'The DFE and CDR were first written as positive feedback. The tap ran away and the CDR drifted to the edge of the eye; flipping one sign at a time isolated each.'
     ],
     learnt: [
-      'Check a measurement against a case with a known answer before trusting it on the case that matters.',
-      'The DFE adds little here because the CTLE already removes most of the smear; a lossier channel would show it better. Next revision: measure a real trace on the fabricated board and make the DFE check bit-exact with a fixed-point reference.',
-      'Limits: the channel is a synthetic model, and nothing has run on an FPGA or silicon yet.'
+      'Check a measurement on a case with a known answer before trusting it.',
+      'The DFE adds little here because the CTLE already does most of the work. Next: fabricate the board, measure a real trace, and make the DFE check bit-exact. So far the channel is synthetic and nothing has run on an FPGA or silicon.'
     ]
   },
 

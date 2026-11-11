@@ -9,7 +9,7 @@ const JOURNAL = [
     title: 'Bringing game theory into EE',
     link: { label: 'rf-mixed-signal-security-game', url: 'https://github.com/jackpham-rgb/rf-mixed-signal-security-game' },
     body: [
-      'It started with all the AI and ML buzz at work. During downtime at my co-op I hung out with the AI and ML team, watched some intro to AI lectures, and kept wondering how game theory could fit into EE. My first guess was circuits, like electrons picking paths through wires. Digging deeper, I wanted a corner fewer people have looked at, and landed on signals and ML.',
+      'This one is a side project from co-op downtime. Hanging around the AI and ML team got me into intro AI lectures, and one question stuck: where does game theory show up in EE? Wires and electron paths came to mind first, but I went looking for something less explored and ended up at side channels, where signals meet ML.',
       'The question: can a device shuffle its clock and dummy power draw so someone listening to its RF or power noise learns less, without burning too much energy? At first, randomizing won in 96 of 400 settings, which looked exciting. Then I compared it against a much finer menu of 36,402 fixed defenses, and the win shrank to 27 settings, by at most about 0.05 bits per trace. An independent rerun matched. So it is real, but small and picky. Still in progress.'
     ],
     fig: { src: 'assets/img/projects/game-heatmap.png', cap: 'Where randomizing helps (red). It only shows up when the frequency bands react differently to the defense (s of 0.5 or more), and at stronger leakage.' }
