@@ -2,9 +2,8 @@
 
 Live at https://jackpham-rgb.github.io/jack-portfolio/
 
-Static HTML/CSS/JS, no build step. Page content (About, Experience, Honors)
-lives directly in `index.html`; project entries are data-driven from
-`data/projects/` (one JSON file per project plus `index.json` for ordering).
+Portfolio 2.0 is at https://jackpham-rgb.github.io/jack-portfolio/v2/, with a journal of how each project went at https://jackpham-rgb.github.io/jack-portfolio/v2/journal.html. See `v2/README.md` for how it is organized.
 
-Edit `index.html` or the files under `data/` directly and push to `main`
-to publish.
+Static HTML, CSS and JS with no build step. The original page keeps its content in `index.html`, and its project entries come from `data/projects/` (one JSON file per project, plus `index.json` for ordering).
+
+Edit the files directly and push to `main` to publish.
