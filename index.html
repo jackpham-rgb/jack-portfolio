@@ -43,7 +43,7 @@
     <div class="more">
       <div class="mono muted"><b class="more-h">More projects</b><br><br><a href="journal.html">Journal</a>: how these projects went, including what broke.</div>
       <ul id="more">
-        <li><b><a href="#about">SAR ADC</a></b> (in progress). A successive-approximation analog-to-digital converter, from a Python model and Verilog control logic down to transistor level. Results and a project page come once there are simulations to show.</li>
+        <li><b>SAR ADC</b> (in progress). A successive-approximation analog-to-digital converter, from a Python model and Verilog control logic down to transistor level. Results and a project page come once there are simulations to show.</li>
         <li><b><a href="https://github.com/jackpham-rgb/MEproject2026F" target="_blank" rel="noopener">Budget robot arm</a></b> (Fall 2026). An Arduino Uno and four hobby servos grip an upright can, lift it, flip it 180° and set it down 90° away. Four concepts ranked in a decision matrix, CAD that passes 43 of 43 engineering checks, and LTspice models of the servo power rail. Designed and simulated; the physical build is next. <a href="https://jackpham-rgb.github.io/MEproject2026F/" target="_blank" rel="noopener">Interactive viewer</a>
           <div class="thumbs"><figure><img src="assets/img/projects/robot-arm-cad.gif" alt="Animated CAD of the robot arm" loading="lazy"><figcaption>Detail CAD running the firmware sequence.</figcaption></figure></div>
         </li>
@@ -104,8 +104,8 @@
       <tbody>
         <tr class="grp"><th colspan="2">Circuits and boards</th></tr>
         <tr><td>PCB design (KiCad)</td><td>Controlled-impedance test board with a 12 in and a 1 in line, DRC-clean, not yet fabricated: <a href="https://github.com/jackpham-rgb/serdes-link/tree/main/pcb" target="_blank" rel="noopener">SerDes test board</a></td></tr>
-        <tr><td>RF measurement (network and spectrum analyzers)</td><td>Gain, insertion loss and harmonic distortion on PA and LNA devices at Final Test: <a href="#experience">Skyworks</a></td></tr>
-        <tr><td>Power regulation and hardware debug</td><td>Power, wiring and debugging across 16 sensors and actuators on an underwater robot: <a href="#experience">Underwater Robotics</a></td></tr>
+        <tr><td>RF measurement (network and spectrum analyzers)</td><td>Gain, insertion loss and harmonic distortion on PA and LNA devices at Final Test: <a href="#skyworks">Skyworks</a></td></tr>
+        <tr><td>Power regulation and hardware debug</td><td>Power, wiring and debugging across 16 sensors and actuators on an underwater robot: <a href="#underwater">Underwater Robotics</a></td></tr>
       </tbody>
       <tbody>
         <tr class="grp"><th colspan="2">Digital design and verification</th></tr>
@@ -126,13 +126,13 @@
       </tbody>
       <tbody>
         <tr class="grp"><th colspan="2">Test data and statistics</th></tr>
-        <tr><td>Yield analysis (Cpk, SPC, ANOVA)</td><td>Die, wafer and module test data on high-volume RF products: <a href="#experience">Skyworks</a></td></tr>
-        <tr><td>Test-data pipelines (Python, C++, Rust)</td><td>Parsers and merge tools across several test-data formats: <a href="#experience">Skyworks</a></td></tr>
+        <tr><td>Yield analysis (Cpk, SPC, ANOVA)</td><td>Die, wafer and module test data on high-volume RF products: <a href="#skyworks">Skyworks</a></td></tr>
+        <tr><td>Test-data pipelines (Python, C++, Rust)</td><td>Parsers and merge tools across several test-data formats: <a href="#skyworks">Skyworks</a></td></tr>
       </tbody>
       <tbody>
         <tr class="grp"><th colspan="2">Learning and optimization</th></tr>
         <tr><td>Multi-agent reinforcement learning (PyTorch)</td><td>Three methods trained and compared to a do-nothing baseline: <a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
-        <tr><td>Linear programming</td><td>Fair task allocation across 5 robot types: <a href="#experience">2024 REU</a></td></tr>
+        <tr><td>Linear programming</td><td>Fair task allocation across 5 robot types: <a href="https://github.com/jackpham-rgb/area-disaster-response" target="_blank" rel="noopener">2024 REU</a></td></tr>
       </tbody>
     </table>
   </section>
@@ -140,7 +140,7 @@
   <section id="experience">
     <div class="sec-head"><h2>Experience</h2><p></p></div>
 
-    <div class="job">
+    <div class="job" id="skyworks">
       <h3>Product Engineer Co-Op, Skyworks Solutions</h3>
       <p class="meta">Irvine, CA · June 2026 to present</p>
       <ul>
@@ -150,7 +150,7 @@
       </ul>
     </div>
 
-    <div class="job">
+    <div class="job" id="leap">
       <h3>Volunteer Electrical Engineer, The LEAP Institute</h3>
       <p class="meta">Huron, CA · October 2026 to present</p>
       <ul>
@@ -160,7 +160,7 @@
       </ul>
     </div>
 
-    <div class="job">
+    <div class="job" id="underwater">
       <h3>Electrical Subteam, Underwater Robotics</h3>
       <p class="meta">UC Berkeley · February 2026 to present</p>
       <ul>
@@ -169,7 +169,7 @@
       </ul>
     </div>
 
-    <div class="job">
+    <div class="job" id="reu">
       <h3>Summer Researcher, NSF REU at TACC</h3>
       <p class="meta">UT Austin · June to August 2024</p>
       <ul>
@@ -178,7 +178,7 @@
       </ul>
     </div>
 
-    <div class="job">
+    <div class="job" id="tutor">
       <h3>Physics Tutor</h3>
       <p class="meta">North Orange County Community College District · February to July 2025</p>
       <ul>
