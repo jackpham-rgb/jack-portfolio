@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jack Pham: Electrical Engineering Portfolio</title>
+  <meta name="description" content="Jack Pham, EECS student at UC Berkeley. Serial links, channel modeling, embedded hardware.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="wrap">
+  <div class="title-block">
+    <div>
+      <h1>Jack Pham</h1>
+      <p class="tagline">EECS student at UC Berkeley. I model, build and verify hardware for moving signals: serial links, transmission-line channels and embedded sensing devices.</p>
+      <p class="links">
+        <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a>
+        <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="../assets/Pham_Jack_Resume.pdf" download>Resume (PDF)</a>
+      </p>
+    </div>
+    <img src="../assets/img/ava-1.jpg" alt="Jack Pham">
+  </div>
+  <nav class="top">
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- Projects first: three featured cards, then the rest -->
+  <section id="projects" style="padding-top:22px">
+    <div class="featured" id="featured"></div>
+
+    <div class="more">
+      <div class="mono muted">More projects</div>
+      <ul id="more">
+        <li><b>EEG attention detection</b> (Spring 2026, team project). Classifies engaged vs low-attention states from EEG; about 64% accuracy on subjects held out of training. <a href="https://github.com/andersvestrum/eeg-attention-analysis" target="_blank" rel="noopener">Repo</a></li>
+        <li><b>Methane emission monitoring</b> (Spring 2026, Fung Fellowship). Prototype data-tracking platform shaped by 12 stakeholder interviews.</li>
+        <li><b>Accessible door entry assistant</b> (2025 to 2026). Handheld RF trigger that presses an ADA automatic-door button for a user with limited mobility.</li>
+        <li><b>Acoustic positioning</b> (Fall 2025, EECS 16A). Locates a microphone in 2D from time differences of arrival, using cross-correlation and least squares.</li>
+        <li><b>Voice command classifier</b> (Fall 2025, EECS 16A). Mel-spectrogram features, PCA and nearest-centroid classification; about 97% on live recordings of one speaker.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="sec-head"><h2>About</h2><p></p></div>
+    <div class="row">
+      <div><img class="about-photo" src="../assets/img/ava-1.jpg" alt="Jack Pham"></div>
+      <div>
+        <p>I study Electrical Engineering and Computer Sciences at UC Berkeley. I started at Cypress College in mathematics and physics, and physics left me with a habit: understand how something works before building it. If I can predict what a circuit or a channel will do, I can tell when a measurement is wrong. That habit is why I lean toward integrated circuits and signal integrity.</p>
+        <p>My target is IC design, analog and digital, with an interest in high-speed links and RF. Right now I am a product engineering co-op on RF front-end parts at Skyworks, and I am designing a SAR analog-to-digital converter (successive-approximation ADC), from a Python model and Verilog control logic down to transistor level. Its page goes up once there are simulated results to show.</p>
+        <p>Outside engineering I hike, take photos and cook.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">Education</div>
+      <div>
+        <p><b>University of California, Berkeley</b>. B.S. Electrical Engineering and Computer Sciences, GPA 3.54, expected May 2028.</p>
+        <p><b>Cypress College</b>. A.S. Mathematics and Physics, GPA 3.94, 2023 to 2025.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">Honors</div>
+      <div>
+        <p><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank" rel="noopener">UC Berkeley Fung Fellow</a>, Spring 2026. PEARC26 Student Program participant, TACC. Presenter at SCCUR and the STARS Celebration Conference, 2024.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><h2>Skills</h2><p>Each skill points to the work that shows it.</p></div>
+    <table>
+      <thead><tr><th>Skill</th><th>Evidence</th><th>Proof</th></tr></thead>
+      <tbody>
+        <tr><td>Link and channel modeling (Python, NumPy, SciPy)</td><td>5 Gb/s SerDes model with FFE, CTLE, DFE and CDR; statistical eye and BER; 43 tests</td><td><a href="project.html?p=serdes-link">SerDes link</a></td></tr>
+        <tr><td>RTL and verification (SystemVerilog, cocotb, Icarus)</td><td>PRBS generator, DFE and CDR loop filter checked against the Python model over 2,000 to 4,000 cycles</td><td><a href="https://github.com/jackpham-rgb/serdes-link/tree/main/rtl" target="_blank" rel="noopener">rtl/</a></td></tr>
+        <tr><td>Electromagnetics and signal integrity (C++17)</td><td>FDTD solver; reflection, S-parameters and loss checked against theory</td><td><a href="project.html?p=fdtd-channel">FDTD solver</a></td></tr>
+        <tr><td>PCB design (KiCad)</td><td>Controlled-impedance test board, 12 in and 1 in lines, DRC-clean, not yet fabricated</td><td><a href="https://github.com/jackpham-rgb/serdes-link/tree/main/pcb" target="_blank" rel="noopener">pcb/</a></td></tr>
+        <tr><td>Embedded firmware (ESP32-S3, C++, PlatformIO)</td><td>On-device audio features and CNN inference; three hardware versions</td><td><a href="project.html?p=accessisound">AccessiSound</a></td></tr>
+        <tr><td>On-device ML (TensorFlow Lite)</td><td>7,429-parameter CNN, 47 to 53% on 5 classes (chance 20%)</td><td><a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/ml" target="_blank" rel="noopener">ml/</a></td></tr>
+        <tr><td>Mechanical CAD (Fusion 360)</td><td>Printable two-shell enclosure with mounting plate</td><td><a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" target="_blank" rel="noopener">hardware/v2</a></td></tr>
+        <tr><td>RF lab instruments</td><td>Network and spectrum analyzer characterization of RF amplifier devices</td><td><a href="#experience">Skyworks co-op</a></td></tr>
+        <tr><td>Test data tooling (Python, C++, Rust)</td><td>Parsers and merge tools for semiconductor test data across several file formats</td><td><a href="#experience">Skyworks co-op</a></td></tr>
+        <tr><td>Multi-agent RL and optimization (PyTorch, cvxpy, ROS)</td><td>Three RL methods trained and compared to a baseline; LP task allocation at the 2024 REU</td><td><a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><h2>Experience</h2><p></p></div>
+
+    <div class="job">
+      <h3>Product Engineer Co-Op, Skyworks Solutions</h3>
+      <p class="meta">Irvine, CA · June 2026 to present</p>
+      <ul>
+        <li>Trace yield trends and root causes on high-volume RF front-end products using process capability (Cpk), statistical process control and ANOVA on die, wafer and module test data.</li>
+        <li>Characterize RF amplifier devices with network and spectrum analyzers.</li>
+        <li>Build Python tools that merge test results across test types for parameter review, and maintain test-data conversion pipelines in Python, C++ and Rust.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Electrical Subteam, Underwater Robotics</h3>
+      <p class="meta">UC Berkeley · February 2026 to present</p>
+      <ul>
+        <li>Study power dissipation and heat in the NVIDIA Jetson modules that run the team’s autonomous underwater robots.</li>
+        <li>Support power regulation, integration and debugging across 16 onboard sensors and actuators.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Summer Researcher, NSF REU at TACC</h3>
+      <p class="meta">UT Austin · June to August 2024</p>
+      <ul>
+        <li>Built a multi-robot task allocation and path planning framework in Python, cvxpy and ROS that improved simulated disaster-response efficiency by 70%.</li>
+        <li>Validated it in Gazebo on TACC’s HPC cluster, cutting planning time by 45%. This work is the origin of the <a href="project.html?p=drone-ugv">Drone-UGV project</a>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Physics Tutor</h3>
+      <p class="meta">North Orange County Community College District · February to July 2025</p>
+      <ul>
+        <li>Wrote Python and Jupyter simulations for electromagnetism and thermodynamics across 40+ tutoring hours, contributing to a 20% average gain in student exam scores.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="resume">
+    <div class="sec-head"><h2>Resume</h2><p><a href="../assets/Pham_Jack_Resume.pdf" target="_blank" rel="noopener">Open in a new tab</a> · <a href="../assets/Pham_Jack_Resume.pdf" download>Download</a></p></div>
+    <iframe class="resume-frame" src="../assets/Pham_Jack_Resume.pdf" title="Jack Pham resume"></iframe>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head"><h2>Contact</h2>
+      <p>Open to Summer 2027 internships in IC design, signal integrity and hardware engineering.<br>
+        <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a> · <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span class="muted">Jack Pham · Berkeley, CA</span>
+</footer>
+
+<script src="projects.js"></script>
+<script>
+  const box = document.getElementById('featured');
+  FEATURED.forEach((id, i) => {
+    const p = PROJECTS.find(x => x.id === id);
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = 'project.html?p=' + p.id;
+    a.innerHTML = `
+      <div class="fig"><img src="${p.card}" alt="${p.title}"></div>
+      <span class="label">Fig. ${i + 1} · ${p.kind} · ${p.year}</span>
+      <h3>${p.title}</h3>
+      <p>${p.line}</p>
+      <span class="res">${p.headline}</span>`;
+    box.appendChild(a);
+  });
+  // Remaining full projects go to the top of the "More projects" list.
+  const more = document.getElementById('more');
+  PROJECTS.filter(p => !FEATURED.includes(p.id)).reverse().forEach(p => {
+    const li = document.createElement('li');
+    li.innerHTML = `<b><a href="project.html?p=${p.id}">${p.title}</a></b> (${p.year}). ${p.line}`;
+    more.prepend(li);
+  });
+</script>
+</body>
+</html>

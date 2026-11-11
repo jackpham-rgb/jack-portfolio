@@ -1,0 +1,159 @@
+/*
+  Portfolio 2.0
+  Direction: the front page of a component datasheet. Title block, hairline
+  rules, numbered figures, spec tables, left-aligned asymmetric grid.
+
+  Palette (roles):
+    --paper  #ffffff  page background
+    --ink    #111418  text and headings
+    --plot   #1f4e9c  links, figure labels (matches the blue in the plots)
+    --rule   #c9d0d8  hairlines and table borders
+    --muted  #56606b  captions, dates, metadata
+    --pass   #1d6b45  measured results only
+
+  Type: Arial everywhere. Hierarchy comes from size, weight and color.
+*/
+:root {
+  --paper: #ffffff;
+  --ink:   #111418;
+  --plot:  #1f4e9c;
+  --rule:  #c9d0d8;
+  --muted: #56606b;
+  --pass:  #1d6b45;
+
+  --display: Arial, Helvetica, sans-serif;
+  --text: Arial, Helvetica, sans-serif;
+  --mono: Arial, Helvetica, sans-serif;
+
+  --max: 1080px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper); color: var(--ink);
+  font: 400 16px/1.6 var(--text);
+}
+img { max-width: 100%; display: block; }
+a { color: var(--plot); text-underline-offset: 2px; }
+a:hover { color: var(--ink); }
+
+h1, h2, h3 { font-family: var(--display); font-weight: 700; line-height: 1.1; }
+h1 { font-size: 44px; letter-spacing: -.01em; }
+h2 { font-size: 28px; }
+h3 { font-size: 21px; }
+p + p { margin-top: .8rem; }
+
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+.mono { font-family: var(--mono); font-size: 13px; }
+.muted { color: var(--muted); }
+
+/* ── Title block ── */
+.title-block {
+  display: grid; grid-template-columns: 1fr auto; gap: 24px;
+  padding: 28px 0 18px; border-bottom: 2px solid var(--ink);
+}
+.title-block .tagline { font-size: 18px; margin-top: 6px; max-width: 60ch; }
+.title-block .links { margin-top: 10px; font-size: 14px; }
+.title-block .links a { margin-right: 14px; }
+.title-block img { width: 104px; height: 104px; object-fit: cover; border: 1px solid var(--rule); }
+
+nav.top {
+  display: flex; flex-wrap: wrap; gap: 4px 22px;
+  padding: 10px 0; border-bottom: 1px solid var(--rule);
+  font-size: 14px;
+}
+nav.top a { color: var(--ink); text-decoration: none; }
+nav.top a:hover { color: var(--plot); text-decoration: underline; }
+
+/* ── Sections ── */
+section { padding: 36px 0 8px; }
+.sec-head {
+  display: grid; grid-template-columns: 220px 1fr; gap: 28px;
+  border-top: 1px solid var(--ink); padding-top: 10px; margin-bottom: 20px;
+}
+.sec-head p { color: var(--muted); font-size: 15px; max-width: 62ch; }
+
+/* ── Featured projects ── */
+.featured { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px; }
+.card { display: flex; flex-direction: column; text-decoration: none; color: var(--ink); }
+.card .fig {
+  border: 1px solid var(--rule); background: #fff;
+  aspect-ratio: 16 / 10; display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.card .fig img { width: 100%; height: 100%; object-fit: contain; }
+.card .label { font-family: var(--mono); font-size: 12px; color: var(--plot); margin-top: 8px; }
+.card h3 { margin-top: 2px; }
+.card:hover h3 { text-decoration: underline; color: var(--plot); }
+.card p { font-size: 15px; margin-top: 4px; }
+.card .res { font-family: var(--mono); font-size: 13px; color: var(--pass); margin-top: 6px; }
+
+.more { margin-top: 28px; display: grid; grid-template-columns: 220px 1fr; gap: 28px; }
+.more ul { list-style: none; }
+.more li { padding: 8px 0; border-top: 1px solid var(--rule); font-size: 15px; }
+.more li:last-child { border-bottom: 1px solid var(--rule); }
+.more li b { font-weight: 600; }
+
+/* ── Two-column body (label left, content right) ── */
+.row { display: grid; grid-template-columns: 220px 1fr; gap: 28px; }
+.row + .row { margin-top: 22px; }
+.row > .k { font-family: var(--mono); font-size: 13px; color: var(--muted); padding-top: 3px; }
+.row ul { padding-left: 1.1rem; }
+.row li + li { margin-top: .35rem; }
+.about-photo { width: 220px; border: 1px solid var(--rule); }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 7px 10px 7px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+th { font-weight: 600; border-bottom: 1.5px solid var(--ink); font-size: 14px; }
+td.num { font-family: var(--mono); font-size: 14px; color: var(--pass); white-space: nowrap; }
+.table-note { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+/* ── Experience ── */
+.job + .job { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.job .meta { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.job ul { margin-top: 6px; padding-left: 1.1rem; }
+
+/* ── Resume ── */
+.resume-frame { width: 100%; height: 900px; border: 1px solid var(--rule); }
+
+footer { margin-top: 48px; padding: 18px 0 40px; border-top: 2px solid var(--ink); font-size: 14px; }
+footer a { margin-right: 14px; }
+
+/* ── Project page ── */
+.crumb { font-size: 14px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.p-head { padding: 26px 0 18px; }
+.p-head .kind { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.p-head h1 { margin-top: 4px; }
+.p-head .line { font-size: 18px; margin-top: 8px; max-width: 64ch; }
+.p-head .links { margin-top: 10px; font-size: 15px; }
+.p-head .links a { margin-right: 16px; }
+
+figure { margin: 0; }
+figure img { border: 1px solid var(--rule); background: #fff; width: 100%; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+figcaption b { font-family: var(--mono); font-weight: 500; color: var(--plot); margin-right: 6px; }
+.figs figure.wide { grid-column: 1 / -1; }
+.hero img { max-height: 520px; object-fit: contain; }
+.figs { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 22px; }
+
+.diagram {
+  font-family: var(--mono); font-size: 13px; white-space: pre; overflow-x: auto;
+  border: 1px solid var(--rule); padding: 12px 14px; margin-bottom: 14px; background: #f5f7f9;
+}
+.tools { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+
+/* ── Phone ── */
+@media (max-width: 760px) {
+  h1 { font-size: 34px; }
+  .wrap { padding: 0 18px; }
+  .title-block img { width: 72px; height: 72px; }
+  .title-block .tagline { font-size: 16px; }
+  .featured { grid-template-columns: 1fr; }
+  .sec-head, .row, .more { grid-template-columns: 1fr; gap: 8px; }
+  .figs { grid-template-columns: 1fr; }
+  .about-photo { width: 160px; }
+  .resume-frame { height: 520px; }
+  table { font-size: 14px; }
+}
