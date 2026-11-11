@@ -1,578 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jack Pham: EECS @ Berkeley</title>
-  <meta name="description" content="Jack Pham, EECS student at UC Berkeley. Circuits, embedded systems, signal processing, and intelligent hardware." />
-
-  <style>
-  /* ── Tokens: one light theme, one accent ── */
-  :root {
-    --bg:      #ffffff;
-    --text:    #1a1a1a;
-    --muted:   #555555;
-    --border:  #dddddd;
-    --accent:  #1a3a6b;
-
-    --serif: Georgia, 'Times New Roman', Times, serif;
-    --max: 760px;
-
-    color-scheme: light;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { font-size: 16px; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.6;
-  }
-
-  a { color: var(--accent); text-decoration: underline; }
-  a:hover { color: var(--text); }
-
-  h1, h2, h3 { font-family: var(--serif); font-weight: 600; color: var(--text); line-height: 1.25; }
-  h1 { font-size: 30px; }
-  h2 { font-size: 21px; margin-bottom: .9rem; }
-  h3 { font-size: 17px; }
-
-  p { margin-bottom: .75rem; }
-  p:last-child { margin-bottom: 0; }
-
-  .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-
-  ul.plain-list { list-style: none; padding: 0; }
-  ul.plain-list li { margin-bottom: .4rem; }
-  ul.plain-list li:last-child { margin-bottom: 0; }
-
-  /* ── Header ── */
-  .site-header { padding: 2.5rem 0 1.25rem; }
-  .header-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; }
-  .header-text { flex: 1; min-width: 0; }
-  .title-line { font-size: 17px; color: var(--muted); margin-bottom: .6rem; }
-  .contact-line, .links-line, .status-line { font-size: 15px; color: var(--muted); margin-bottom: .3rem; }
-  .links-line a { margin: 0 .1rem; }
-  .status-line { margin-top: .5rem; }
-
-  .avatar-wrap { flex-shrink: 0; }
-  .avatar-img {
-    width: 120px; height: 120px; object-fit: cover;
-    border: 1px solid var(--border); display: block;
-  }
-
-  .jump-nav { margin-top: 1.5rem; font-size: 14px; color: var(--muted); }
-  .jump-nav a { margin: 0 .15rem; }
-
-  /* ── Sections ── */
-  section { padding: 2.5rem 0; border-top: 1px solid var(--border); }
-  .site-header + section { border-top: 1px solid var(--border); }
-
-  .about-text p { margin-bottom: .9rem; }
-  .about-sub { margin-top: 1.75rem; }
-  .about-sub h3 { margin-bottom: .5rem; }
-  .about-sub p, .about-sub li { font-size: 15px; color: var(--text); }
-  .edu-block { margin-bottom: .8rem; }
-  .edu-block:last-child { margin-bottom: 0; }
-  .edu-org { font-weight: 600; }
-  .edu-line { font-size: 15px; color: var(--muted); }
-
-  /* ── Entry list (projects / experience) ── */
-  .entry-list .entry { padding: 1.25rem 0; border-top: 1px solid var(--border); }
-  .entry-list .entry:first-child { padding-top: 0; border-top: none; }
-  .entry-head {
-    display: flex; justify-content: space-between; align-items: baseline;
-    gap: 1rem; flex-wrap: wrap; margin-bottom: .35rem;
-  }
-  .entry-head h3 { margin: 0; }
-  .entry-meta { font-size: 13px; color: var(--muted); white-space: nowrap; }
-  .entry-desc { font-size: 15px; margin-bottom: .5rem; }
-  .entry-bullets { margin: 0 0 .5rem 1.15rem; font-size: 15px; }
-  .entry-bullets li { margin-bottom: .3rem; }
-  .entry-bullets li:last-child { margin-bottom: 0; }
-  .entry-tags { font-size: 13px; color: var(--muted); margin-bottom: .35rem; }
-  .entry-links { font-size: 14px; margin-bottom: 0; }
-  .entry-links a { margin-right: 1rem; cursor: pointer; }
-
-  /* ── Modal (project case studies) ── */
-  .modal-overlay {
-    display: none; position: fixed; inset: 0; z-index: 500;
-    background: rgba(0,0,0,.5);
-    overflow-y: auto;
-    padding: 2rem 24px;
-    align-items: flex-start; justify-content: center;
-  }
-  .modal-overlay.open { display: flex; }
-  body.modal-open { overflow: hidden; position: fixed; width: 100%; }
-  .modal {
-    background: var(--bg); border: 1px solid var(--border);
-    max-width: 680px; width: 100%;
-    margin: auto; padding: 2rem; position: relative;
-  }
-  .modal-close {
-    position: absolute; top: 1.1rem; right: 1.1rem;
-    font-size: 13px; color: var(--muted);
-    background: none; border: 1px solid var(--border);
-    padding: .25rem .6rem; cursor: pointer;
-  }
-  .modal-close:hover { color: var(--text); }
-  .modal-type { font-size: 13px; color: var(--muted); margin-bottom: .4rem; }
-  .modal h3 { font-size: 22px; padding-right: 4rem; margin-bottom: .5rem; }
-  .modal-tags { font-size: 13px; color: var(--muted); margin-bottom: 1rem; }
-  .modal-section { margin-top: 1.1rem; }
-  .modal-section-title { font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: .3rem; }
-  .modal-section p { font-size: 15px; white-space: pre-line; }
-  .modal figure img {
-    width: 100%; height: auto; display: block;
-    border: 1px solid var(--border);
-    max-height: 420px; object-fit: contain; background: #fff;
-    margin-top: 1rem;
-  }
-  .modal figcaption { font-size: 13px; color: var(--muted); margin-top: .4rem; text-align: center; }
-  .modal-links a { display: inline-block; margin: .8rem .8rem 0 0; }
-  .note-formula {
-    font-family: 'Courier New', monospace; font-size: 14px;
-    border-left: 2px solid var(--accent); padding: .4rem .8rem;
-    margin: .6rem 0; background: #f7f7f7;
-  }
-
-  /* ── Footer ── */
-  footer { padding: 2rem 0 3rem; border-top: 1px solid var(--border); }
-  footer p { font-size: 14px; color: var(--muted); }
-  .footer-copy { margin-top: .3rem; font-size: 13px; }
-
-  /* ── Responsive ── */
-  @media (max-width: 600px) {
-    .header-row { flex-direction: column-reverse; align-items: flex-start; gap: 1rem; }
-    .avatar-img { width: 88px; height: 88px; }
-    .entry-head { flex-direction: column; gap: .15rem; }
-  }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jack Pham: Electrical Engineering Portfolio</title>
+  <meta name="description" content="Jack Pham, EECS student at UC Berkeley. Serial links, channel modeling, embedded hardware.">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ════════════════════ HEADER ════════════════════ -->
-<header class="site-header container">
-  <div class="header-row">
-    <div class="header-text">
+<header class="wrap">
+  <div class="title-block">
+    <div>
       <h1>Jack Pham</h1>
-      <p class="title-line">EECS Student, UC Berkeley</p>
-      <p class="contact-line">Berkeley, CA · <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a></p>
-      <p class="links-line">
-        <a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a> ·
-        <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a> ·
-        <a href="#" data-resume download>Resume (PDF)</a>
+      <p class="tagline">Berkeley EECS student working on RF and analog circuits, digital design and verification, and embedded hardware. I model a design, build it, and check the two against each other.</p>
+      <p class="links">
+        <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a>
+        <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="assets/JackPham-Resume-IC-Circuits.pdf" download>Resume (PDF)</a>
       </p>
-      <p class="status-line">Open to internships, research collaborations, and interesting projects.</p>
     </div>
-    <div class="avatar-wrap">
-      <img class="avatar-img" src="assets/img/ava-1.jpg" alt="Jack Pham" onerror="this.parentElement.style.display='none'">
-    </div>
+    <img src="assets/img/ava-1.jpg" alt="Jack Pham">
   </div>
-  <nav class="jump-nav">
-    <a href="#about">About</a> ·
-    <a href="#projects">Projects</a> ·
-    <a href="#experience">Experience</a> ·
-    <a href="#honors">Honors</a>
+  <nav class="top">
+    <a href="#projects">Projects</a>
+    <a href="journal.html">Journal</a>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#resume">Resume</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<!-- ════════════════════ ABOUT ════════════════════ -->
-<section id="about">
-  <div class="container">
-    <h2>About</h2>
-    <div class="about-text">
-      <p>
-        I am an Electrical Engineering and Computer Science (B.S.) student at UC Berkeley,
-        focused on circuits, embedded systems, and signal processing. I build reliable
-        hardware and robotic systems that connect theory to real use, and I like to
-        understand how something works before I build it, a habit that comes from studying physics.
-      </p>
-      <p>Outside of research, I enjoy hiking, photography, and cooking.</p>
-    </div>
+<main class="wrap">
 
-    <div class="about-sub">
-      <h3>Core Skills</h3>
-      <p>
-        Circuit Design, PCB Layout, Embedded C/C++, ESP32 / Arduino / Raspberry Pi,
-        Signal Processing, ROS / Robotics, Python, TensorFlow / TFLite, NumPy / SciPy / cvxpy,
-        C / C++ / Java / MATLAB, Linux / Bash / Git, Docker / Gazebo, Soldering &amp; Lab Instrumentation.
-      </p>
-    </div>
+  <!-- Projects first: three featured cards, then the rest -->
+  <section id="projects" style="padding-top:22px">
+    <div class="featured" id="featured"></div>
 
-    <div class="about-sub">
-      <h3>Education</h3>
-      <div class="edu-block">
-        <p class="edu-org">University of California, Berkeley</p>
-        <p class="edu-line">B.S. Electrical Engineering &amp; Computer Sciences · GPA 3.54 · August 2025 – May 2028 (Expected)</p>
-      </div>
-      <div class="edu-block">
-        <p class="edu-org">Cypress College</p>
-        <p class="edu-line">A.S. Mathematics &amp; Physics · GPA 3.94 · February 2023 – May 2025</p>
-      </div>
-    </div>
-
-    <div class="about-sub">
-      <h3>Currently</h3>
-      <ul class="plain-list">
-        <li>Product Engineer Co-Op, Skyworks Solutions (Irvine, CA)</li>
-        <li>Electrical Subteam, Underwater Robotics Team (UC Berkeley)</li>
-        <li>SerDes Link Model (personal research)</li>
-        <li>FDTD Channel Solver (personal research)</li>
+    <div class="more">
+      <div class="mono muted"><b class="more-h">More projects</b><br><br><a href="journal.html">Journal</a>: how these projects went, including what broke.</div>
+      <ul id="more">
+        <li><b><a href="#about">SAR ADC</a></b> (in progress). A successive-approximation analog-to-digital converter, from a Python model and Verilog control logic down to transistor level. Results and a project page come once there are simulations to show.</li>
+        <li><b><a href="https://github.com/jackpham-rgb/MEproject2026F" target="_blank" rel="noopener">Budget robot arm</a></b> (Fall 2026). An Arduino Uno and four hobby servos grip an upright can, lift it, flip it 180° and set it down 90° away. Four concepts ranked in a decision matrix, CAD that passes 43 of 43 engineering checks, and LTspice models of the servo power rail. Designed and simulated; the physical build is next. <a href="https://jackpham-rgb.github.io/MEproject2026F/" target="_blank" rel="noopener">Interactive viewer</a>
+          <div class="thumbs"><figure><img src="assets/img/projects/robot-arm-cad.gif" alt="Animated CAD of the robot arm" loading="lazy"><figcaption>Detail CAD running the firmware sequence.</figcaption></figure></div>
+        </li>
+        <li><b><a href="https://github.com/jackpham-rgb/area-disaster-response" target="_blank" rel="noopener">2024 REU: fair multi-robot task allocation</a></b> (Summer 2024, TACC). Linear-programming task allocation, a fairness-weighted learning reward (FE-MADDPG) and conflict-based path search for five robot roles, rebuilt as a browser simulation. <a href="https://jackpham-rgb.github.io/area-disaster-response/simulation_v2.html" target="_blank" rel="noopener">Simulation</a></li>
+        <li><b><a href="https://github.com/andersvestrum/eeg-attention-analysis" target="_blank" rel="noopener">EEG attention detection</a></b> (Spring 2026, team project). XGBoost classifier on EEG band-power features from 60 subjects; 64.3% accuracy on engaged vs low-attention states. <a href="journal.html#garbage-in">Journal entry</a></li>
+        <li><b><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank" rel="noopener">Methane emission monitoring</a></b> (Spring 2026, Fung Fellowship, team of 4). A $15 household methane sensor built from off-the-shelf parts, shaped by 12 stakeholder interviews with Climate Action California. Findings went to the California Air Resources Board. <a href="journal.html#interviews-before-hardware">Journal entry</a>
+          <div class="thumbs">
+            <figure><img src="assets/img/projects/methane-team.jpg" alt="Fung Fellowship methane team" loading="lazy"><figcaption>The methane team at the Fung Fellowship showcase, Spring 2026. Photo: Fung Institute.</figcaption></figure>
+            <figure><img src="assets/img/projects/methane-prototype.jpg" alt="Methane sensor prototype on a breadboard" loading="lazy"><figcaption>The sensor prototype on a breadboard. Photo: Fung Institute.</figcaption></figure>
+          </div>
+        </li>
+        <li><b><a href="journal.html#signals-as-vectors">Acoustic positioning</a></b> (Fall 2025, EECS 16A). Locates a microphone in 2D from time differences of arrival, using cross-correlation and least squares.</li>
+        <li><b><a href="journal.html#signals-as-vectors">Voice command classifier</a></b> (Fall 2025, EECS 16A). Mel-spectrogram features, PCA and nearest-centroid classification; about 97% on live recordings of one speaker.</li>
       </ul>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ════════════════════ PROJECTS ════════════════════ -->
-<section id="projects">
-  <div class="container">
-    <h2>Selected Projects</h2>
-    <div class="entry-list" id="projectsList"></div>
-  </div>
-</section>
-
-<!-- ════════════════════ EXPERIENCE ════════════════════ -->
-<section id="experience">
-  <div class="container">
-    <h2>Experience</h2>
-    <div class="entry-list">
-
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Product Engineer Co-Op</h3>
-          <span class="entry-meta">Skyworks Solutions · Irvine, CA · June 2026 – Present</span>
-        </div>
-        <ul class="entry-bullets">
-          <li>Isolate yield trends and root causes on high-volume RF front-end products, applying Cpk, SPC, and ANOVA methods to semiconductor die, wafer, and module test data.</li>
-          <li>Characterize RF chip performance on GaAs HBT and SAW amplifier devices using network and spectrum analyzers.</li>
-          <li>Built a Python-based Parameter Review workbook merging ~44,000 test rows across 100 test types, and maintain STDF-to-CSV pipelines in Python, C++, and Rust across seven-plus vendor formats.</li>
-        </ul>
-        <p class="entry-tags">RF Test · Yield Analysis · SPC / ANOVA · Python · C++ · Rust</p>
-      </article>
-
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Underwater Robotics: Electrical Subteam</h3>
-          <span class="entry-meta">UC Berkeley · February 2026 – Present</span>
-        </div>
-        <ul class="entry-bullets">
-          <li>Investigating power dissipation and thermal behavior of NVIDIA Jetson modules in autonomous underwater robots.</li>
-          <li>Supporting electrical integration, power regulation, and embedded hardware debugging across 16 onboard sensors and actuators.</li>
-        </ul>
-        <p class="entry-tags">Embedded Hardware · Jetson · Power Systems</p>
-      </article>
-
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Physics Tutor</h3>
-          <span class="entry-meta">North Orange County Community College District · February – July 2025</span>
-        </div>
-        <ul class="entry-bullets">
-          <li>Developed Python and Jupyter simulations for electromagnetism and thermodynamics, contributing to a 20% average improvement in student exam performance across 40+ tutoring hours.</li>
-        </ul>
-      </article>
-
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Summer Researcher</h3>
-          <span class="entry-meta">TACC · UT Austin · June – August 2024</span>
-        </div>
-        <ul class="entry-bullets">
-          <li>Built a multi-robot task allocation and path-planning framework (Python, cvxpy, ROS) that improved simulated disaster-response efficiency by 70%.</li>
-          <li>Validated the system in Gazebo on TACC's HPC cluster, cutting planning computation time by 45%.</li>
-        </ul>
-        <p class="entry-tags">ROS · Python · cvxpy · Gazebo · HPC</p>
-      </article>
-
-      <article class="entry">
-        <div class="entry-head">
-          <h3>Student Ambassador: Charger Experience</h3>
-          <span class="entry-meta">Cypress College · January – December 2024</span>
-        </div>
-      </article>
-
+  <section id="about">
+    <div class="sec-head"><h2>About</h2><p></p></div>
+    <div class="row">
+      <div><img class="about-photo" src="assets/img/ava-1.jpg" alt="Jack Pham"></div>
+      <div>
+        <p>I study Electrical Engineering and Computer Sciences at UC Berkeley. I started at Cypress College in mathematics and physics, and physics left me with a habit: understand how something works before building it. If I can predict what a circuit or a channel will do, I can tell when a measurement is wrong. That habit is why I lean toward integrated circuits and signal integrity.</p>
+        <p>My target is IC design, analog and digital, with an interest in high-speed links and RF. Right now I am a product engineering co-op on RF front-end parts at Skyworks, I volunteer on a community solar and storage microgrid in Huron, CA, and I am designing a SAR analog-to-digital converter (successive-approximation ADC), from a Python model and Verilog control logic down to transistor level. Its page goes up once there are simulated results to show.</p>
+        <p>Quantum sounds fun, lol. I saw that quantum computer, and it looks like it came out of a comic. I want to work on it someday.</p>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="row">
+      <div class="k">Outside work</div>
+      <div>
+        <p>I hike and camp, mostly in Yosemite. After six hours of driving, the cold air on the last curvy road through the trees is my favorite part. I take photos of ordinary things, often scenes from Vietnam, and I paint. On weekends I cook, usually mixing Thai and Korean flavors.</p>
+        <div class="thumbs">
+          <figure><img src="assets/img/life/boat1.jpg" alt="Boats in Vietnam" loading="lazy"><figcaption>Boats in Vietnam.</figcaption></figure>
+          <figure><img src="assets/img/life/painted_this_myself.jpg" alt="A painting by Jack" loading="lazy"><figcaption>One I painted.</figcaption></figure>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">Education</div>
+      <div>
+        <p><b>University of California, Berkeley</b>. B.S. Electrical Engineering and Computer Sciences, expected May 2028.</p>
+        <p><b>Cypress College</b>. Associate Degree for Transfer in Mathematics and Physics, 2023 to 2025.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="k">Honors</div>
+      <div>
+        <p><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank" rel="noopener">UC Berkeley Fung Fellow</a>, Spring 2026. PEARC26 Student Program participant, TACC. Presenter at SCCUR and the STARS Celebration Conference, 2024.</p>
+      </div>
+    </div>
+  </section>
 
-<!-- ════════════════════ HONORS ════════════════════ -->
-<section id="honors">
-  <div class="container">
-    <h2>Honors</h2>
-    <ul class="plain-list">
-      <li><a href="https://funginstitute.berkeley.edu/news/the-invisible-methane-crisis-and-what-fung-fellows-are-doing-about-it/" target="_blank">UC Berkeley Fung Fellow</a>, Spring 2026</li>
-      <li>PEARC26 Student Program Participant, Texas Advanced Computing Center (TACC)</li>
-      <li>Presenter, SCCUR and STARS Celebration Conference (2024)</li>
-    </ul>
-  </div>
-</section>
+  <section id="skills">
+    <div class="sec-head"><h2>Skills</h2><p></p></div>
+    <table class="skills">
+      <thead><tr><th>Skill</th><th>Where I used it</th></tr></thead>
+      <tbody>
+        <tr class="grp"><th colspan="2">Circuits and boards</th></tr>
+        <tr><td>PCB design (KiCad)</td><td>Controlled-impedance test board with a 12 in and a 1 in line, DRC-clean, not yet fabricated: <a href="https://github.com/jackpham-rgb/serdes-link/tree/main/pcb" target="_blank" rel="noopener">SerDes test board</a></td></tr>
+        <tr><td>RF measurement (network and spectrum analyzers)</td><td>Gain, insertion loss and harmonic distortion on PA and LNA devices at Final Test: <a href="#experience">Skyworks</a></td></tr>
+        <tr><td>Power regulation and hardware debug</td><td>Power, wiring and debugging across 16 sensors and actuators on an underwater robot: <a href="#experience">Underwater Robotics</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Digital design and verification</th></tr>
+        <tr><td>SystemVerilog RTL</td><td>PRBS generator, 4-tap DFE and CDR loop filter: <a href="https://github.com/jackpham-rgb/serdes-link/tree/main/rtl" target="_blank" rel="noopener">serdes-link/rtl</a></td></tr>
+        <tr><td>cocotb and Icarus Verilog</td><td>RTL checked against the Python model over 2,000 to 4,000 cycles: <a href="project.html?p=serdes-link">SerDes link</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Signals and modeling</th></tr>
+        <tr><td>High-speed link modeling (Python, NumPy, SciPy)</td><td>FFE, CTLE, DFE and CDR with a statistical eye and BER, 43 tests: <a href="project.html?p=serdes-link">SerDes link</a></td></tr>
+        <tr><td>Electromagnetic simulation (C++17)</td><td>FDTD solver with reflection, S-parameters and loss matched to theory: <a href="project.html?p=fdtd-channel">FDTD solver</a></td></tr>
+        <tr><td>Signal processing</td><td>MFCC audio features on a microcontroller; acoustic positioning by cross-correlation: <a href="project.html?p=accessisound">AccessiSound</a>, <a href="journal.html#signals-as-vectors">EECS 16A</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Embedded and machine learning</th></tr>
+        <tr><td>ESP32-S3 firmware (C++, PlatformIO)</td><td>I2S microphone, on-device features and inference, three hardware versions: <a href="project.html?p=accessisound">AccessiSound</a></td></tr>
+        <tr><td>TensorFlow Lite Micro</td><td>7,429-parameter CNN, 47 to 53% on 5 classes (chance 20%): <a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/ml" target="_blank" rel="noopener">accessisound/ml</a></td></tr>
+        <tr><td>Enclosure CAD (Fusion 360)</td><td>Printable two-shell enclosure with a mounting plate: <a href="https://github.com/jackpham-rgb/accessisound-esp32s3/tree/main/hardware/v2" target="_blank" rel="noopener">accessisound/hardware</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Test data and statistics</th></tr>
+        <tr><td>Yield analysis (Cpk, SPC, ANOVA)</td><td>Die, wafer and module test data on high-volume RF products: <a href="#experience">Skyworks</a></td></tr>
+        <tr><td>Test-data pipelines (Python, C++, Rust)</td><td>Parsers and merge tools across several test-data formats: <a href="#experience">Skyworks</a></td></tr>
+      </tbody>
+      <tbody>
+        <tr class="grp"><th colspan="2">Learning and optimization</th></tr>
+        <tr><td>Multi-agent reinforcement learning (PyTorch)</td><td>Three methods trained and compared to a do-nothing baseline: <a href="project.html?p=drone-ugv">Drone-UGV</a></td></tr>
+        <tr><td>Linear programming</td><td>Fair task allocation across 5 robot types: <a href="#experience">2024 REU</a></td></tr>
+      </tbody>
+    </table>
+  </section>
 
-<!-- ════════════════════ FOOTER ════════════════════ -->
-<footer>
-  <div class="container">
-    <p>
-      <a href="https://github.com/jackpham-rgb" target="_blank">GitHub</a> ·
-      <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank">LinkedIn</a> ·
-      <a href="#" data-email>Email</a> ·
-      <a href="#" data-resume download>Resume</a>
-    </p>
-  </div>
+  <section id="experience">
+    <div class="sec-head"><h2>Experience</h2><p></p></div>
+
+    <div class="job">
+      <h3>Product Engineer Co-Op, Skyworks Solutions</h3>
+      <p class="meta">Irvine, CA · June 2026 to present</p>
+      <ul>
+        <li>Characterize power amplifier and low-noise amplifier devices at Final Test with network and spectrum analyzers: insertion loss, gain and harmonic distortion.</li>
+        <li>Trace yield trends and root causes on high-volume RF front-end products using process capability (Cpk), statistical process control and ANOVA on die, wafer and module test data.</li>
+        <li>Build Python tools that merge test results across test types for parameter review, and maintain test-data conversion pipelines in Python, C++ and Rust.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Volunteer Electrical Engineer, The LEAP Institute</h3>
+      <p class="meta">Huron, CA · October 2026 to present</p>
+      <ul>
+        <li>Electrical engineering support for a community-led solar, battery storage and EV charging microgrid serving a farmworker community, with graduate students at UCLA and USF.</li>
+        <li>Reviewed concept papers, budgets and a community survey (33 residents, 24 vendors) to find the main electrical loads: refrigerated storage, a cooling center, a commissary kitchen, and event lighting and stage power.</li>
+        <li>Found that six planned DC fast chargers conflict with the net zero goal, and raised it so the team could define where the net zero boundary sits.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Electrical Subteam, Underwater Robotics</h3>
+      <p class="meta">UC Berkeley · February 2026 to present</p>
+      <ul>
+        <li>Study power dissipation and heat in the NVIDIA Jetson modules that run the team’s autonomous underwater robots.</li>
+        <li>Support power regulation, integration and debugging across 16 onboard sensors and actuators.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Summer Researcher, NSF REU at TACC</h3>
+      <p class="meta">UT Austin · June to August 2024</p>
+      <ul>
+        <li>Formulated multi-robot task allocation as a linear program that minimizes the largest workload gap across 5 robot types in a simulated disaster grid, run on an HPC cluster.</li>
+        <li>Combined it with a fairness-weighted learning reward (FE-MADDPG) to improve task-distribution efficiency by 70% over the baseline. This work is the origin of the <a href="project.html?p=drone-ugv">Drone-UGV project</a>.</li>
+      </ul>
+    </div>
+
+    <div class="job">
+      <h3>Physics Tutor</h3>
+      <p class="meta">North Orange County Community College District · February to July 2025</p>
+      <ul>
+        <li>Wrote Python and Jupyter simulations for electromagnetism and thermodynamics across 40+ tutoring hours, contributing to a 20% average gain in student exam scores.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="resume">
+    <div class="sec-head"><h2>Resume</h2><p><a href="assets/JackPham-Resume-IC-Circuits.pdf" target="_blank" rel="noopener">Open in a new tab</a> · <a href="assets/JackPham-Resume-IC-Circuits.pdf" download>Download</a></p></div>
+    <iframe class="resume-frame" src="assets/JackPham-Resume-IC-Circuits.pdf" title="Jack Pham resume"></iframe>
+  </section>
+
+  <section id="contact">
+    <div class="sec-head"><h2>Contact</h2>
+      <p>Open to Summer 2027 internships and research opportunities in IC design, signal integrity and hardware engineering.<br>
+        <a href="mailto:jack_pham@berkeley.edu">jack_pham@berkeley.edu</a> · <a href="https://www.linkedin.com/in/jackpham1611/" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://github.com/jackpham-rgb" target="_blank" rel="noopener">GitHub</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span class="muted">Jack Pham · Berkeley, CA</span>
 </footer>
 
-<!-- ════════════════════ MODAL (project case studies) ════════════════════ -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">&#10005; Close</button>
-    <div id="modalContent"></div>
-  </div>
-</div>
-
-<!-- ════════════════════ JS ════════════════════ -->
+<script src="projects.js"></script>
 <script>
-/* ════════════════════════════════════════════════════════════
-   SITE CONFIG
-════════════════════════════════════════════════════════════ */
-const SITE_CONFIG = {
-  resumeFile: 'assets/Pham_Jack_Resume.pdf',
-  email:      'jack_pham@berkeley.edu',
-};
-
-(function applySiteConfig() {
-  document.querySelectorAll('[data-resume]').forEach(el => { el.href = SITE_CONFIG.resumeFile; });
-  document.querySelectorAll('[data-email]').forEach(el => { el.href = 'mailto:' + SITE_CONFIG.email; });
-})();
-
-/* ── Modal ── */
-let _savedScrollY = 0;
-function openModal(html) {
-  _savedScrollY = window.scrollY;
-  document.body.style.top = `-${_savedScrollY}px`;
-  document.body.classList.add('modal-open');
-  document.getElementById('modalContent').innerHTML = html;
-  document.getElementById('modalOverlay').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.classList.remove('modal-open');
-  document.body.style.top = '';
-  window.scrollTo({ top: _savedScrollY, behavior: 'instant' });
-}
-function closeModalOnBg(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-/* ════════════════════════════════════════════════════════════
-   MEDIA RENDERER: image or YouTube embed from a media array
-════════════════════════════════════════════════════════════ */
-function getYouTubeId(url) {
-  const m = url.match(/(?:v=|youtu\.be\/)([^&?/]+)/);
-  return m ? m[1] : null;
-}
-
-function renderMedia(mediaArr) {
-  if (!mediaArr || mediaArr.length === 0) return '';
-  return mediaArr.map(m => {
-    if (m.type === 'youtube') {
-      const id = getYouTubeId(m.src);
-      if (!id) return '';
-      return `
-        <figure>
-          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border:1px solid var(--border)">
-            <iframe src="https://www.youtube.com/embed/${id}"
-              style="position:absolute;top:0;left:0;width:100%;height:100%;border:none"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}
-        </figure>`;
-    }
-    if (m.type === 'image') {
-      return `
-        <figure>
-          <img src="${m.src}" alt="${m.caption || ''}" onerror="this.parentElement.style.display='none'">
-          ${m.caption ? `<figcaption>${m.caption}</figcaption>` : ''}
-        </figure>`;
-    }
-    return '';
-  }).join('');
-}
-
-/* ════════════════════════════════════════════════════════════
-   PROJECTS: plain reverse-chronological list, no filtering
-════════════════════════════════════════════════════════════ */
-let allProjects = [];
-
-function buildProjectEntry(p) {
-  const div = document.createElement('article');
-  div.className = 'entry';
-  const badge = (p.badge && !p.type.includes(p.badge)) ? p.badge : '';
-  const meta = [p.type, p.year, badge].filter(Boolean).join(' · ');
-  const ghLink = p.github ? `<a href="${p.github}" target="_blank">GitHub &#8594;</a>` : '';
-  div.innerHTML = `
-    <div class="entry-head">
+  const box = document.getElementById('featured');
+  FEATURED.forEach((id, i) => {
+    const p = PROJECTS.find(x => x.id === id);
+    const a = document.createElement('a');
+    a.className = 'card';
+    a.href = 'project.html?p=' + p.id;
+    a.innerHTML = `
+      <div class="fig"><img src="${p.card}" alt="${p.title}"></div>
+      <span class="label">Fig. ${i + 1} · ${p.kind} · ${p.year}</span>
       <h3>${p.title}</h3>
-      <span class="entry-meta">${meta}</span>
-    </div>
-    <p class="entry-desc">${p.desc}</p>
-    <p class="entry-tags">${(p.tags_display || []).join(' · ')}</p>
-    <p class="entry-links">${ghLink}<a data-open-case>Case study &#8594;</a></p>
-  `;
-  div.querySelector('[data-open-case]').addEventListener('click', () => openProjectModal(p));
-  return div;
-}
-
-function renderProjects() {
-  const list = document.getElementById('projectsList');
-  list.innerHTML = '';
-  allProjects.forEach(p => list.appendChild(buildProjectEntry(p)));
-}
-
-function openProjectModal(p) {
-  const d = p.detail;
-
-  let linksBlock = '';
-  if (d.links && d.links.length > 0) {
-    const linkBtns = d.links.map(l => `<a href="${l.url}" target="_blank">&#8599; ${l.label}</a>`).join('');
-    linksBlock = `<div class="modal-links">${linkBtns}</div>`;
-  } else if (p.github) {
-    linksBlock = `<div class="modal-links"><a href="${p.github}" target="_blank">&#8599; View on GitHub</a></div>`;
-  }
-
-  const displayTags = (d.tags_display || p.tags_display || []);
-
-  if (d.body) {
-    const bodyHtml = renderProjectBody(d.body);
-    openModal(`
-      <p class="modal-type">${p.type} · ${p.year}</p>
-      <h3>${p.title}</h3>
-      <p class="modal-tags">${displayTags.join(' · ')}</p>
-      ${bodyHtml}
-      <div class="modal-section">
-        <p class="modal-section-title">Status</p>
-        <p>${d.status || ''}</p>
-      </div>
-      ${linksBlock}
-    `);
-    return;
-  }
-
-  const extraSections = (d.sections || []).map(s => `
-    <div class="modal-section">
-      <p class="modal-section-title">${s.title}</p>
-      <p>${s.body}</p>
-    </div>`).join('');
-
-  const resultsBlock = d.results ? `
-    <div class="modal-section">
-      <p class="modal-section-title">Results</p>
-      <p>${d.results}</p>
-    </div>` : '';
-
-  openModal(`
-    <p class="modal-type">${p.type} · ${p.year}</p>
-    <h3>${p.title}</h3>
-    <p class="modal-tags">${displayTags.join(' · ')}</p>
-    <div class="modal-section"><p class="modal-section-title">Summary</p><p>${d.summary || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">Why I built it</p><p>${d.why || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">Core challenge</p><p>${d.problem || ''}</p></div>
-    <div class="modal-section"><p class="modal-section-title">Approach</p><p>${d.approach || ''}</p></div>
-    ${extraSections}
-    ${resultsBlock}
-    <div class="modal-section"><p class="modal-section-title">Status</p><p>${d.status || ''}</p></div>
-    ${linksBlock}
-    ${renderMedia(d.media || [])}
-  `);
-}
-
-/* ── Project body renderer: [SECTION: ...] / [IMAGE: src | caption] markers ── */
-function renderProjectBody(body) {
-  return body.split('\n\n').map(chunk => {
-    const t = chunk.trim();
-    if (!t) return '';
-
-    if (t.startsWith('[SECTION:')) {
-      const title = t.replace('[SECTION:', '').replace(']', '').trim();
-      return `<div class="modal-section"><p class="modal-section-title">${title}</p>`;
-    }
-
-    if (t.startsWith('[IMAGE:')) {
-      const inner = t.replace('[IMAGE:', '').replace(']', '').trim();
-      const [src, caption] = inner.split('|').map(s => s.trim());
-      return `<figure>
-        <img src="${src}" alt="${caption || ''}" onerror="this.parentElement.style.display='none'">
-        ${caption ? `<figcaption>${caption}</figcaption>` : ''}
-      </figure>`;
-    }
-
-    if (/^https?:\/\/\S+$/.test(t)) {
-      return `<p><a href="${t}" target="_blank">${t}</a></p>`;
-    }
-
-    if (t.includes('https://') && (t.includes('→') || t.includes(':'))) {
-      const urlMatch = t.match(/(https?:\/\/\S+)/);
-      if (urlMatch) {
-        const url = urlMatch[1];
-        const label = t.replace(url, '').replace(/[→:]+$/, '').trim();
-        return `<p>${label ? label + ' ' : ''}<a href="${url}" target="_blank">${url}</a></p>`;
-      }
-    }
-
-    if (t.startsWith('- ')) {
-      const items = t.split('\n').filter(l => l.startsWith('- '));
-      const lis = items.map(l => `<li>${l.slice(2)}</li>`).join('');
-      return `<ul style="margin:.4rem 0 .6rem 1.25rem;font-size:15px">${lis}</ul>`;
-    }
-
-    const hasMath = /[=→·^ᵀ‖∑Σεᵢ]/.test(t);
-    const isShort = t.split(' ').length < 16;
-    if (hasMath && isShort) {
-      return `<p class="note-formula">${t}</p>`;
-    }
-
-    return `<p>${t}</p>`;
-  }).join('');
-}
-
-/* ════════════════════════════════════════════════════════════
-   INIT
-════════════════════════════════════════════════════════════ */
-async function loadJSON(path) {
-  const r = await fetch(path);
-  if (!r.ok) throw new Error('Failed: ' + path);
-  return r.json();
-}
-
-async function loadIndexedItems(folder) {
-  const index = await loadJSON(`data/${folder}/index.json`);
-  const items = await Promise.all(
-    index.map(entry => {
-      const id = typeof entry === 'string' ? entry : entry.id;
-      return loadJSON(`data/${folder}/${id}.json`)
-        .then(item => ({ ...item, ...(typeof entry === 'object' ? entry : {}) }));
-    })
-  );
-  return items;
-}
-
-async function init() {
-  try {
-    allProjects = (await loadIndexedItems('projects'))
-      .sort((a, b) => (a.rank || 99) - (b.rank || 99));
-    renderProjects();
-  } catch (err) {
-    console.error('Data load error:', err);
-    document.getElementById('projectsList').innerHTML =
-      '<p>Run via GitHub Pages or a local server to load content.</p>';
-  }
-}
-
-init();
+      <p>${p.line}</p>
+      <span class="res">${p.headline}</span>`;
+    box.appendChild(a);
+  });
+  // Remaining full projects go to the top of the "More projects" list.
+  const more = document.getElementById('more');
+  PROJECTS.filter(p => !FEATURED.includes(p.id)).reverse().forEach(p => {
+    const li = document.createElement('li');
+    li.innerHTML = `<b><a href="project.html?p=${p.id}">${p.title}</a></b> (${p.year}). ${p.line}`;
+    more.prepend(li);
+  });
 </script>
 </body>
 </html>

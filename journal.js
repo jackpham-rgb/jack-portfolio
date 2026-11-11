@@ -13,7 +13,7 @@ const JOURNAL = [
       'The eye-height code included the dead time before the first bit arrived. That flat stretch of signal pulled the measured opening to zero. Once the measurement skipped start-up and sampled at the eye center, 12 inches turned out to be too easy: the eye was open with no equalization at all. I moved to 36 inches, 14.9 dB of loss at 2.5 GHz, so the equalizers had something to fix, and redid every result I had written up from the broken measurement.',
       'I now check a measurement on a case with a known answer before trusting it on the case that matters.'
     ],
-    fig: { src: '../assets/img/v2/serdes-card.png', cap: 'After the fix, at 36 in: raw channel (left) and after the full equalizer chain (right).' }
+    fig: { src: 'assets/img/projects/serdes-card.png', cap: 'After the fix, at 36 in: raw channel (left) and after the full equalizer chain (right).' }
   },
   {
     id: 'survey-as-load-list',
@@ -33,7 +33,7 @@ const JOURNAL = [
       'My first FDTD solver blew up to infinity on an open-circuit line. A smaller time step should make a simulation more stable; here it made it blow up faster. I swept the step over four values and saw that peak amplitude times step size stayed constant. That pattern means something gets added a fixed amount per step regardless of how long a step is. It was the source: the code added the raw pulse value to the first node on every step.',
       'Fixing that exposed a second problem. Every load except the open circuit gave the wrong reflection; a short read +0.56 instead of −1.0. The source had zero impedance, so waves bounced back off it. A matched source fixed all five cases, and four of them now land within 0.0003 of theory.'
     ],
-    fig: { src: '../assets/img/v2/fdtd-wave_reflection.png', cap: 'A pulse from the matched source reflecting off an open end.' }
+    fig: { src: 'assets/img/projects/fdtd-wave_reflection.png', cap: 'A pulse from the matched source reflecting off an open end.' }
   },
   {
     id: 'label-not-result',
@@ -53,7 +53,7 @@ const JOURNAL = [
       'In the Fung Fellowship, our team of four (anthropology, society and environment, electrical engineering and mechanical engineering) took on methane emissions with Climate Action California. I expected to start with a sensor. We started with 12 stakeholder interviews, and they pointed at the real gap: there is little methane data at the household level.',
       'That shaped the device, a $15 household methane sensor built from off-the-shelf parts. Our findings went to the California Air Resources Board.'
     ],
-    fig: { src: '../assets/img/v2/methane-prototype.jpg', cap: 'The sensor prototype. Photo: Fung Institute.' }
+    fig: { src: 'assets/img/projects/methane-prototype.jpg', cap: 'The sensor prototype. Photo: Fung Institute.' }
   },
   {
     id: 'garbage-in',
@@ -73,7 +73,7 @@ const JOURNAL = [
       'SoDA Hacks on March 7, 2026, was my first hackathon. In one day I built a sound-recognition assistant on an ESP32-S3-BOX-3 lent by CSUA, trained on basic recordings, online datasets and CSUA computing resources. Afterward I bought my own parts and rebuilt it with a custom enclosure, and later made a version for a friend whose family has hearing and vision impairments.',
       'Writing the pipeline up properly, I ran the same audio through the firmware’s feature code and the training script’s. They only partly agree, with a mean correlation of 0.78. The demo worked, but the pipeline was not consistent end to end, and that is the first thing to fix in the next revision.'
     ],
-    fig: { src: '../assets/img/accessisound-v1-soda-hacks.jpg', cap: 'Presenting v1 at SoDA Hacks.' }
+    fig: { src: 'assets/img/accessisound-v1-soda-hacks.jpg', cap: 'Presenting v1 at SoDA Hacks.' }
   },
   {
     id: 'signals-as-vectors',
