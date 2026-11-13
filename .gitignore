@@ -1,5 +1,6 @@
 # Local only: files taken off the public repo
 to_be_deleted/
+portfolio-pdf/
 
 # Tool and editor folders
 .claude/
